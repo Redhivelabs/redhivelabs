@@ -47,9 +47,9 @@ export default function Home() {
           className="text-4xl font-bold leading-tight tracking-tight text-[#12171D] sm:text-6xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Find Where Your
+          Buyers Check
           <br />
-          <span className="text-[#0B6E62]">Buyers Talk</span>
+          <span className="text-[#0B6E62]">REDDIT First</span>
         </h1>
 
         <p className="mx-auto mt-5 max-w-lg text-lg text-[#12171D]/70">
