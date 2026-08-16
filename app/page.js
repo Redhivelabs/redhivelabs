@@ -22,19 +22,19 @@ export default function Home() {
           "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
       }}
     >
-      <nav className="mx-auto mt-6 flex max-w-4xl items-center justify-between rounded-full bg-[#12171D] px-6 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)]">
+      <nav className="mx-auto mt-6 flex max-w-4xl items-center justify-between gap-3 rounded-full bg-[#12171D] px-4 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)] sm:px-6">
         <img
           src="/lockup-horizontal-white.svg"
           alt="RedHiveLabs"
-          className="w-auto"
-          style={{ height: "56px" }}
+          className="w-auto flex-shrink-0"
+          style={{ height: "40px" }}
         />
-        <div className="flex items-center gap-6 text-sm font-medium text-white/70">
-          <Link href="/#features" className="hover:text-white">
+        <div className="flex items-center gap-3 text-xs font-medium text-white/70 sm:gap-6 sm:text-sm">
+          <Link href="/features" className="hover:text-white">
             Features
           </Link>
           <Link href="/sample" className="hover:text-white">
-            Sample Report
+            Sample
           </Link>
           <Link href="/pricing" className="hover:text-white">
             Pricing
@@ -57,8 +57,8 @@ export default function Home() {
         </p>
 
         <div className="relative mx-auto mt-9 max-w-xl">
-          <div className="float-icon pointer-events-none absolute -right-6 -top-8 hidden sm:block">
-            <svg viewBox="0 0 216 216" className="h-11 w-11 drop-shadow-lg">
+          <div className="float-icon pointer-events-none absolute -right-2 -top-6 sm:-right-6 sm:-top-8">
+            <svg viewBox="0 0 216 216" className="h-8 w-8 drop-shadow-lg sm:h-11 sm:w-11">
               <circle cx="108" cy="108" r="108" fill="#FF4500" />
               <path
                 fill="#FFFFFF"
