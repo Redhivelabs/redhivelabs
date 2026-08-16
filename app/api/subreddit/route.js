@@ -52,6 +52,58 @@ function detectGateFlags(allRuleText) {
   };
 }
 
+function getVerdict(removalRatePercent, taggedRules) {
+  const hasBlockingRule = taggedRules.some((r) => r.severity === "blocking");
+
+  if (removalRatePercent >= 60 || (hasBlockingRule && removalRatePercent >= 40)) {
+    return {
+      verdict: "avoid",
+      reasoning:
+        "High removal rate (" +
+        removalRatePercent +
+        "%) combined with strictly enforced rules makes this subreddit risky without significant prep.",
+    };
+  }
+
+  if (removalRatePercent >= 30) {
+    return {
+      verdict: "warm up first",
+      reasoning:
+        "Moderate removal rate (" +
+        removalRatePercent +
+        "%). Build some karma here and follow the posting rules closely before posting your key content.",
+    };
+  }
+
+  return {
+    verdict: "post",
+    reasoning:
+      "Low removal rate (" +
+      removalRatePercent +
+      "%) and no unusual restrictions detected. This subreddit looks approachable.",
+  };
+}
+
+// Arctic Shift is a free, community-run service that can briefly slow
+// down under load. If we get a "please slow down" style response, wait
+// a couple seconds and try again before giving up, so a real customer's
+// report doesn't fail over a transient hiccup.
+async function fetchWithRetry(url, maxRetries = 2, delayMs = 2000) {
+  let lastRes = null;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const res = await fetch(url);
+    if (res.ok) return res;
+    lastRes = res;
+    const retryable = res.status === 422 || res.status === 429 || res.status === 503;
+    if (retryable && attempt < maxRetries) {
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      continue;
+    }
+    return res;
+  }
+  return lastRes;
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const subreddit = searchParams.get("subreddit");
@@ -65,7 +117,20 @@ export async function GET(request) {
       "https://arctic-shift.photon-reddit.com/api/subreddits/search?subreddit_prefix=" +
       encodeURIComponent(subreddit) +
       "&limit=1";
-    const aboutRes = await fetch(aboutUrl);
+    const aboutRes = await fetchWithRetry(aboutUrl);
+
+    if (!aboutRes.ok) {
+      const errText = await aboutRes.text();
+      return Response.json(
+        {
+          error: "Arctic Shift subreddit-info request failed",
+          status: aboutRes.status,
+          details: errText.slice(0, 300),
+        },
+        { status: 500 }
+      );
+    }
+
     const aboutData = await aboutRes.json();
     const info = aboutData.data && aboutData.data[0] ? aboutData.data[0] : null;
 
@@ -109,7 +174,7 @@ export async function GET(request) {
       beforeTimestamp +
       "&after=" +
       afterTimestamp;
-    const postsRes = await fetch(postsUrl);
+    const postsRes = await fetchWithRetry(postsUrl);
 
     if (!postsRes.ok) {
       const errText = await postsRes.text();
@@ -137,6 +202,14 @@ export async function GET(request) {
     // Dead-post rate: posts with score <= 1
     const deadCount = posts.filter((p) => (p.score || 0) <= 1).length;
     const deadPostRatePercent = Math.round((deadCount / postCount) * 100);
+
+    // Upvote ratio (Reddit's own % of upvotes vs downvotes, when available)
+    const upvoteRatios = posts
+      .map((p) => p.upvote_ratio)
+      .filter((r) => typeof r === "number");
+    const avgUpvoteRatio = upvoteRatios.length
+      ? Math.round((upvoteRatios.reduce((a, b) => a + b, 0) / upvoteRatios.length) * 100) / 100
+      : null;
 
     // Format split
     const typeCounts = { text: 0, link: 0, image: 0, video: 0 };
@@ -193,6 +266,24 @@ export async function GET(request) {
       url: "https://reddit.com" + (p.permalink || ""),
     }));
 
+    // Identity: age + posting frequency, calculated from real data
+    const nowSeconds = Math.floor(Date.now() / 1000);
+    const ageDays = info && info.created_utc ? Math.floor((nowSeconds - info.created_utc) / 86400) : null;
+
+    const postTimestamps = posts.map((p) => p.created_utc).filter(Boolean);
+    let postsPerDay = null;
+    let commentsPerDay = null;
+    if (postTimestamps.length > 1) {
+      const oldest = Math.min(...postTimestamps);
+      const newest = Math.max(...postTimestamps);
+      const spanDays = Math.max(1, (newest - oldest) / 86400);
+      postsPerDay = Math.round((posts.length / spanDays) * 10) / 10;
+      const totalComments = comments.reduce((a, b) => a + b, 0);
+      commentsPerDay = Math.round((totalComments / spanDays) * 10) / 10;
+    }
+
+    const verdict = getVerdict(removalRatePercent, taggedRules);
+
     return Response.json({
       subreddit,
       identity: info
@@ -201,6 +292,9 @@ export async function GET(request) {
             subscribers: info.subscribers || null,
             description: info.public_description || null,
             createdUtc: info.created_utc || null,
+            ageDays,
+            postsPerDay,
+            commentsPerDay,
           }
         : null,
       traction: {
@@ -208,6 +302,7 @@ export async function GET(request) {
         medianScore: median(scores),
         medianComments: median(comments),
         p90Score: percentile(scores, 90),
+        avgUpvoteRatio,
         deadPostRatePercent,
       },
       removalRisk: {
@@ -227,6 +322,7 @@ export async function GET(request) {
         bestWindows,
       },
       evidence,
+      verdict,
     });
   } catch (error) {
     return Response.json(
