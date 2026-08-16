@@ -12,6 +12,7 @@ export const scans = pgTable("scans", {
   id: serial("id").primaryKey(),
   keyword: text("keyword").notNull(),
   resultData: jsonb("result_data"),
+  userId: integer("user_id").references(() => users.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
