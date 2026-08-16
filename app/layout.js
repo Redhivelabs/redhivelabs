@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
       className={`${archivo.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body
-        className="min-h-full flex flex-col"
+        className="min-h-full flex flex-col overflow-x-hidden"
         style={{ fontFamily: "var(--font-source-serif), serif" }}
       >
         {children}

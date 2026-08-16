@@ -201,22 +201,22 @@ export default function ScanResults() {
                     key={r.subreddit}
                     className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)] transition-shadow hover:shadow-[0_8px_28px_-8px_rgba(18,23,29,0.2)]"
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
+                    <div className="flex min-w-0 items-center justify-between gap-2">
+                      <div className="flex min-w-0 items-center gap-3">
                         <span
-                          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0B6E62]/10 text-sm font-bold text-[#0B6E62]"
+                          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#0B6E62]/10 text-sm font-bold text-[#0B6E62]"
                           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                         >
                           {i + 1}
                         </span>
                         <span
-                          className="font-bold text-[#12171D]"
+                          className="truncate font-bold text-[#12171D]"
                           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                         >
                           r/{r.subreddit}
                         </span>
                       </div>
-                      <span className="rounded-full bg-[#12171D]/5 px-3 py-1 text-xs font-medium text-[#12171D]/60">
+                      <span className="flex-shrink-0 rounded-full bg-[#12171D]/5 px-3 py-1 text-xs font-medium text-[#12171D]/60">
                         {r.mentions} mentions
                       </span>
                     </div>
@@ -306,7 +306,7 @@ export default function ScanResults() {
                 10-15 curated subreddits, posting rules, removal risk, best
                 times to post, and real evidence — one report, $99 USD.
               </p>
-              <div className="mx-auto mt-6 max-w-xs rounded-xl bg-white p-1.5 shadow-lg">
+              <div className="mx-auto mt-6 w-full max-w-xs rounded-xl bg-white p-3 shadow-lg">
                 <PayPalButton keyword={keyword} />
               </div>
               <p className="mt-3 text-xs text-white/30">
