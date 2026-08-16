@@ -58,7 +58,7 @@ export default function Pricing() {
             className="mt-3 text-5xl font-bold text-[#12171D]"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            $99
+            $99 <span className="text-2xl font-medium text-[#12171D]/50">USD</span>
           </p>
           <p className="mt-1 text-sm text-[#12171D]/50">one-time</p>
 

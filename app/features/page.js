@@ -24,7 +24,10 @@ export default function Features() {
             style={{ height: "32px" }}
           />
         </Link>
-        <div className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
+        <div
+          className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
           <Link href="/features" className="text-white">
             Features
           </Link>
@@ -42,11 +45,11 @@ export default function Features() {
           className="text-4xl font-bold leading-tight tracking-tight text-[#12171D] sm:text-5xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          What You Get
+          Stop Getting Removed
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-lg text-[#12171D]/70">
-          A free scan to get you started, and a curated report that tells you
-          exactly where — and how — to post.
+          You post. A mod nukes it in 4 minutes. Nobody tells you why. We fix
+          that — before you hit submit.
         </p>
       </div>
 
@@ -59,29 +62,29 @@ export default function Features() {
             className="text-xl font-bold text-[#12171D]"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            Instant keyword scan
+            See where they're already talking
           </h2>
           <p className="mt-2 text-sm text-[#12171D]/70">
-            Enter a keyword and see the top 5 subreddits where people are
-            already talking about it — in seconds, no signup for your first
-            scan.
+            Type a keyword. We pull the top 5 subreddits actually discussing
+            it — not the ones with the biggest subscriber count, the ones
+            with real activity.
           </p>
         </div>
 
         <div className="rounded-2xl bg-white p-7 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#0B6E62]/10 px-3 py-1 text-xs font-medium text-[#0B6E62]">
-            $99 report
+            $99 USD report
           </div>
           <h2
             className="text-xl font-bold text-[#12171D]"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            10-15 curated subreddits
+            The list mods don't want you to have
           </h2>
           <p className="mt-2 text-sm text-[#12171D]/70">
-            Not just the top 5 — we go wider and hand-pick the strongest
-            fits for your keyword, filtering out dead, gated, or irrelevant
-            communities.
+            We go wider than the free scan — 10 to 15 real candidates — then
+            cut the dead ones, the gated ones, and the ones that'll ghost
+            your post. What's left is worth your time.
           </p>
         </div>
 
@@ -90,11 +93,12 @@ export default function Features() {
             className="text-xl font-bold text-[#12171D]"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            Removal risk, upfront
+            Know your odds before you post
           </h2>
           <p className="mt-2 text-sm text-[#12171D]/70">
-            See the real percentage of posts that get removed in each
-            subreddit — before you post, not after.
+            Every subreddit has a removal rate. Some nuke 60% of posts on
+            sight. We show you the number so you're not finding out the hard
+            way, again.
           </p>
         </div>
 
@@ -103,11 +107,12 @@ export default function Features() {
             className="text-xl font-bold text-[#12171D]"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            Posting rules, decoded
+            Rules, translated from mod-speak
           </h2>
           <p className="mt-2 text-sm text-[#12171D]/70">
-            Every subreddit's rules, broken down and flagged by how strictly
-            they're enforced — so you know what actually gets you banned.
+            "Self-promotion at moderator discretion" means whatever the mod
+            on duty feels like that day. We flag which rules are actually
+            enforced — and which ones nobody checks.
           </p>
         </div>
 
@@ -116,11 +121,12 @@ export default function Features() {
             className="text-xl font-bold text-[#12171D]"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            Best times to post
+            Post when someone's actually awake
           </h2>
           <p className="mt-2 text-sm text-[#12171D]/70">
-            Based on when the highest-performing posts actually went live —
-            not a generic guess.
+            Not a generic "9am is best" guess. We pull the timestamps from
+            the subreddit's own top posts and tell you when its people show
+            up.
           </p>
         </div>
 
@@ -129,11 +135,12 @@ export default function Features() {
             className="text-xl font-bold text-[#12171D]"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            Real evidence, not guesses
+            Proof, not promises
           </h2>
           <p className="mt-2 text-sm text-[#12171D]/70">
-            Top-performing posts from each community, so you can see exactly
-            what resonates before you write a word.
+            Real posts that actually worked in that exact subreddit — so
+            you're not guessing what "good content" means to strangers on
+            the internet.
           </p>
         </div>
       </div>
@@ -143,18 +150,18 @@ export default function Features() {
           className="text-2xl font-bold text-[#12171D]"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Curated, not automated
+          A human looks at every report
         </h2>
         <p className="mx-auto mt-2 max-w-lg text-sm text-[#12171D]/70">
-          Every report is personally reviewed before it reaches you —
-          irrelevant, dead, and NSFW subreddits get filtered out, so you're
-          not left sorting through noise.
+          No bot spits out a list and calls it done. Every subreddit gets
+          checked by a real person — dead ones, NSFW ones, and the ones that
+          just don't fit get cut before you ever see them.
         </p>
         <Link
           href="/"
           className="mt-6 inline-block rounded-full bg-[#0B6E62] px-8 py-3 font-medium text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
         >
-          Try a free scan
+          Run a free scan
         </Link>
       </div>
     </div>
