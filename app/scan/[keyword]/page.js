@@ -9,6 +9,7 @@ export default function ScanResults() {
   const keyword = decodeURIComponent(params.keyword);
 
   const [results, setResults] = useState(null);
+  const [details, setDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -21,12 +22,26 @@ export default function ScanResults() {
         const data = await res.json();
         if (data.error) {
           setError(data.error);
-        } else {
-          setResults(data.results);
+          setLoading(false);
+          return;
         }
+        setResults(data.results);
+        setLoading(false);
+
+        // For each subreddit found, fetch its deeper details in the background
+        data.results.forEach(async (r) => {
+          try {
+            const detailRes = await fetch(
+              "/api/subreddit?subreddit=" + encodeURIComponent(r.subreddit)
+            );
+            const detailData = await detailRes.json();
+            setDetails((prev) => ({ ...prev, [r.subreddit]: detailData }));
+          } catch (e) {
+            // Silently skip if one subreddit's details fail
+          }
+        });
       } catch (err) {
         setError("Something went wrong. Please try again.");
-      } finally {
         setLoading(false);
       }
     }
@@ -56,24 +71,50 @@ export default function ScanResults() {
 
         {results && results.length > 0 && (
           <div className="mt-8 flex flex-col gap-3">
-            {results.map((r, i) => (
-              <div
-                key={r.subreddit}
-                className="flex items-center justify-between rounded-xl bg-white px-5 py-4 shadow-sm"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0B6E62]/10 text-sm font-semibold text-[#0B6E62]">
-                    {i + 1}
-                  </span>
-                  <span className="font-medium text-[#12171D]">
-                    r/{r.subreddit}
-                  </span>
+            {results.map((r, i) => {
+              const d = details[r.subreddit];
+              return (
+                <div
+                  key={r.subreddit}
+                  className="rounded-xl bg-white px-5 py-4 shadow-sm"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0B6E62]/10 text-sm font-semibold text-[#0B6E62]">
+                        {i + 1}
+                      </span>
+                      <span className="font-medium text-[#12171D]">
+                        r/{r.subreddit}
+                      </span>
+                    </div>
+                    <span className="text-sm text-[#12171D]/60">
+                      {r.mentions} mentions
+                    </span>
+                  </div>
+
+                  {!d && (
+                    <p className="mt-2 pl-11 text-xs text-[#12171D]/40">
+                      Loading details...
+                    </p>
+                  )}
+
+                  {d && d.identity && (
+                    <div className="mt-2 pl-11 text-xs text-[#12171D]/60">
+                      <p>
+                        {d.identity.subscribers
+                          ? d.identity.subscribers.toLocaleString() +
+                            " subscribers"
+                          : "Subscriber count unavailable"}
+                      </p>
+                      <p className="mt-1">
+                        Avg score: {d.traction.avgScore} - Avg comments:{" "}
+                        {d.traction.avgComments}
+                      </p>
+                    </div>
+                  )}
                 </div>
-                <span className="text-sm text-[#12171D]/60">
-                  {r.mentions} mentions
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
