@@ -20,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "RedHiveLabs — Find where your customers already are",
+  title: "RedHiveLabs — The #1 Reddit Placement Intelligence Tool",
   description:
     "Scan Reddit for the subreddits where your customers are already talking. Free top-5 scan, full placement report for $99.",
   icons: {
