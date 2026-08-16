@@ -37,3 +37,67 @@ body {
 .float-icon {
   animation: float 3.5s ease-in-out infinite;
 }
+
+@keyframes spin-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-ring {
+  animation: spin-ring 1s linear infinite;
+}
+
+@keyframes pulse-fade {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.pulse-fade {
+  animation: pulse-fade 1.8s ease-in-out infinite;
+}
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-detail {
+  animation: fade-slide-up 0.4s ease-out;
+}
+
+@keyframes bar-load {
+  0%, 20% {
+    opacity: 0.15;
+  }
+  40%, 100% {
+    opacity: 1;
+  }
+}
+
+.bar-1 {
+  animation: bar-load 1.6s ease-in-out infinite;
+  animation-delay: 0s;
+}
+.bar-2 {
+  animation: bar-load 1.6s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+.bar-3 {
+  animation: bar-load 1.6s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+.bar-4 {
+  animation: bar-load 1.6s ease-in-out infinite;
+  animation-delay: 0.6s;
+}

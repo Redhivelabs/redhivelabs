@@ -16,6 +16,13 @@ function markScanned() {
   document.cookie = "redhive_scanned=true; path=/; max-age=" + oneYear;
 }
 
+const loadingMessages = [
+  "Scanning Reddit...",
+  "Finding real conversations...",
+  "Checking subreddit activity...",
+  "Almost there...",
+];
+
 export default function ScanResults() {
   const params = useParams();
   const router = useRouter();
@@ -26,14 +33,28 @@ export default function ScanResults() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [gated, setGated] = useState(false);
+  const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {
-    if (hasScannedBefore()) {
-      setGated(true);
-      setLoading(false);
-      router.push("/login?next=" + encodeURIComponent("/scan/" + keyword));
-      return;
-    }
+    if (!loading) return;
+    const interval = setInterval(function () {
+      setMessageIndex(function (i) {
+        return (i + 1) % loadingMessages.length;
+      });
+    }, 1400);
+    return function () {
+      clearInterval(interval);
+    };
+  }, [loading]);
+
+  useEffect(() => {
+    // Gate temporarily disabled for testing — re-enable by uncommenting below
+    // if (hasScannedBefore()) {
+    //   setGated(true);
+    //   setLoading(false);
+    //   router.push("/login?next=" + encodeURIComponent("/scan/" + keyword));
+    //   return;
+    // }
 
     async function fetchResults() {
       try {
@@ -50,13 +71,15 @@ export default function ScanResults() {
         setLoading(false);
         markScanned();
 
-        data.results.forEach(async (r) => {
+        data.results.forEach(async function (r) {
           try {
             const detailRes = await fetch(
               "/api/subreddit?subreddit=" + encodeURIComponent(r.subreddit)
             );
             const detailData = await detailRes.json();
-            setDetails((prev) => ({ ...prev, [r.subreddit]: detailData }));
+            setDetails(function (prev) {
+              return { ...prev, [r.subreddit]: detailData };
+            });
           } catch (e) {
             // Silently skip if one subreddit's details fail
           }
@@ -71,97 +94,227 @@ export default function ScanResults() {
 
   if (gated) {
     return (
-      <div className="min-h-screen bg-[#E9ECF0] px-6 py-16">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-[#12171D]/60">Redirecting to sign up...</p>
-        </div>
+      <div
+        className="flex min-h-screen items-center justify-center px-6"
+        style={{
+          background:
+            "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
+        }}
+      >
+        <p className="text-[#12171D]/60">Redirecting to sign up...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#E9ECF0] px-6 py-16">
-      <div className="mx-auto max-w-2xl">
-        <Link href="/" className="text-sm text-[#0B6E62] hover:underline">
-          Back to search
+    <div
+      className="min-h-screen px-6 pb-24"
+      style={{
+        background:
+          "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
+      }}
+    >
+      <nav className="mx-auto mt-6 flex max-w-4xl items-center justify-between gap-2 rounded-full bg-[#12171D] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)] sm:gap-3 sm:px-6">
+        <Link href="/">
+          <img
+            src="/lockup-horizontal-white.svg"
+            alt="RedHiveLabs"
+            className="w-auto flex-shrink-0"
+            style={{ height: "32px" }}
+          />
+        </Link>
+        <div
+          className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
+          <Link href="/features" className="hover:text-white">
+            Features
+          </Link>
+          <Link href="/sample" className="hover:text-white">
+            Sample
+          </Link>
+          <Link href="/pricing" className="hover:text-white">
+            Pricing
+          </Link>
+        </div>
+      </nav>
+
+      <div className="mx-auto mt-14 max-w-2xl">
+        <Link
+          href="/"
+          className="text-sm font-medium text-[#0B6E62] hover:underline"
+        >
+          ← Back to search
         </Link>
 
-        <h1 className="mt-4 text-3xl font-bold text-[#12171D]">
-          Top subreddits for {keyword}
-        </h1>
+        {loading && (
+          <div className="mt-20 flex flex-col items-center justify-center text-center">
+            <svg viewBox="0 0 100 100" width="72" height="72" fill="none">
+              <polygon
+                points="84.64,70.00 50.00,90.00 15.36,70.00 15.36,30.00 50.00,10.00 84.64,30.00"
+                fill="none"
+                stroke="#12171D"
+                strokeWidth="6"
+                strokeLinejoin="round"
+                opacity="0.2"
+              />
+              <rect className="bar-1" x="28" y="31" width="17" height="8" rx="1.5" fill="#12171D" />
+              <rect className="bar-2" x="28" y="41" width="29" height="8" rx="1.5" fill="#12171D" />
+              <rect className="bar-3" x="28" y="51" width="40" height="8" rx="1.5" fill="#0B6E62" />
+              <rect className="bar-4" x="28" y="61" width="23" height="8" rx="1.5" fill="#12171D" />
+            </svg>
+            <p className="pulse-fade mt-6 text-sm font-medium text-[#12171D]/60">
+              {loadingMessages[messageIndex]}
+            </p>
+          </div>
+        )}
 
-        {loading && <p className="mt-8 text-[#12171D]/60">Scanning Reddit...</p>}
-
-        {error && <p className="mt-8 text-[#98302A]">Error: {error}</p>}
+        {error && (
+          <p className="mt-10 rounded-xl bg-[#98302A]/5 p-4 text-sm text-[#98302A]">
+            {error}
+          </p>
+        )}
 
         {results && results.length === 0 && (
-          <p className="mt-8 text-[#12171D]/60">
+          <p className="mt-10 text-[#12171D]/60">
             No subreddits found for this keyword. Try something broader.
           </p>
         )}
 
         {results && results.length > 0 && (
-          <div className="mt-8 flex flex-col gap-3">
-            {results.map((r, i) => {
-              const d = details[r.subreddit];
-              return (
-                <div
-                  key={r.subreddit}
-                  className="rounded-xl bg-white px-5 py-4 shadow-sm"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0B6E62]/10 text-sm font-semibold text-[#0B6E62]">
-                        {i + 1}
-                      </span>
-                      <span className="font-medium text-[#12171D]">
-                        r/{r.subreddit}
+          <>
+            <h1
+              className="mt-6 text-2xl font-bold text-[#12171D] sm:text-3xl"
+              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+            >
+              Top subreddits for "{keyword}"
+            </h1>
+            <p className="mt-1 text-sm text-[#12171D]/50">
+              {results.length} communities found — free preview
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3">
+              {results.map(function (r, i) {
+                const d = details[r.subreddit];
+                return (
+                  <div
+                    key={r.subreddit}
+                    className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)] transition-shadow hover:shadow-[0_8px_28px_-8px_rgba(18,23,29,0.2)]"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0B6E62]/10 text-sm font-bold text-[#0B6E62]"
+                          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                        >
+                          {i + 1}
+                        </span>
+                        <span
+                          className="font-bold text-[#12171D]"
+                          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                        >
+                          r/{r.subreddit}
+                        </span>
+                      </div>
+                      <span className="rounded-full bg-[#12171D]/5 px-3 py-1 text-xs font-medium text-[#12171D]/60">
+                        {r.mentions} mentions
                       </span>
                     </div>
-                    <span className="text-sm text-[#12171D]/60">
-                      {r.mentions} mentions
-                    </span>
+
+                    {!d && (
+                      <p className="pulse-fade mt-3 pl-12 text-xs text-[#12171D]/40">
+                        Analyzing this community...
+                      </p>
+                    )}
+
+                    {d && d.identity && (
+                      <div
+                        key={r.subreddit + "-loaded"}
+                        className="fade-in-detail mt-3 pl-12"
+                      >
+                        <div className="flex flex-wrap gap-2">
+                          <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
+                            {d.identity.subscribers
+                              ? d.identity.subscribers.toLocaleString() +
+                                " subscribers"
+                              : "Subscribers unavailable"}
+                          </span>
+                          <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
+                            Avg score {d.traction && d.traction.medianScore}
+                          </span>
+                          <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
+                            Avg comments{" "}
+                            {d.traction && d.traction.medianComments}
+                          </span>
+                        </div>
+
+                        {d.verdict && (
+                          <div
+                            className="mt-3 flex items-start gap-2 rounded-xl p-3"
+                            style={{
+                              backgroundColor:
+                                d.verdict.verdict === "post"
+                                  ? "rgba(11, 110, 98, 0.08)"
+                                  : d.verdict.verdict === "warm up first"
+                                  ? "rgba(143, 93, 12, 0.08)"
+                                  : "rgba(152, 48, 42, 0.08)",
+                            }}
+                          >
+                            <span
+                              className="mt-0.5 flex-shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
+                              style={{
+                                backgroundColor:
+                                  d.verdict.verdict === "post"
+                                    ? "#0B6E62"
+                                    : d.verdict.verdict === "warm up first"
+                                    ? "#8F5D0C"
+                                    : "#98302A",
+                                color: "#FFFFFF",
+                              }}
+                            >
+                              {d.verdict.verdict}
+                            </span>
+                            <p className="text-xs text-[#12171D]/70">
+                              {d.verdict.reasoning}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-
-                  {!d && (
-                    <p className="mt-2 pl-11 text-xs text-[#12171D]/40">
-                      Loading details...
-                    </p>
-                  )}
-
-                  {d && d.identity && (
-                    <div className="mt-2 pl-11 text-xs text-[#12171D]/60">
-                      <p>
-                        {d.identity.subscribers
-                          ? d.identity.subscribers.toLocaleString() +
-                            " subscribers"
-                          : "Subscriber count unavailable"}
-                      </p>
-                      <p className="mt-1">
-                        Avg score: {d.traction && d.traction.medianScore} -
-                        Avg comments: {d.traction && d.traction.medianComments}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        <div className="mt-10 rounded-xl border border-[#0B6E62]/20 bg-[#0B6E62]/5 p-6 text-center">
-          <p className="font-medium text-[#12171D]">
-            Want the full placement report?
-          </p>
-          <p className="mt-1 text-sm text-[#12171D]/60">
-            Rules, timing, removal risk, and a posting strategy - $99.
-          </p>
-          <div className="mt-4 flex justify-center">
-            <div className="w-full max-w-xs">
-              <PayPalButton keyword={keyword} />
+                );
+              })}
             </div>
-          </div>
-        </div>
+
+            <div
+              className="mt-10 rounded-2xl p-8 text-center shadow-[0_16px_40px_-12px_rgba(11,110,98,0.35)]"
+              style={{
+                background: "linear-gradient(180deg, #12171D 0%, #0B1410 100%)",
+              }}
+            >
+              <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full bg-[#0B6E62]/20 px-3 py-1 text-xs font-medium text-[#1FBFA8]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#1FBFA8]" />
+                Full Placement Report
+              </div>
+              <p
+                className="text-2xl font-bold text-white"
+                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+              >
+                Get the full picture
+              </p>
+              <p className="mx-auto mt-2 max-w-sm text-sm text-white/60">
+                10-15 curated subreddits, posting rules, removal risk, best
+                times to post, and real evidence — one report, $99 USD.
+              </p>
+              <div className="mx-auto mt-6 max-w-xs rounded-xl bg-white p-1.5 shadow-lg">
+                <PayPalButton keyword={keyword} />
+              </div>
+              <p className="mt-3 text-xs text-white/30">
+                Secure checkout via PayPal
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
