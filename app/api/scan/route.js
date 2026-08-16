@@ -7,16 +7,28 @@ export async function GET(request) {
   }
 
   try {
-    // Step 1: Search PullPush for posts matching the keyword across all subreddits
-    const pullpushUrl = `https://api.pullpush.io/reddit/search/submission/?q=${encodeURIComponent(
-      keyword
-    )}&size=100&sort=desc`;
+    const apiUrl =
+      "https://api.redditapis.com/api/reddit/search?q=" +
+      encodeURIComponent(keyword) +
+      "&sort=new&limit=100";
 
-    const pullpushRes = await fetch(pullpushUrl);
-    const pullpushData = await pullpushRes.json();
-    const posts = pullpushData.data || [];
+    const res = await fetch(apiUrl, {
+      headers: {
+        Authorization: "Bearer " + process.env.REDDITAPIS_KEY,
+      },
+    });
 
-    // Step 2: Count how many matching posts came from each subreddit
+    if (!res.ok) {
+      const errText = await res.text();
+      return Response.json(
+        { error: "Redditapis request failed", status: res.status, details: errText.slice(0, 500) },
+        { status: 500 }
+      );
+    }
+
+    const data = await res.json();
+    const posts = data.posts || [];
+
     const subredditCounts = {};
     for (const post of posts) {
       const sub = post.subreddit;
@@ -24,7 +36,6 @@ export async function GET(request) {
       subredditCounts[sub] = (subredditCounts[sub] || 0) + 1;
     }
 
-    // Step 3: Sort subreddits by how often they appeared, take top 5
     const topSubreddits = Object.entries(subredditCounts)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
