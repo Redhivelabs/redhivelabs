@@ -29,6 +29,29 @@ function getPostType(post) {
   return "link";
 }
 
+function classifyRuleSeverity(text) {
+  const lower = text.toLowerCase();
+  if (/\bban(ned)?\b|zero tolerance|immediate(ly)? removed|permanent/.test(lower)) {
+    return "blocking";
+  }
+  if (/\bmust\b|\brequired\b|will be removed|not allowed/.test(lower)) {
+    return "material";
+  }
+  return "minor";
+}
+
+function detectGateFlags(allRuleText) {
+  const lower = allRuleText.toLowerCase();
+  return {
+    mentionsKarmaMinimum: /karma/.test(lower),
+    mentionsAccountAge: /account age|account must be|days old|account older/.test(lower),
+    mentionsSelfPromoRestriction: /self.?promo|self promotion|advertis/.test(lower),
+    mentionsModApproval: /mod(erator)? approval|message the mod|contact mod/.test(lower),
+    mentionsFlairRequired: /flair is required|must (have|use|include) (a |an )?flair|require.*flair/.test(lower),
+    mentionsLinkRestriction: /no links|link.?free|text.?only|self.?post only/.test(lower),
+  };
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const subreddit = searchParams.get("subreddit");
@@ -46,10 +69,35 @@ export async function GET(request) {
     const aboutData = await aboutRes.json();
     const info = aboutData.data && aboutData.data[0] ? aboutData.data[0] : null;
 
+    const rulesUrl =
+      "https://api.redditapis.com/api/reddit/sub/" +
+      encodeURIComponent(subreddit) +
+      "/rules";
+    const rulesRes = await fetch(rulesUrl, {
+      headers: { Authorization: "Bearer " + process.env.REDDITAPIS_KEY },
+    });
+    let rules = [];
+    let siteRules = [];
+    if (rulesRes.ok) {
+      const rulesData = await rulesRes.json();
+      rules = rulesData.rules || [];
+      siteRules = rulesData.site_rules || [];
+    }
+
+    const taggedRules = rules.map((r) => ({
+      name: r.name,
+      description: r.description,
+      appliesTo: r.applies_to,
+      severity: classifyRuleSeverity((r.name || "") + " " + (r.description || "")),
+    }));
+
+    const allRuleText = rules.map((r) => (r.name || "") + " " + (r.description || "")).join(" ");
+    const gateFlags = detectGateFlags(allRuleText);
+
     // Arctic Shift snapshots posts the moment they're created (score=1,
     // comments=0) and only reflects real vote counts after ~36 hours.
-    // So we only look at posts at least 3 days old (settled data) and
-    // no older than 90 days (recent enough to reflect current activity).
+    // We only look at posts 3-90 days old so vote counts have settled.
+    // Note: Arctic Shift caps 'limit' at 100 max per request.
     const now = Math.floor(Date.now() / 1000);
     const beforeTimestamp = now - 3 * 24 * 60 * 60;
     const afterTimestamp = now - 90 * 24 * 60 * 60;
@@ -62,6 +110,19 @@ export async function GET(request) {
       "&after=" +
       afterTimestamp;
     const postsRes = await fetch(postsUrl);
+
+    if (!postsRes.ok) {
+      const errText = await postsRes.text();
+      return Response.json(
+        {
+          error: "Arctic Shift posts request failed",
+          status: postsRes.status,
+          details: errText.slice(0, 300),
+        },
+        { status: 500 }
+      );
+    }
+
     const postsData = await postsRes.json();
     const posts = postsData.data || [];
 
@@ -155,6 +216,11 @@ export async function GET(request) {
       format: {
         breakdown: typeCounts,
         avgWinningTitleLength,
+      },
+      gates: {
+        rules: taggedRules,
+        siteRules,
+        detected: gateFlags,
       },
       flair: flairStats,
       timing: {
