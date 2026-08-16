@@ -15,16 +15,16 @@ export default function Features() {
           "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
       }}
     >
-      <nav className="mx-auto mt-6 flex max-w-4xl items-center justify-between gap-3 rounded-full bg-[#12171D] px-4 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)] sm:px-6">
+      <nav className="mx-auto mt-6 flex max-w-4xl items-center justify-between gap-2 rounded-full bg-[#12171D] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)] sm:gap-3 sm:px-6">
         <Link href="/">
           <img
             src="/lockup-horizontal-white.svg"
             alt="RedHiveLabs"
             className="w-auto flex-shrink-0"
-            style={{ height: "40px" }}
+            style={{ height: "32px" }}
           />
         </Link>
-        <div className="flex items-center gap-3 text-xs font-medium text-white/70 sm:gap-6 sm:text-sm">
+        <div className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
           <Link href="/features" className="text-white">
             Features
           </Link>
