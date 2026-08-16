@@ -109,16 +109,21 @@ export default function Home() {
           Powered By Real Reddit Data
         </div>
 
-        <p className="mt-4 text-xs text-[#12171D]/40">
-          No signup required for your first scan
-        </p>
-
-        <div className="mx-auto mt-16 flex max-w-lg items-center justify-center gap-8 text-xs text-[#12171D]/40">
-          <span>Real subreddit data</span>
-          <span className="h-1 w-1 rounded-full bg-[#12171D]/20" />
-          <span>Updated in real time</span>
-          <span className="h-1 w-1 rounded-full bg-[#12171D]/20" />
-          <span>No account needed</span>
+        <div className="mx-auto mt-16 flex max-w-lg flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-[#12171D]/40">
+          <a
+            href="https://twitter.com/Redhivelabs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#0B6E62]"
+          >
+            @Redhivelabs
+          </a>
+          <Link href="/privacy" className="hover:text-[#0B6E62]">
+            Privacy Policy
+          </Link>
+          <Link href="/terms" className="hover:text-[#0B6E62]">
+            Terms and Conditions
+          </Link>
         </div>
       </div>
     </div>
