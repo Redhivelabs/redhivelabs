@@ -1,9 +1,9 @@
 import Link from "next/link";
+import NavAuthStatus from "../../components/NavAuthStatus.js";
 
 export const metadata = {
   title: "Pricing — RedHiveLabs",
-  description:
-    "One report, $99. No subscriptions, no hidden tiers.",
+  description: "One report, $69. No subscriptions, no hidden tiers.",
 };
 
 export default function Pricing() {
@@ -24,7 +24,10 @@ export default function Pricing() {
             style={{ height: "32px" }}
           />
         </Link>
-        <div className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
+        <div
+          className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
           <Link href="/features" className="hover:text-white">
             Features
           </Link>
@@ -34,6 +37,7 @@ export default function Pricing() {
           <Link href="/pricing" className="text-white">
             Pricing
           </Link>
+          <NavAuthStatus />
         </div>
       </nav>
 
@@ -45,7 +49,7 @@ export default function Pricing() {
           Simple, One-Time Pricing
         </h1>
         <p className="mx-auto mt-4 max-w-lg text-lg text-[#12171D]/70">
-          No subscriptions. No hidden tiers. Pay once, get your report.
+          No subscriptions. No hidden tiers. Sign in to place an order.
         </p>
       </div>
 
@@ -58,7 +62,7 @@ export default function Pricing() {
             className="mt-3 text-5xl font-bold text-[#12171D]"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            $99 <span className="text-2xl font-medium text-[#12171D]/50">USD</span>
+            $69 <span className="text-2xl font-medium text-[#12171D]/50">USD</span>
           </p>
           <p className="mt-1 text-sm text-[#12171D]/50">one-time</p>
 
@@ -102,17 +106,35 @@ export default function Pricing() {
           </ul>
 
           <Link
-            href="/"
+            href="/dashboard"
             className="mt-8 block rounded-full bg-[#0B6E62] px-8 py-3 font-medium text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
           >
-            Start with a free scan
+            Sign in to order
           </Link>
+        </div>
+
+        <div className="mt-6 rounded-2xl bg-white p-6 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
+          <p
+            className="font-bold text-[#12171D]"
+            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+          >
+            Also available
+          </p>
+          <div className="mt-3 flex flex-col gap-2 text-sm text-[#12171D]/70">
+            <div className="flex items-center justify-between">
+              <span>Subreddit posting (per post)</span>
+              <span className="font-medium text-[#12171D]">$30</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span>Subreddit comments (per comment)</span>
+              <span className="font-medium text-[#12171D]">$15</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <p className="mx-auto mt-10 max-w-md text-center text-xs text-[#12171D]/40">
-        Run a free scan first — you'll only pay once you decide the full
-        report is worth it.
+        Run a free scan first — sign in when you're ready to order.
       </p>
     </div>
   );

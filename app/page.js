@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import NavAuthStatus from "../components/NavAuthStatus.js";
 
 export default function Home() {
   const [keyword, setKeyword] = useState("");
@@ -42,6 +43,7 @@ export default function Home() {
           <Link href="/pricing" className="hover:text-white">
             Pricing
           </Link>
+          <NavAuthStatus />
         </div>
       </nav>
 
@@ -114,8 +116,11 @@ export default function Home() {
             href="https://twitter.com/Redhivelabs"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#0B6E62]"
+            className="flex items-center gap-1.5 hover:text-[#0B6E62]"
           >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
             @Redhivelabs
           </a>
           <Link href="/privacy" className="hover:text-[#0B6E62]">

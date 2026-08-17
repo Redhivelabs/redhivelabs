@@ -75,7 +75,7 @@ export default function Terms() {
             <p className="mt-2">
               RedHiveLabs provides a free keyword scan showing publicly
               available subreddit activity, and a paid placement report
-              (currently $99 USD) containing curated subreddit
+              (currently $69 USD) containing curated subreddit
               recommendations, posting rules, removal-risk data, timing
               guidance, and supporting evidence, personally reviewed before
               delivery.

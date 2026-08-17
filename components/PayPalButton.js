@@ -3,7 +3,7 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useRouter } from "next/navigation";
 
-export default function PayPalButton({ keyword }) {
+export default function PayPalButton({ orderType, keyword, quantity, notes, findSubreddit }) {
   const router = useRouter();
 
   return (
@@ -19,7 +19,13 @@ export default function PayPalButton({ keyword }) {
           const res = await fetch("/api/paypal/create-order", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ keyword }),
+            body: JSON.stringify({
+              orderType: orderType || "report",
+              keyword: keyword,
+              quantity: quantity || 1,
+              notes: notes || "",
+              findSubreddit: Boolean(findSubreddit),
+            }),
           });
           const data = await res.json();
 

@@ -29,7 +29,7 @@ export async function GET(request) {
   }
 
   try {
-    const userId = await getUserIdFromSession(request);
+   const userId = await getUserIdFromSession(request);
 
     if (userId) {
       const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);

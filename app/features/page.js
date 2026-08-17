@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NavAuthStatus from "../../components/NavAuthStatus.js";
 
 export const metadata = {
   title: "Features — RedHiveLabs",
@@ -37,6 +38,7 @@ export default function Features() {
           <Link href="/pricing" className="hover:text-white">
             Pricing
           </Link>
+          <NavAuthStatus />
         </div>
       </nav>
 
@@ -73,7 +75,7 @@ export default function Features() {
 
         <div className="rounded-2xl bg-white p-7 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#0B6E62]/10 px-3 py-1 text-xs font-medium text-[#0B6E62]">
-            $99 USD report
+            $69 USD report
           </div>
           <h2
             className="text-xl font-bold text-[#12171D]"

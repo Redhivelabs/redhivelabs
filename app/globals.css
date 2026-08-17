@@ -101,3 +101,10 @@ body {
   animation: bar-load 1.6s ease-in-out infinite;
   animation-delay: 0.6s;
 }
+
+/* Dashboard readability overrides */
+.dashboard-card label,
+.dashboard-card input::placeholder,
+.dashboard-card textarea::placeholder {
+  color: rgba(18, 23, 29, 0.55) !important;
+}

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
-import PayPalButton from "../../../components/PayPalButton.js";
+import NavAuthStatus from "../../../components/NavAuthStatus.js";
 
 function hasScannedBefore() {
   return document.cookie
@@ -25,7 +25,6 @@ const loadingMessages = [
 
 export default function ScanResults() {
   const params = useParams();
-  const router = useRouter();
   const keyword = decodeURIComponent(params.keyword);
 
   const [results, setResults] = useState(null);
@@ -34,6 +33,7 @@ export default function ScanResults() {
   const [error, setError] = useState(null);
   const [gated, setGated] = useState(false);
   const [messageIndex, setMessageIndex] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     if (!loading) return;
@@ -48,13 +48,27 @@ export default function ScanResults() {
   }, [loading]);
 
   useEffect(() => {
-    // Gate temporarily disabled for testing — re-enable by uncommenting below
-    // if (hasScannedBefore()) {
-    //   setGated(true);
-    //   setLoading(false);
-    //   router.push("/login?next=" + encodeURIComponent("/scan/" + keyword));
-    //   return;
-    // }
+    async function checkLoginAndFetch() {
+      let loggedIn = false;
+      try {
+        const meRes = await fetch("/api/me");
+        const meData = await meRes.json();
+        loggedIn = meData.loggedIn;
+        setIsLoggedIn(loggedIn);
+      } catch (e) {
+        loggedIn = false;
+      }
+
+      if (!loggedIn && hasScannedBefore()) {
+        setTimeout(function () {
+          setGated(true);
+          setLoading(false);
+        }, 2200);
+        return;
+      }
+
+      fetchResults();
+    }
 
     async function fetchResults() {
       try {
@@ -89,22 +103,11 @@ export default function ScanResults() {
         setLoading(false);
       }
     }
-    fetchResults();
-  }, [keyword, router]);
 
-  if (gated) {
-    return (
-      <div
-        className="flex min-h-screen items-center justify-center px-6"
-        style={{
-          background:
-            "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
-        }}
-      >
-        <p className="text-[#12171D]/60">Redirecting to sign up...</p>
-      </div>
-    );
-  }
+    checkLoginAndFetch();
+  }, [keyword]);
+
+  const placeholderCards = [1, 2, 3, 4, 5];
 
   return (
     <div
@@ -136,6 +139,7 @@ export default function ScanResults() {
           <Link href="/pricing" className="hover:text-white">
             Pricing
           </Link>
+          <NavAuthStatus />
         </div>
       </nav>
 
@@ -169,10 +173,115 @@ export default function ScanResults() {
           </div>
         )}
 
-        {error && (
-          <p className="mt-10 rounded-xl bg-[#98302A]/5 p-4 text-sm text-[#98302A]">
-            {error}
-          </p>
+        {gated && (
+          <div className="relative mt-8">
+            <div className="pointer-events-none flex flex-col gap-3 blur-sm select-none" aria-hidden="true">
+              {placeholderCards.map(function (n) {
+                return (
+                  <div
+                    key={n}
+                    className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0B6E62]/10 text-sm font-bold text-[#0B6E62]">
+                          {n}
+                        </span>
+                        <span className="font-bold text-[#12171D]">r/subreddit{n}</span>
+                      </div>
+                      <span className="rounded-full bg-[#12171D]/5 px-3 py-1 text-xs font-medium text-[#12171D]/60">
+                        12 mentions
+                      </span>
+                    </div>
+                    <div className="mt-3 flex gap-2 pl-12">
+                      <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
+                        50,000 subscribers
+                      </span>
+                      <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
+                        Avg score 42
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="absolute inset-0 flex items-center justify-center px-4">
+              <div className="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-[0_16px_48px_-12px_rgba(18,23,29,0.35)]">
+                <p
+                  className="text-lg font-bold text-[#12171D]"
+                  style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                >
+                  Sign in to view your results
+                </p>
+                <p className="mt-2 text-sm text-[#12171D]/60">
+                  Your scan for &quot;{keyword}&quot; is ready. Sign in free to
+                  see it and save it to your dashboard.
+                </p>
+                <a
+                  href={"/api/auth/google?next=" + encodeURIComponent("/scan/" + keyword)}
+                  className="mt-5 flex items-center justify-center gap-3 rounded-full border border-[#12171D]/15 bg-white px-6 py-3 font-medium text-[#12171D] shadow-sm transition-colors hover:bg-[#12171D]/5"
+                >
+                  <svg width="18" height="18" viewBox="0 0 18 18">
+                    <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" />
+                    <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" />
+                    <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" />
+                    <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" />
+                  </svg>
+                  Continue with Google
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {error && isLoggedIn && (
+          <div className="mt-10 rounded-2xl bg-white p-8 text-center shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
+            <p
+              className="text-lg font-bold text-[#12171D]"
+              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+            >
+              {error}
+            </p>
+            <p className="mx-auto mt-2 max-w-sm text-sm text-[#12171D]/60">
+              Your free scans reset in 24 hours. Want the full picture right
+              now instead? Get the $99 report for this keyword — 10-15
+              curated subreddits, no daily limit.
+            </p>
+            <Link
+              href="/pricing"
+              className="mt-5 inline-block rounded-full bg-[#0B6E62] px-8 py-3 text-sm font-medium text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
+            >
+              View report options
+            </Link>
+          </div>
+        )}
+
+        {error && !isLoggedIn && (
+          <div className="mt-10 rounded-2xl bg-white p-8 text-center shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
+            <p
+              className="text-lg font-bold text-[#12171D]"
+              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+            >
+              {error}
+            </p>
+            <p className="mx-auto mt-2 max-w-sm text-sm text-[#12171D]/60">
+              Sign in free to keep scanning and save your results to your
+              dashboard.
+            </p>
+            <a
+              href={"/api/auth/google?next=" + encodeURIComponent("/scan/" + keyword)}
+              className="mt-5 flex items-center justify-center gap-3 rounded-full border border-[#12171D]/15 bg-white px-6 py-3 font-medium text-[#12171D] shadow-sm transition-colors hover:bg-[#12171D]/5"
+            >
+              <svg width="18" height="18" viewBox="0 0 18 18">
+                <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" />
+                <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" />
+                <path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" />
+                <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" />
+              </svg>
+              Continue with Google
+            </a>
+          </div>
         )}
 
         {results && results.length === 0 && (
@@ -304,13 +413,23 @@ export default function ScanResults() {
               </p>
               <p className="mx-auto mt-2 max-w-sm text-sm text-white/60">
                 10-15 curated subreddits, posting rules, removal risk, best
-                times to post, and real evidence — one report, $99 USD.
+                times to post, and real evidence — one report, $69 USD.
               </p>
-              <div className="mx-auto mt-6 w-full max-w-xs rounded-xl bg-white p-3 shadow-lg">
-                <PayPalButton keyword={keyword} />
-              </div>
+              <a
+                href={
+                  isLoggedIn
+                    ? "/dashboard?order=report&keyword=" + encodeURIComponent(keyword)
+                    : "/api/auth/google?next=" +
+                      encodeURIComponent(
+                        "/dashboard?order=report&keyword=" + keyword
+                      )
+                }
+                className="mx-auto mt-6 block w-full max-w-xs rounded-full bg-[#0B6E62] px-8 py-3.5 text-center font-medium text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
+              >
+                {isLoggedIn ? "Order this report" : "Sign in to order"}
+              </a>
               <p className="mt-3 text-xs text-white/30">
-                Secure checkout via PayPal
+                Secure checkout inside your dashboard
               </p>
             </div>
           </>

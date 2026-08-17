@@ -5,6 +5,20 @@ import { orders } from "../../../../db/schema.js";
 import { eq } from "drizzle-orm";
 import { getPayPalAccessToken, PAYPAL_BASE_URL } from "../../../../lib/paypal.js";
 
+const PRICES = {
+  report: 69,
+  posts: 30,
+  comments: 15,
+};
+
+const FIND_SUBREDDIT_FEE = 5;
+
+const LABELS = {
+  report: "Subreddit placement report",
+  posts: "Subreddit posting service",
+  comments: "Subreddit commenting service",
+};
+
 export async function POST(request) {
   try {
     const cookieStore = await cookies();
@@ -12,7 +26,7 @@ export async function POST(request) {
 
     if (!sessionToken) {
       return Response.json(
-        { error: "You must be logged in to purchase a report" },
+        { error: "You must be logged in to place an order" },
         { status: 401 }
       );
     }
@@ -27,10 +41,29 @@ export async function POST(request) {
 
     const body = await request.json();
     const keyword = (body.keyword || "").trim();
+    const notes = (body.notes || "").slice(0, 1000);
+    const orderType = ["report", "posts", "comments"].includes(body.orderType)
+      ? body.orderType
+      : "report";
+    const findSubreddit = orderType !== "report" && Boolean(body.findSubreddit);
+
+    let quantity = parseInt(body.quantity, 10);
+    if (!Number.isFinite(quantity) || quantity < 1) {
+      quantity = 1;
+    }
+    if (orderType === "report") {
+      quantity = 1;
+    }
+    if (quantity > 15) {
+      quantity = 15;
+    }
 
     if (!keyword) {
       return Response.json({ error: "Missing keyword" }, { status: 400 });
     }
+
+    const unitPrice = PRICES[orderType] + (findSubreddit ? FIND_SUBREDDIT_FEE : 0);
+    const totalAmount = unitPrice * quantity;
 
     // Create a pending order in our own database first
     const inserted = await db
@@ -39,13 +72,23 @@ export async function POST(request) {
         userId,
         keyword,
         status: "pending",
-        amount: 99,
+        amount: totalAmount,
+        orderType,
+        quantity,
+        notes: notes || null,
       })
       .returning();
     const order = inserted[0];
 
     // Ask PayPal to create the real payment order
     const accessToken = await getPayPalAccessToken();
+
+    const description =
+      LABELS[orderType] +
+      ": " +
+      keyword +
+      (orderType !== "report" ? " (x" + quantity + ")" : "") +
+      (findSubreddit ? " + find subreddit" : "");
 
     const paypalRes = await fetch(PAYPAL_BASE_URL + "/v2/checkout/orders", {
       method: "POST",
@@ -58,10 +101,10 @@ export async function POST(request) {
         purchase_units: [
           {
             reference_id: String(order.id),
-            description: "RedHiveLabs subreddit placement report: " + keyword,
+            description: description.slice(0, 127),
             amount: {
               currency_code: "USD",
-              value: "99.00",
+              value: totalAmount.toFixed(2),
             },
           },
         ],

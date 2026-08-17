@@ -23,7 +23,10 @@ export const orders = pgTable("orders", {
   keyword: text("keyword").notNull(),
   status: text("status").notNull().default("pending"), // pending, paid, fulfilled
   paypalOrderId: text("paypal_order_id"),
-  amount: integer("amount").notNull().default(99),
+  amount: integer("amount").notNull().default(69),
+  orderType: text("order_type").notNull().default("report"), // report, posts, comments
+  quantity: integer("quantity").notNull().default(1),
+  notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
