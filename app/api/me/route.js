@@ -12,10 +12,11 @@ export async function GET() {
   try {
     const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
     const { payload } = await jwtVerify(sessionToken, secret);
-    return Response.json({
+        return Response.json({
       loggedIn: true,
       email: payload.email,
       picture: payload.picture || null,
+      name: payload.name || null,
     });
   } catch (error) {
     return Response.json({ loggedIn: false });

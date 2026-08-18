@@ -78,10 +78,11 @@ export async function GET(request) {
     }
 
     const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
-    const sessionToken = await new SignJWT({
+        const sessionToken = await new SignJWT({
       userId: user.id,
       email: user.email,
       picture: googleUser.picture || null,
+      name: googleUser.name || null,
     })
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()

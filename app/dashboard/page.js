@@ -330,8 +330,16 @@ function DashboardInner() {
                 10-15 curated subreddits, rules, timing, and removal risk.
               </p>
 
-              <div className="mt-6 rounded-2xl bg-white p-6 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
-                <label className="text-xs font-medium uppercase tracking-wide text-[#12171D]/80">
+              <div
+                className="mt-6 rounded-2xl p-6"
+                style={{
+                  background:
+                    "radial-gradient(140% 120% at 10% 0%, #14A08C 0%, #0B6E62 32%, #063D37 100%)",
+                  boxShadow:
+                    "inset 0 1px 0 rgba(255,255,255,0.12), 0 16px 40px -12px rgba(11,110,98,0.4)",
+                }}
+              >
+                <label className="text-xs font-medium uppercase tracking-wide text-white/70">
                   Keyword
                 </label>
                 <input
@@ -341,18 +349,18 @@ function DashboardInner() {
                     setReportKeyword(e.target.value);
                   }}
                   placeholder="e.g. skincare for sensitive skin"
-                  className="mt-2 w-full rounded-full border border-[#12171D]/15 px-5 py-3 text-[#12171D] outline-none placeholder:text-[#12171D]/40 focus:border-[#0B6E62]"
+                  className="mt-2 w-full rounded-full border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                 />
 
                 {!reportKeyword.trim() && (
-                  <p className="mt-4 text-xs text-[#0B6E62]">
+                  <p className="mt-4 text-xs font-medium text-[#A6F0E0]">
                     Enter a keyword above to unlock checkout.
                   </p>
                 )}
 
                 <div className="mt-5 flex items-center justify-between">
                   <span
-                    className="text-2xl font-bold text-[#12171D]"
+                    className="text-2xl font-bold text-white"
                     style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                   >
                     $69 USD
@@ -360,7 +368,7 @@ function DashboardInner() {
                 </div>
 
                 {reportKeyword.trim() && (
-                  <div className="mt-4">
+                  <div className="mt-4 rounded-xl bg-white p-1.5">
                     <PayPalButton
                       orderType="report"
                       keyword={reportKeyword.trim()}
@@ -392,8 +400,16 @@ function DashboardInner() {
                 post.
               </p>
 
-              <div className="mt-6 rounded-2xl bg-white p-6 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
-                <label className="text-xs font-medium uppercase tracking-wide text-[#12171D]/80">
+              <div
+                className="mt-6 rounded-2xl p-6"
+                style={{
+                  background:
+                    "radial-gradient(140% 120% at 10% 0%, #14A08C 0%, #0B6E62 32%, #063D37 100%)",
+                  boxShadow:
+                    "inset 0 1px 0 rgba(255,255,255,0.12), 0 16px 40px -12px rgba(11,110,98,0.4)",
+                }}
+              >
+                <label className="text-xs font-medium uppercase tracking-wide text-white/70">
                   Keyword / subreddit focus
                 </label>
                 <input
@@ -403,10 +419,10 @@ function DashboardInner() {
                     setPostsKeyword(e.target.value);
                   }}
                   placeholder="e.g. skincare for sensitive skin"
-                  className="mt-2 w-full rounded-full border border-[#12171D]/15 px-5 py-3 text-[#12171D] outline-none placeholder:text-[#12171D]/40 focus:border-[#0B6E62]"
+                  className="mt-2 w-full rounded-full border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                 />
 
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-[#12171D]/80">
+                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
                   Number of posts
                 </label>
                 <div className="mt-2 flex items-center gap-3">
@@ -414,12 +430,12 @@ function DashboardInner() {
                     onClick={function () {
                       setPostsQty(Math.max(1, postsQty - 1));
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-[#12171D]/15 text-lg text-[#12171D] hover:bg-[#12171D]/5"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-lg text-white transition-colors hover:border-[#2DD4BF]/50" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                   >
                     −
                   </button>
                   <span
-                    className="w-8 text-center text-lg font-bold text-[#12171D]"
+                    className="w-8 text-center text-lg font-bold text-white"
                     style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                   >
                     {postsQty}
@@ -428,13 +444,13 @@ function DashboardInner() {
                     onClick={function () {
                       setPostsQty(Math.min(15, postsQty + 1));
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-[#12171D]/15 text-lg text-[#12171D] hover:bg-[#12171D]/5"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-lg text-white transition-colors hover:border-[#2DD4BF]/50" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                   >
                     +
                   </button>
                 </div>
 
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-[#12171D]/80">
+                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
                   Subreddit URL(s) (optional)
                 </label>
                 <textarea
@@ -444,10 +460,10 @@ function DashboardInner() {
                   }}
                   rows={3}
                   placeholder={"https://www.reddit.com/r/subreddit\nAdd one per line if you have more than one"}
-                  className="mt-2 w-full resize-none rounded-2xl border border-[#12171D]/15 px-5 py-3 text-[#12171D] outline-none placeholder:text-[#12171D]/40 focus:border-[#0B6E62]"
+                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                 />
 
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-[#12171D]/80">
+                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
                   Special instructions (optional)
                 </label>
                 <textarea
@@ -458,44 +474,44 @@ function DashboardInner() {
                   maxLength={300}
                   rows={3}
                   placeholder="Anything we should know before posting?"
-                  className="mt-2 w-full resize-none rounded-2xl border border-[#12171D]/15 px-5 py-3 text-[#12171D] outline-none placeholder:text-[#12171D]/40 focus:border-[#0B6E62]"
+                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                 />
-                <p className="mt-1 text-right text-xs text-[#12171D]/30">
+                <p className="mt-1 text-right text-xs text-white/40">
                   {postsInstructions.length}/300
                 </p>
 
-                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-[#12171D]/10 p-4 hover:bg-[#12171D]/[0.02]">
+                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 p-4 transition-colors hover:border-[#2DD4BF]/40" style={{ backgroundColor: "rgba(6,32,29,0.3)" }}>
                   <input
                     type="checkbox"
                     checked={postsFindSubreddit}
                     onChange={function (e) {
                       setPostsFindSubreddit(e.target.checked);
                     }}
-                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#0B6E62]"
+                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#2DD4BF]"
                   />
-                  <span className="text-sm text-[#12171D]">
+                  <span className="text-sm text-white">
                     <span className="font-medium">
                       Find the right subreddit for us
                     </span>
-                    <span className="block text-xs text-[#12171D]/80">
+                    <span className="block text-xs text-white/60">
                       Don't know where to post? We'll find it. +$5 per post.
                     </span>
                   </span>
                 </label>
 
                 {!postsKeyword.trim() && (
-                  <p className="mt-4 text-xs text-[#0B6E62]">
+                  <p className="mt-4 text-xs font-medium text-[#A6F0E0]">
                     Enter a keyword above to unlock checkout.
                   </p>
                 )}
 
                 <div className="mt-5 flex items-center justify-between">
-                  <span className="text-sm text-[#12171D]/80">
+                  <span className="text-sm text-white/70">
                     Total
                     {postsFindSubreddit ? " (incl. find-subreddit add-on)" : ""}
                   </span>
                   <span
-                    className="text-2xl font-bold text-[#12171D]"
+                    className="text-2xl font-bold text-white"
                     style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                   >
                     ${(PRICES.posts + (postsFindSubreddit ? 5 : 0)) * postsQty} USD
@@ -503,7 +519,7 @@ function DashboardInner() {
                 </div>
 
                 {postsKeyword.trim() && (
-                  <div className="mt-4">
+                  <div className="mt-4 rounded-xl bg-white p-1.5">
                     <PayPalButton
                       orderType="posts"
                       keyword={postsKeyword.trim()}
@@ -541,8 +557,16 @@ function DashboardInner() {
                 We leave real comments on relevant threads. $15 per comment.
               </p>
 
-              <div className="mt-6 rounded-2xl bg-white p-6 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
-                <label className="text-xs font-medium uppercase tracking-wide text-[#12171D]/80">
+              <div
+                className="mt-6 rounded-2xl p-6"
+                style={{
+                  background:
+                    "radial-gradient(140% 120% at 10% 0%, #14A08C 0%, #0B6E62 32%, #063D37 100%)",
+                  boxShadow:
+                    "inset 0 1px 0 rgba(255,255,255,0.12), 0 16px 40px -12px rgba(11,110,98,0.4)",
+                }}
+              >
+                <label className="text-xs font-medium uppercase tracking-wide text-white/70">
                   Keyword / subreddit focus
                 </label>
                 <input
@@ -552,10 +576,10 @@ function DashboardInner() {
                     setCommentsKeyword(e.target.value);
                   }}
                   placeholder="e.g. skincare for sensitive skin"
-                  className="mt-2 w-full rounded-full border border-[#12171D]/15 px-5 py-3 text-[#12171D] outline-none placeholder:text-[#12171D]/40 focus:border-[#0B6E62]"
+                  className="mt-2 w-full rounded-full border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                 />
 
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-[#12171D]/80">
+                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
                   Number of comments
                 </label>
                 <div className="mt-2 flex items-center gap-3">
@@ -563,12 +587,12 @@ function DashboardInner() {
                     onClick={function () {
                       setCommentsQty(Math.max(1, commentsQty - 1));
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-[#12171D]/15 text-lg text-[#12171D] hover:bg-[#12171D]/5"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-lg text-white transition-colors hover:border-[#2DD4BF]/50" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                   >
                     −
                   </button>
                   <span
-                    className="w-8 text-center text-lg font-bold text-[#12171D]"
+                    className="w-8 text-center text-lg font-bold text-white"
                     style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                   >
                     {commentsQty}
@@ -577,13 +601,13 @@ function DashboardInner() {
                     onClick={function () {
                       setCommentsQty(Math.min(15, commentsQty + 1));
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-[#12171D]/15 text-lg text-[#12171D] hover:bg-[#12171D]/5"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-lg text-white transition-colors hover:border-[#2DD4BF]/50" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                   >
                     +
                   </button>
                 </div>
 
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-[#12171D]/80">
+                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
                   Subreddit URL(s) (optional)
                 </label>
                 <textarea
@@ -593,10 +617,10 @@ function DashboardInner() {
                   }}
                   rows={3}
                   placeholder={"https://www.reddit.com/r/subreddit\nAdd one per line if you have more than one"}
-                  className="mt-2 w-full resize-none rounded-2xl border border-[#12171D]/15 px-5 py-3 text-[#12171D] outline-none placeholder:text-[#12171D]/40 focus:border-[#0B6E62]"
+                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                 />
 
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-[#12171D]/80">
+                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
                   Special instructions (optional)
                 </label>
                 <textarea
@@ -607,26 +631,26 @@ function DashboardInner() {
                   maxLength={300}
                   rows={3}
                   placeholder="Anything we should know before commenting?"
-                  className="mt-2 w-full resize-none rounded-2xl border border-[#12171D]/15 px-5 py-3 text-[#12171D] outline-none placeholder:text-[#12171D]/40 focus:border-[#0B6E62]"
+                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
                 />
-                <p className="mt-1 text-right text-xs text-[#12171D]/30">
+                <p className="mt-1 text-right text-xs text-white/40">
                   {commentsInstructions.length}/300
                 </p>
 
-                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-[#12171D]/10 p-4 hover:bg-[#12171D]/[0.02]">
+                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 p-4 transition-colors hover:border-[#2DD4BF]/40" style={{ backgroundColor: "rgba(6,32,29,0.3)" }}>
                   <input
                     type="checkbox"
                     checked={commentsFindSubreddit}
                     onChange={function (e) {
                       setCommentsFindSubreddit(e.target.checked);
                     }}
-                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#0B6E62]"
+                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#2DD4BF]"
                   />
-                  <span className="text-sm text-[#12171D]">
+                  <span className="text-sm text-white">
                     <span className="font-medium">
                       Find the right subreddit for us
                     </span>
-                    <span className="block text-xs text-[#12171D]/80">
+                    <span className="block text-xs text-white/60">
                       Don't know where to comment? We'll find it. +$5 per
                       comment.
                     </span>
@@ -634,18 +658,18 @@ function DashboardInner() {
                 </label>
 
                 {!commentsKeyword.trim() && (
-                  <p className="mt-4 text-xs text-[#0B6E62]">
+                  <p className="mt-4 text-xs font-medium text-[#A6F0E0]">
                     Enter a keyword above to unlock checkout.
                   </p>
                 )}
 
                 <div className="mt-5 flex items-center justify-between">
-                  <span className="text-sm text-[#12171D]/80">
+                  <span className="text-sm text-white/70">
                     Total
                     {commentsFindSubreddit ? " (incl. find-subreddit add-on)" : ""}
                   </span>
                   <span
-                    className="text-2xl font-bold text-[#12171D]"
+                    className="text-2xl font-bold text-white"
                     style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                   >
                     ${(PRICES.comments + (commentsFindSubreddit ? 5 : 0)) * commentsQty} USD
@@ -653,7 +677,7 @@ function DashboardInner() {
                 </div>
 
                 {commentsKeyword.trim() && (
-                  <div className="mt-4">
+                  <div className="mt-4 rounded-xl bg-white p-1.5">
                     <PayPalButton
                       orderType="comments"
                       keyword={commentsKeyword.trim()}

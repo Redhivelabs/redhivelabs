@@ -34,14 +34,11 @@ export default function Home() {
           className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          <Link href="/features" className="hover:text-white">
-            Features
+          <Link href="/services" className="hover:text-white">
+            Services
           </Link>
-          <Link href="/sample" className="hover:text-white">
-            Sample
-          </Link>
-          <Link href="/pricing" className="hover:text-white">
-            Pricing
+          <Link href="/about" className="hover:text-white">
+            About
           </Link>
           <NavAuthStatus />
         </div>
