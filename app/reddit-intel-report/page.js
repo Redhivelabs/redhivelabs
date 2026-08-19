@@ -127,18 +127,23 @@ export default function RedditIntelReportPage() {
       <div className="mx-auto mt-20 max-w-2xl text-center">
         <Eyebrow>Reddit Intel Report</Eyebrow>
         <h1
-          className="mt-4 text-3xl font-extrabold leading-tight text-[#12171D] sm:text-5xl"
+          className="mt-4 text-4xl font-extrabold leading-tight text-[#12171D] sm:text-6xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Removed. Shadowbanned. Ignored. Wrong subreddit, wrong moderator,
-          wrong day — not a bad post.
+          Removed? Ignored? Shadow Banned?
         </h1>
+        <p
+          className="mx-auto mt-4 max-w-xl text-xl font-bold text-[#12171D]/80"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
+          Wrong Subreddit, Wrong Moderator, Wrong Day — Not a Bad Post.
+        </p>
         <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-[#12171D]/70">
-          We find the right subreddit, the right moderator, the right day —
+          We find you the right subreddit, the right moderator, the right day —
           before you post, not after.
         </p>
         <div className="mt-8 flex flex-col items-center gap-3">
-          <CTAButton>Show me the good subreddits — $49*</CTAButton>
+          <CTAButton>Show me the Good Subreddits — $49*</CTAButton>
           <p className="max-w-sm text-xs text-[#12171D]/40">
             * No more guessing. No more &quot;removed, no reason given.&quot; Just the
             subreddits that&apos;ll actually let your post breathe.

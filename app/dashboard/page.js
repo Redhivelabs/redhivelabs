@@ -162,6 +162,7 @@ function DashboardInner() {
   useEffect(function () {
     const orderParam = searchParams.get("order");
     const keywordParam = searchParams.get("keyword");
+    const quantityParam = parseInt(searchParams.get("quantity"), 10);
     if (orderParam && sections.some(function (s) { return s.key === orderParam; })) {
       setActiveSection(orderParam);
     }
@@ -169,6 +170,10 @@ function DashboardInner() {
       setReportKeyword(keywordParam);
       setPostsKeyword(keywordParam);
       setCommentsKeyword(keywordParam);
+    }
+    if (Number.isFinite(quantityParam) && quantityParam >= 1 && quantityParam <= 15) {
+      setPostsQty(quantityParam);
+      setCommentsQty(quantityParam);
     }
   }, [searchParams]);
 

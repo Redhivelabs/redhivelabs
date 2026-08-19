@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import NavAuthStatus from "../components/NavAuthStatus.js";
+import ServicesNavDropdown from "../components/ServicesNavDropdown.js";
 
 export default function Home() {
   const [keyword, setKeyword] = useState("");
@@ -34,14 +35,12 @@ export default function Home() {
           className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          <Link href="/services" className="hover:text-white">
-            Services
-          </Link>
+          <ServicesNavDropdown />
           <Link href="/reddit-intel-report" className="hover:text-white">
             Reddit Intel Report
           </Link>
           <Link href="/about" className="hover:text-white">
-            About
+            About Me
           </Link>
           <NavAuthStatus />
         </div>
