@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -9,7 +10,7 @@ const ORDER_TYPE_LABELS = {
   comments: "Sub Reddit Comments",
 };
 
-export default function OrderConfirmedPage() {
+function OrderConfirmedContent() {
   const searchParams = useSearchParams();
 
   const orderId = searchParams.get("orderId");
@@ -78,5 +79,13 @@ export default function OrderConfirmedPage() {
         Go to your dashboard
       </Link>
     </div>
+  );
+}
+
+export default function OrderConfirmedPage() {
+  return (
+    <Suspense fallback={null}>
+      <OrderConfirmedContent />
+    </Suspense>
   );
 }
