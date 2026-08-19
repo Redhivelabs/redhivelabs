@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 import { getPayPalAccessToken, PAYPAL_BASE_URL } from "../../../../lib/paypal.js";
 
 const PRICES = {
-  report: 69,
+  report: 49,
   posts: 30,
   comments: 15,
 };

@@ -232,7 +232,7 @@ export default function ScanResults() {
             </p>
             <p className="mx-auto mt-2 max-w-sm text-sm text-[#12171D]/60">
               Your free scans reset in 24 hours. Want the full picture right
-              now instead? Get the $69 report for this keyword — 10-15
+              now instead? Get the $49 report for this keyword — 10-15
               curated subreddits, no daily limit.
             </p>
             <Link
@@ -451,7 +451,7 @@ export default function ScanResults() {
               </p>
               <p className="mx-auto mt-2 max-w-sm text-sm text-white/60">
                 10-15 curated subreddits, posting rules, removal risk, best
-                times to post, and real evidence — one report, $69 USD.
+                times to post, and real evidence — one report, $49 USD.
               </p>
               <a
                 href={

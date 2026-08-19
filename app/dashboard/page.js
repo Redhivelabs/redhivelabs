@@ -51,7 +51,7 @@ function SidebarIcon({ name }) {
   return null;
 }
 
-const PRICES = { report: 69, posts: 30, comments: 15 };
+const PRICES = { report: 49, posts: 30, comments: 15 };
 
 function statusLabel(order) {
   if (order.orderType === "report") {
@@ -363,7 +363,7 @@ function DashboardInner() {
                     className="text-2xl font-bold text-white"
                     style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                   >
-                    $69 USD
+                    $49 USD
                   </span>
                 </div>
 

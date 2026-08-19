@@ -425,6 +425,16 @@ function intentStyle(intent) {
   return {};
 }
 
+// Works around a known @react-pdf/renderer issue: certain fonts (including
+// Archivo) define an "fl" ligature glyph that sometimes fails to embed and
+// silently drops from the rendered PDF (e.g. "flagged" -> "fagged"). Inserting
+// a zero-width non-joiner between "f" and a following "l" or "i" stops the
+// ligature substitution from triggering, with no visible effect on the text.
+function dl(text) {
+  if (text == null) return text;
+  return String(text).replace(/f([li])/g, "f\u200C$1");
+}
+
 function formatAge(ageDays) {
   if (ageDays == null) return null;
   const years = Math.floor(ageDays / 365);
@@ -485,7 +495,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
         <Text style={styles.sectionTitle}>Strategy</Text>
         <Text style={styles.sectionSubtitle}>Your at-a-glance game plan</Text>
         <Text style={styles.strategyText}>
-          {strategy && strategy.narrative ? strategy.narrative : "No narrative available."}
+          {strategy && strategy.narrative ? dl(strategy.narrative) : "No narrative available."}
         </Text>
 
         <View style={{ marginTop: 28 }}>
@@ -546,7 +556,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                     {ageText}
                   </Text>
                   {r.description ? (
-                    <Text style={styles.descriptionText}>{r.description}</Text>
+                    <Text style={styles.descriptionText}>{dl(r.description)}</Text>
                   ) : null}
                 </View>
                 <View style={styles.scoreBox}>
@@ -575,7 +585,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                 {gateBadges.map(function (label) {
                   return (
                     <Text key={label} style={[styles.badge, styles.badgeOchre]}>
-                      {label}
+                      {dl(label)}
                     </Text>
                   );
                 })}
@@ -585,7 +595,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                 <View style={[styles.verdictBox, vStyle]}>
                   <Text style={styles.verdictText}>
                     <Text style={styles.verdictLabel}>{r.verdict.verdict.toUpperCase()}: </Text>
-                    {r.verdict.reasoning}
+                    {dl(r.verdict.reasoning)}
                   </Text>
                 </View>
               ) : null}
@@ -629,11 +639,13 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
               {topFlairs.length > 0 ? (
                 <Text style={styles.inlineDetailText}>
                   <Text style={{ fontFamily: "Archivo", fontWeight: 700 }}>Top flairs: </Text>
-                  {topFlairs
-                    .map(function (f) {
-                      return f.flair + " (avg score " + f.avgScore + ")";
-                    })
-                    .join("  \u2022  ")}
+                  {dl(
+                    topFlairs
+                      .map(function (f) {
+                        return f.flair + " (avg score " + f.avgScore + ")";
+                      })
+                      .join("  \u2022  ")
+                  )}
                 </Text>
               ) : null}
 
@@ -645,7 +657,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
               ) : null}
 
               {r.suggestedAngle ? (
-                <Text style={styles.angleText}>&quot;{r.suggestedAngle}&quot;</Text>
+                <Text style={styles.angleText}>&quot;{dl(r.suggestedAngle)}&quot;</Text>
               ) : null}
 
               {r.questions && r.questions.length > 0 ? (
@@ -658,7 +670,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                           {q.intent}
                         </Text>
                         <Link src={q.url} style={styles.questionTitle}>
-                          {q.title}
+                          {dl(q.title)}
                         </Link>
                         <Text style={styles.questionMeta}>
                           {q.score != null ? q.score + " pts" : ""}
@@ -681,18 +693,22 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
         <HexMark size={28} />
         <Text style={styles.closingTitle}>What&apos;s next</Text>
         <Text style={styles.closingText}>
-          You now know exactly where your audience is talking, what gets removed,
-          and what kind of post actually lands. The next step is putting that to
-          work — whether that&apos;s posting it yourself, or letting us handle it.
+          {dl(
+            "You now know exactly where your audience is talking, what gets removed, " +
+              "and what kind of post actually lands. The next step is putting that to " +
+              "work — whether that's posting it yourself, or letting us handle it."
+          )}
         </Text>
 
         <View style={styles.upsellBox}>
           <Text style={styles.upsellTitle}>We can post it for you</Text>
           <Text style={styles.upsellText}>
-            Our Sub Reddit Posts and Comments services put your content live
-            through a network of real, aged, high-karma accounts — the kind
-            mods trust, not throwaways that get flagged on sight. $30 per post,
-            $15 per comment. Head to your dashboard to get started.
+            {dl(
+              "Our Sub Reddit Posts and Comments services put your content live " +
+                "through a network of real, aged, high-karma accounts — the kind " +
+                "mods trust, not throwaways that get flagged on sight. $30 per post, " +
+                "$15 per comment. Head to your dashboard to get started."
+            )}
           </Text>
         </View>
 
