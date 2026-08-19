@@ -20,15 +20,27 @@ const loadingMessages = [
   "Scanning Reddit...",
   "Finding real conversations...",
   "Checking subreddit activity...",
+  "Classifying buyer intent...",
   "Almost there...",
 ];
+
+const intentStyles = {
+  BUYING: { bg: "rgba(11, 110, 98, 0.1)", color: "#0B6E62", label: "Buying Intent" },
+  DISCUSSION: { bg: "rgba(143, 93, 12, 0.1)", color: "#8F5D0C", label: "Discussion" },
+  CURIOSITY: { bg: "rgba(18, 23, 29, 0.06)", color: "#12171D99", label: "Curiosity" },
+};
+
+function opportunityColor(score) {
+  if (score >= 70) return "#0B6E62";
+  if (score >= 40) return "#8F5D0C";
+  return "#98302A";
+}
 
 export default function ScanResults() {
   const params = useParams();
   const keyword = decodeURIComponent(params.keyword);
 
   const [results, setResults] = useState(null);
-  const [details, setDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [gated, setGated] = useState(false);
@@ -41,7 +53,7 @@ export default function ScanResults() {
       setMessageIndex(function (i) {
         return (i + 1) % loadingMessages.length;
       });
-    }, 1400);
+    }, 1600);
     return function () {
       clearInterval(interval);
     };
@@ -73,7 +85,7 @@ export default function ScanResults() {
     async function fetchResults() {
       try {
         const res = await fetch(
-          "/api/scan?keyword=" + encodeURIComponent(keyword)
+          "/api/scan-insights?keyword=" + encodeURIComponent(keyword)
         );
         const data = await res.json();
         if (data.error) {
@@ -81,23 +93,9 @@ export default function ScanResults() {
           setLoading(false);
           return;
         }
-        setResults(data.results);
+        setResults(data.subreddits);
         setLoading(false);
         markScanned();
-
-        data.results.forEach(async function (r) {
-          try {
-            const detailRes = await fetch(
-              "/api/subreddit?subreddit=" + encodeURIComponent(r.subreddit)
-            );
-            const detailData = await detailRes.json();
-            setDetails(function (prev) {
-              return { ...prev, [r.subreddit]: detailData };
-            });
-          } catch (e) {
-            // Silently skip if one subreddit's details fail
-          }
-        });
       } catch (err) {
         setError("Something went wrong. Please try again.");
         setLoading(false);
@@ -187,15 +185,7 @@ export default function ScanResults() {
                         <span className="font-bold text-[#12171D]">r/subreddit{n}</span>
                       </div>
                       <span className="rounded-full bg-[#12171D]/5 px-3 py-1 text-xs font-medium text-[#12171D]/60">
-                        12 mentions
-                      </span>
-                    </div>
-                    <div className="mt-3 flex gap-2 pl-12">
-                      <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
-                        50,000 subscribers
-                      </span>
-                      <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
-                        Avg score 42
+                        Score 80
                       </span>
                     </div>
                   </div>
@@ -242,11 +232,11 @@ export default function ScanResults() {
             </p>
             <p className="mx-auto mt-2 max-w-sm text-sm text-[#12171D]/60">
               Your free scans reset in 24 hours. Want the full picture right
-              now instead? Get the $99 report for this keyword — 10-15
+              now instead? Get the $69 report for this keyword — 10-15
               curated subreddits, no daily limit.
             </p>
             <Link
-              href="/pricing"
+              href="/dashboard"
               className="mt-5 inline-block rounded-full bg-[#0B6E62] px-8 py-3 text-sm font-medium text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
             >
               View report options
@@ -299,15 +289,15 @@ export default function ScanResults() {
               {results.length} communities found — free preview
             </p>
 
-            <div className="mt-8 flex flex-col gap-3">
+            <div className="mt-8 flex flex-col gap-4">
               {results.map(function (r, i) {
-                const d = details[r.subreddit];
+                const oppColor = opportunityColor(r.opportunityScore);
                 return (
                   <div
                     key={r.subreddit}
-                    className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)] transition-shadow hover:shadow-[0_8px_28px_-8px_rgba(18,23,29,0.2)]"
+                    className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]"
                   >
-                    <div className="flex min-w-0 items-center justify-between gap-2">
+                    <div className="flex min-w-0 items-start justify-between gap-3">
                       <div className="flex min-w-0 items-center gap-3">
                         <span
                           className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#0B6E62]/10 text-sm font-bold text-[#0B6E62]"
@@ -315,76 +305,127 @@ export default function ScanResults() {
                         >
                           {i + 1}
                         </span>
+                        <div className="min-w-0">
+                          <p
+                            className="truncate font-bold text-[#12171D]"
+                            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                          >
+                            r/{r.subreddit}
+                          </p>
+                          {r.subscribers && (
+                            <p className="text-xs text-[#12171D]/50">
+                              {r.subscribers.toLocaleString()} subscribers
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex flex-shrink-0 flex-col items-end">
                         <span
-                          className="truncate font-bold text-[#12171D]"
-                          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                          className="text-lg font-bold"
+                          style={{ color: oppColor, fontFamily: "var(--font-archivo), sans-serif" }}
                         >
-                          r/{r.subreddit}
+                          {r.opportunityScore}
+                        </span>
+                        <span className="text-[10px] uppercase tracking-wide text-[#12171D]/40">
+                          Opportunity
                         </span>
                       </div>
-                      <span className="flex-shrink-0 rounded-full bg-[#12171D]/5 px-3 py-1 text-xs font-medium text-[#12171D]/60">
-                        {r.mentions} mentions
-                      </span>
                     </div>
 
-                    {!d && (
-                      <p className="pulse-fade mt-3 pl-12 text-xs text-[#12171D]/40">
-                        Analyzing this community...
+                    <div className="mt-3 flex flex-wrap gap-2 pl-12">
+                      <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
+                        {r.activityLabel} activity
+                      </span>
+                      <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
+                        {r.moderationLabel} moderation
+                      </span>
+                      {r.googleRanking && r.googleRanking.ranking && (
+                        <a
+                          href={r.googleRanking.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-full bg-[#0B6E62]/10 px-3 py-1 text-xs font-medium text-[#0B6E62] hover:underline"
+                        >
+                          Ranks on Google
+                        </a>
+                      )}
+                      {r.karmaRequired && (
+                        <span className="rounded-full bg-[#8F5D0C]/10 px-3 py-1 text-xs text-[#8F5D0C]">
+                          Karma required
+                        </span>
+                      )}
+                      {r.accountAgeRequired && (
+                        <span className="rounded-full bg-[#8F5D0C]/10 px-3 py-1 text-xs text-[#8F5D0C]">
+                          Account age required
+                        </span>
+                      )}
+                    </div>
+
+                    {r.verdict && (
+                      <div
+                        className="mt-3 ml-12 flex items-start gap-2 rounded-xl p-3"
+                        style={{
+                          backgroundColor:
+                            r.verdict.verdict === "post"
+                              ? "rgba(11, 110, 98, 0.08)"
+                              : r.verdict.verdict === "warm up first"
+                              ? "rgba(143, 93, 12, 0.08)"
+                              : "rgba(152, 48, 42, 0.08)",
+                        }}
+                      >
+                        <span
+                          className="mt-0.5 flex-shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
+                          style={{
+                            backgroundColor:
+                              r.verdict.verdict === "post"
+                                ? "#0B6E62"
+                                : r.verdict.verdict === "warm up first"
+                                ? "#8F5D0C"
+                                : "#98302A",
+                            color: "#FFFFFF",
+                          }}
+                        >
+                          {r.verdict.verdict}
+                        </span>
+                        <p className="text-xs text-[#12171D]/70">
+                          {r.verdict.reasoning}
+                        </p>
+                      </div>
+                    )}
+
+                    {r.suggestedAngle && (
+                      <p className="mt-3 ml-12 text-xs italic text-[#12171D]/60">
+                        “{r.suggestedAngle}”
                       </p>
                     )}
 
-                    {d && d.identity && (
-                      <div
-                        key={r.subreddit + "-loaded"}
-                        className="fade-in-detail mt-3 pl-12"
-                      >
-                        <div className="flex flex-wrap gap-2">
-                          <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
-                            {d.identity.subscribers
-                              ? d.identity.subscribers.toLocaleString() +
-                                " subscribers"
-                              : "Subscribers unavailable"}
-                          </span>
-                          <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
-                            Avg score {d.traction && d.traction.medianScore}
-                          </span>
-                          <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
-                            Avg comments{" "}
-                            {d.traction && d.traction.medianComments}
-                          </span>
-                        </div>
-
-                        {d.verdict && (
-                          <div
-                            className="mt-3 flex items-start gap-2 rounded-xl p-3"
-                            style={{
-                              backgroundColor:
-                                d.verdict.verdict === "post"
-                                  ? "rgba(11, 110, 98, 0.08)"
-                                  : d.verdict.verdict === "warm up first"
-                                  ? "rgba(143, 93, 12, 0.08)"
-                                  : "rgba(152, 48, 42, 0.08)",
-                            }}
-                          >
-                            <span
-                              className="mt-0.5 flex-shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
-                              style={{
-                                backgroundColor:
-                                  d.verdict.verdict === "post"
-                                    ? "#0B6E62"
-                                    : d.verdict.verdict === "warm up first"
-                                    ? "#8F5D0C"
-                                    : "#98302A",
-                                color: "#FFFFFF",
-                              }}
+                    {r.questions && r.questions.length > 0 && (
+                      <div className="mt-4 ml-12 flex flex-col gap-2">
+                        <p className="text-[10px] font-bold uppercase tracking-wide text-[#12171D]/40">
+                          Real questions from this subreddit
+                        </p>
+                        {r.questions.map(function (q, qi) {
+                          const style = intentStyles[q.intent] || intentStyles.CURIOSITY;
+                          return (
+                            <a
+                              key={qi}
+                              href={q.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-start gap-2 rounded-xl border border-[#12171D]/5 p-2.5 transition-colors hover:bg-[#12171D]/[0.02]"
                             >
-                              {d.verdict.verdict}
-                            </span>
-                            <p className="text-xs text-[#12171D]/70">
-                              {d.verdict.reasoning}
-                            </p>
-                          </div>
-                        )}
+                              <span
+                                className="mt-0.5 flex-shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide"
+                                style={{ backgroundColor: style.bg, color: style.color }}
+                              >
+                                {style.label}
+                              </span>
+                              <span className="text-xs text-[#12171D]/80">
+                                {q.title}
+                              </span>
+                            </a>
+                          );
+                        })}
                       </div>
                     )}
                   </div>

@@ -48,7 +48,14 @@ export default function PayPalButton({ orderType, keyword, quantity, notes, find
           const result = await res.json();
 
           if (result.success) {
-            router.push("/dashboard");
+            const params = new URLSearchParams({
+              orderId: result.orderId,
+              orderType: result.orderType || "",
+              keyword: result.keyword || "",
+              quantity: result.quantity || "",
+              amount: result.amount || "",
+            });
+            router.push("/order-confirmed?" + params.toString());
           } else {
             alert("Payment could not be completed. Please try again.");
           }

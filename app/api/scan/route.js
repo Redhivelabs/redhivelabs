@@ -29,7 +29,7 @@ export async function GET(request) {
   }
 
   try {
-   const userId = await getUserIdFromSession(request);
+    const userId = await getUserIdFromSession(request);
 
     if (userId) {
       const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
@@ -51,16 +51,35 @@ export async function GET(request) {
       encodeURIComponent(keyword) +
       "&sort=new&limit=100";
 
-    const res = await fetch(apiUrl, {
-      headers: {
-        Authorization: "Bearer " + process.env.REDDITAPIS_KEY,
-      },
-    });
+    let res = null;
+    let lastErrText = "";
+    const maxRetries = 6;
+
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      res = await fetch(apiUrl, {
+        headers: {
+          Authorization: "Bearer " + process.env.REDDITAPIS_KEY,
+        },
+      });
+
+      if (res.ok) break;
+
+      lastErrText = await res.text();
+      const isPoolSaturated = res.status === 503 && lastErrText.includes("pool_saturated");
+
+      if (isPoolSaturated && attempt < maxRetries) {
+        const waitTime = Math.min(5000 * (attempt + 1), 15000);
+        await new Promise(function (resolve) {
+          setTimeout(resolve, waitTime);
+        });
+        continue;
+      }
+      break;
+    }
 
     if (!res.ok) {
-      const errText = await res.text();
       return Response.json(
-        { error: "Redditapis request failed", status: res.status, details: errText.slice(0, 500) },
+        { error: "Redditapis request failed", status: res.status, details: lastErrText.slice(0, 500) },
         { status: 500 }
       );
     }
@@ -76,11 +95,17 @@ export async function GET(request) {
     }
 
     const rankedSubreddits = Object.entries(subredditCounts)
-      .filter(([, count]) => count >= MIN_MENTIONS)
-      .sort((a, b) => b[1] - a[1])
-      .map(([subreddit, count]) => ({ subreddit, mentions: count }));
+      .filter(function ([, count]) {
+        return count >= MIN_MENTIONS;
+      })
+      .sort(function (a, b) {
+        return b[1] - a[1];
+      })
+      .map(function ([subreddit, count]) {
+        return { subreddit, mentions: count };
+      });
 
-    const topSubreddits = rankedSubreddits.slice(0, 5);
+    const topSubreddits = rankedSubreddits.slice(0, 2);
     const extendedSubreddits = rankedSubreddits.slice(0, 20);
 
     if (userId) {
@@ -97,8 +122,9 @@ export async function GET(request) {
       extended: extendedSubreddits,
     });
   } catch (error) {
+    console.error("Scan route error:", error);
     return Response.json(
-      { error: "Scan failed", details: error.message },
+      { error: "Scan failed", details: error.message, stack: error.stack },
       { status: 500 }
     );
   }

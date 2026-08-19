@@ -77,6 +77,39 @@ async function checkRelevance(keyword, subredditName, data) {
   }
 }
 
+async function checkGoogleRanking(keyword) {
+  try {
+    const url =
+      "https://www.googleapis.com/customsearch/v1?" +
+      new URLSearchParams({
+        key: process.env.GOOGLE_SEARCH_API_KEY,
+        cx: process.env.GOOGLE_SEARCH_ENGINE_ID,
+        q: keyword,
+        num: "10",
+      }).toString();
+
+    const res = await fetch(url);
+    if (!res.ok) return [];
+
+    const data = await res.json();
+    const items = data.items || [];
+
+    return items.map(function (item) {
+      return { url: item.link, title: item.title };
+    });
+  } catch (e) {
+    return [];
+  }
+}
+
+function findSubredditInGoogleResults(subredditName, googleResults) {
+  const nameLower = subredditName.toLowerCase();
+  const match = googleResults.find(function (result) {
+    return result.url.toLowerCase().includes("/r/" + nameLower + "/");
+  });
+  return match || null;
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const keyword = searchParams.get("keyword");
@@ -92,8 +125,12 @@ export async function GET(request) {
     const scanRes = await fetch(
       baseUrl + "/api/scan?keyword=" + encodeURIComponent(keyword)
     );
-    if (!scanRes.ok) {
-      return Response.json({ error: "Scan failed" }, { status: 500 });
+       if (!scanRes.ok) {
+      const errText = await scanRes.text();
+      return Response.json(
+        { error: "Scan failed", details: errText.slice(0, 500) },
+        { status: 500 }
+      );
     }
     const scanData = await scanRes.json();
     const candidates = scanData.extended || [];
@@ -140,10 +177,22 @@ export async function GET(request) {
       });
     }
 
+    const googleResults = await checkGoogleRanking(keyword);
+
+    const qualifiedWithGoogle = qualified.map(function (candidate) {
+      const googleMatch = findSubredditInGoogleResults(candidate.subreddit, googleResults);
+      return {
+        ...candidate,
+        googleRanking: googleMatch
+          ? { ranking: true, url: googleMatch.url, title: googleMatch.title }
+          : { ranking: false },
+      };
+    });
+
     return Response.json({
       keyword: keyword,
-      qualifiedCount: qualified.length,
-      qualified: qualified,
+      qualifiedCount: qualifiedWithGoogle.length,
+      qualified: qualifiedWithGoogle,
       disqualified: disqualified,
     });
   } catch (error) {
