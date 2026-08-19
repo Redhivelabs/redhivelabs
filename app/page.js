@@ -37,6 +37,9 @@ export default function Home() {
           <Link href="/services" className="hover:text-white">
             Services
           </Link>
+          <Link href="/reddit-intel-report" className="hover:text-white">
+            Reddit Intel Report
+          </Link>
           <Link href="/about" className="hover:text-white">
             About
           </Link>
