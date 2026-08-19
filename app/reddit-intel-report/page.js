@@ -3,7 +3,7 @@ import Link from "next/link";
 export const metadata = {
   title: "Reddit Intel Report — Know Before You Post | RedHiveLabs",
   description:
-    "Your post got removed again. Cool. Or — stop guessing. Get the exact subreddits that won't nuke your post, before you write another word.",
+    "Removed, shadowbanned, ignored — not a bad post, just the wrong subreddit. Get the exact subreddits, moderators, and days that work for your keyword, before you post.",
 };
 
 function TopNav() {
@@ -127,14 +127,15 @@ export default function RedditIntelReportPage() {
       <div className="mx-auto mt-20 max-w-2xl text-center">
         <Eyebrow>Reddit Intel Report</Eyebrow>
         <h1
-          className="mt-4 text-4xl font-extrabold leading-tight text-[#12171D] sm:text-5xl"
+          className="mt-4 text-3xl font-extrabold leading-tight text-[#12171D] sm:text-5xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Your post got removed. Again.
+          Removed. Shadowbanned. Ignored. Wrong subreddit, wrong moderator,
+          wrong day — not a bad post.
         </h1>
         <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-[#12171D]/70">
-          Cool. Or — you could stop finding out the hard way and get the exact
-          subreddits that were never going to remove it in the first place.
+          We find the right subreddit, the right moderator, the right day —
+          before you post, not after.
         </p>
         <div className="mt-8 flex flex-col items-center gap-3">
           <CTAButton>Show me the good subreddits — $49*</CTAButton>
