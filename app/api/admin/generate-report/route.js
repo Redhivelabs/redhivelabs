@@ -318,7 +318,8 @@ export async function POST(request) {
         };
       });
 
-      const postsPerDay = d && d.identity ? d.identity.postsPerDay : null;
+      const identity = d && d.identity ? d.identity : {};
+      const postsPerDay = identity.postsPerDay;
       const removalRatePercent = d && d.removalRisk ? d.removalRisk.removalRatePercent : 0;
       const taggedRules = d && d.gates ? d.gates.rules : [];
       const detected = d && d.gates ? d.gates.detected : {};
@@ -326,7 +327,11 @@ export async function POST(request) {
       return {
         subreddit: c.subreddit,
         mentions: c.mentions,
-        subscribers: d && d.identity ? d.identity.subscribers : null,
+        subscribers: identity.subscribers != null ? identity.subscribers : null,
+        description: identity.description || null,
+        ageDays: identity.ageDays != null ? identity.ageDays : null,
+        postsPerDay: postsPerDay != null ? postsPerDay : null,
+        commentsPerDay: identity.commentsPerDay != null ? identity.commentsPerDay : null,
         activityLabel: activityLabel(postsPerDay),
         moderationLabel: moderationLabel(removalRatePercent, taggedRules),
         removalRatePercent: removalRatePercent,
@@ -344,6 +349,7 @@ export async function POST(request) {
         suggestedAngle: classification.angle,
         questions: questions,
         verdict: d && d.verdict ? d.verdict : null,
+        traction: d && d.traction ? d.traction : null,
         timing: d && d.timing ? d.timing : null,
         flair: d && d.flair ? d.flair : null,
         format: d && d.format ? d.format : null,

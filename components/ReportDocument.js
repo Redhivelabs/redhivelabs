@@ -169,6 +169,13 @@ const styles = StyleSheet.create({
     color: COLORS.inkMuted,
     marginTop: 2,
   },
+  descriptionText: {
+    fontFamily: "Source Serif 4",
+    fontSize: 8.5,
+    color: COLORS.inkMuted,
+    marginTop: 2,
+    maxWidth: 340,
+  },
   scoreBox: {
     alignItems: "flex-end",
   },
@@ -245,6 +252,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 4,
     gap: 6,
+    alignItems: "flex-start",
   },
   questionIntent: {
     fontFamily: "Archivo",
@@ -260,6 +268,55 @@ const styles = StyleSheet.create({
     fontSize: 8.5,
     color: COLORS.ink,
     flex: 1,
+  },
+  questionMeta: {
+    fontFamily: "Source Serif 4",
+    fontSize: 7.5,
+    color: COLORS.inkMuted,
+    width: 70,
+    textAlign: "right",
+  },
+  statGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 4,
+    marginBottom: 10,
+    gap: 8,
+  },
+  statBox: {
+    width: 96,
+    padding: 8,
+    backgroundColor: COLORS.paper,
+    borderRadius: 4,
+  },
+  statValue: {
+    fontFamily: "Archivo",
+    fontWeight: 800,
+    fontSize: 13,
+    color: COLORS.ink,
+  },
+  statLabel: {
+    fontFamily: "Archivo",
+    fontWeight: 700,
+    fontSize: 6.5,
+    color: COLORS.inkMuted,
+    textTransform: "uppercase",
+    marginTop: 2,
+  },
+  subSectionLabel: {
+    fontFamily: "Archivo",
+    fontWeight: 700,
+    fontSize: 8,
+    color: COLORS.inkMuted,
+    textTransform: "uppercase",
+    marginBottom: 4,
+    marginTop: 8,
+  },
+  inlineDetailText: {
+    fontFamily: "Source Serif 4",
+    fontSize: 8.5,
+    color: COLORS.inkMuted,
+    marginBottom: 3,
   },
   footer: {
     position: "absolute",
@@ -368,6 +425,38 @@ function intentStyle(intent) {
   return {};
 }
 
+function formatAge(ageDays) {
+  if (ageDays == null) return null;
+  const years = Math.floor(ageDays / 365);
+  if (years >= 1) return years + (years === 1 ? " year old" : " years old");
+  const months = Math.floor(ageDays / 30);
+  if (months >= 1) return months + (months === 1 ? " month old" : " months old");
+  return ageDays + (ageDays === 1 ? " day old" : " days old");
+}
+
+// Small stat tile used in the Traction grid — value + label stacked.
+function StatBox({ value, label }) {
+  if (value === null || value === undefined) return null;
+  return (
+    <View style={styles.statBox}>
+      <Text style={styles.statValue}>{value}</Text>
+      <Text style={styles.statLabel}>{label}</Text>
+    </View>
+  );
+}
+
+// Extra rule-gate flags beyond the top-line karma/account-age badges
+// already shown in the main badge row.
+function extraGateBadges(rawGates) {
+  const detected = rawGates && rawGates.detected ? rawGates.detected : {};
+  const badges = [];
+  if (detected.mentionsSelfPromoRestriction) badges.push("Self-promo restricted");
+  if (detected.mentionsModApproval) badges.push("Mod approval needed");
+  if (detected.mentionsFlairRequired) badges.push("Flair required");
+  if (detected.mentionsLinkRestriction) badges.push("Link restrictions");
+  return badges;
+}
+
 export default function ReportDocument({ keyword, generatedAt, strategy, subreddits }) {
   const dateStr = new Date(generatedAt || Date.now()).toLocaleDateString("en-US", {
     year: "numeric",
@@ -430,6 +519,13 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
 
       {ranked.map(function (r, i) {
         const vStyle = r.verdict ? verdictStyle(r.verdict.verdict) : {};
+        const t = r.traction || {};
+        const ageText = formatAge(r.ageDays);
+        const gateBadges = extraGateBadges(r.rawGates);
+        const formatBreakdown = r.format && r.format.breakdown ? r.format.breakdown : null;
+        const topFlairs = (r.flair || []).slice(0, 3);
+        const bestWindows = r.timing && r.timing.bestWindows ? r.timing.bestWindows : [];
+
         return (
           <Page key={r.subreddit} size="A4" style={styles.page} wrap>
             <PageHeader keyword={keyword} />
@@ -444,10 +540,13 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                   <Text style={styles.subredditName}>
                     #{i + 1} r/{r.subreddit}
                   </Text>
-                  {r.subscribers ? (
-                    <Text style={styles.subscriberText}>
-                      {r.subscribers.toLocaleString()} subscribers
-                    </Text>
+                  <Text style={styles.subscriberText}>
+                    {r.subscribers ? r.subscribers.toLocaleString() + " subscribers" : null}
+                    {r.subscribers && ageText ? "  \u2014  " : ""}
+                    {ageText}
+                  </Text>
+                  {r.description ? (
+                    <Text style={styles.descriptionText}>{r.description}</Text>
                   ) : null}
                 </View>
                 <View style={styles.scoreBox}>
@@ -473,6 +572,13 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                 {r.accountAgeRequired ? (
                   <Text style={[styles.badge, styles.badgeOchre]}>Account age required</Text>
                 ) : null}
+                {gateBadges.map(function (label) {
+                  return (
+                    <Text key={label} style={[styles.badge, styles.badgeOchre]}>
+                      {label}
+                    </Text>
+                  );
+                })}
               </View>
 
               {r.verdict ? (
@@ -482,6 +588,60 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                     {r.verdict.reasoning}
                   </Text>
                 </View>
+              ) : null}
+
+              {/* Traction stats grid */}
+              {r.traction ? (
+                <View>
+                  <Text style={styles.subSectionLabel}>Traction (last 90 days)</Text>
+                  <View style={styles.statGrid}>
+                    <StatBox value={t.medianScore} label="Median score" />
+                    <StatBox value={t.medianComments} label="Median comments" />
+                    <StatBox value={t.p90Score} label="Top 10% score" />
+                    <StatBox
+                      value={t.avgUpvoteRatio != null ? Math.round(t.avgUpvoteRatio * 100) + "%" : null}
+                      label="Avg upvote ratio"
+                    />
+                    <StatBox
+                      value={t.deadPostRatePercent != null ? t.deadPostRatePercent + "%" : null}
+                      label="Dead-post rate"
+                    />
+                    <StatBox
+                      value={r.removalRatePercent != null ? r.removalRatePercent + "%" : null}
+                      label="Removal rate"
+                    />
+                  </View>
+                </View>
+              ) : null}
+
+              {/* Format + flair + timing, shown compactly as text lines */}
+              {formatBreakdown ? (
+                <Text style={styles.inlineDetailText}>
+                  <Text style={{ fontFamily: "Archivo", fontWeight: 700 }}>Format mix: </Text>
+                  {formatBreakdown.text || 0} text, {formatBreakdown.link || 0} link,{" "}
+                  {formatBreakdown.image || 0} image, {formatBreakdown.video || 0} video
+                  {r.format && r.format.avgWinningTitleLength
+                    ? "  \u2014  avg winning title length: " + r.format.avgWinningTitleLength + " chars"
+                    : ""}
+                </Text>
+              ) : null}
+
+              {topFlairs.length > 0 ? (
+                <Text style={styles.inlineDetailText}>
+                  <Text style={{ fontFamily: "Archivo", fontWeight: 700 }}>Top flairs: </Text>
+                  {topFlairs
+                    .map(function (f) {
+                      return f.flair + " (avg score " + f.avgScore + ")";
+                    })
+                    .join("  \u2022  ")}
+                </Text>
+              ) : null}
+
+              {bestWindows.length > 0 ? (
+                <Text style={styles.inlineDetailText}>
+                  <Text style={{ fontFamily: "Archivo", fontWeight: 700 }}>Best times to post: </Text>
+                  {bestWindows.join("  \u2022  ")}
+                </Text>
               ) : null}
 
               {r.suggestedAngle ? (
@@ -500,6 +660,11 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                         <Link src={q.url} style={styles.questionTitle}>
                           {q.title}
                         </Link>
+                        <Text style={styles.questionMeta}>
+                          {q.score != null ? q.score + " pts" : ""}
+                          {q.score != null && q.comments != null ? "  \u00b7  " : ""}
+                          {q.comments != null ? q.comments + " comments" : ""}
+                        </Text>
                       </View>
                     );
                   })}
