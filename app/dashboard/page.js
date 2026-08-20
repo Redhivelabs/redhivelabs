@@ -7,10 +7,10 @@ import PayPalButton from "../../components/PayPalButton.js";
 import DashboardAvatarMenu from "../../components/DashboardAvatarMenu.js";
 
 const sections = [
-  { key: "scans", label: "My Scans", icon: "search" },
-  { key: "report", label: "Report", icon: "doc" },
-  { key: "posts", label: "Sub Reddit Posts", icon: "edit" },
-  { key: "comments", label: "Sub Reddit Comments", icon: "chat" },
+  { key: "scans", label: "My Scans", mobileLabel: "Scans", icon: "search" },
+  { key: "report", label: "Report", mobileLabel: "Report", icon: "doc" },
+  { key: "posts", label: "Sub Reddit Posts", mobileLabel: "Posts", icon: "edit" },
+  { key: "comments", label: "Sub Reddit Comments", mobileLabel: "Comments", icon: "chat" },
 ];
 
 function SidebarIcon({ name }) {
@@ -77,7 +77,8 @@ function OrderList({ orders }) {
         return (
           <div
             key={order.orderId}
-            className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]"
+            className="rounded-2xl border-l-4 bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]"
+            style={{ borderLeftColor: s.color }}
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -98,8 +99,8 @@ function OrderList({ orders }) {
                 </p>
               </div>
               <span
-                className="flex-shrink-0 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide"
-                style={{ backgroundColor: s.color + "1A", color: s.color }}
+                className="flex-shrink-0 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wide"
+                style={{ backgroundColor: s.color + "1A", color: s.color, fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 {s.text}
               </span>
@@ -109,7 +110,8 @@ function OrderList({ orders }) {
                 href={order.pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block rounded-full bg-[#0B6E62] px-5 py-2 text-sm font-medium text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
+                className="mt-4 inline-block rounded-full bg-[#0B6E62] px-5 py-2 text-sm font-bold text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
+                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Download Report
               </a>
@@ -249,8 +251,19 @@ function DashboardInner() {
         </aside>
 
         <main className="min-w-0 flex-1">
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 overflow-x-auto rounded-full bg-white p-1 shadow-[0_4px_16px_-8px_rgba(18,23,29,0.15)] sm:hidden">
+          <div className="mb-4 flex flex-col gap-3 sm:hidden">
+            <div className="flex items-center justify-between rounded-full bg-[#12171D] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)]">
+              <Link href="/" className="flex items-center px-1">
+                <img
+                  src="/lockup-horizontal-white.svg"
+                  alt="RedHiveLabs"
+                  className="w-auto"
+                  style={{ height: "24px" }}
+                />
+              </Link>
+              <DashboardAvatarMenu email={data.email} picture={data.picture} />
+            </div>
+            <div className="flex items-center gap-1.5 overflow-x-auto rounded-full bg-[#12171D] p-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)]">
               {sections.map(function (section) {
                 const isActive = activeSection === section.key;
                 return (
@@ -259,26 +272,34 @@ function DashboardInner() {
                     onClick={function () {
                       setActiveSection(section.key);
                     }}
-                    className="flex-shrink-0 rounded-full px-3 py-1.5 text-xs font-medium"
+                    className="flex-shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-xs font-bold transition-colors"
                     style={{
                       backgroundColor: isActive ? "#0B6E62" : "transparent",
-                      color: isActive ? "#FFFFFF" : "#12171D99",
+                      color: isActive ? "#FFFFFF" : "rgba(255,255,255,0.55)",
+                      fontFamily: "var(--font-archivo), sans-serif",
                     }}
                   >
-                    {section.label}
+                    {section.mobileLabel}
                   </button>
                 );
               })}
             </div>
-            <div className="ml-auto">
-              <DashboardAvatarMenu email={data.email} picture={data.picture} />
-            </div>
+          </div>
+
+          <div className="mb-4 hidden items-center justify-end sm:flex">
+            <DashboardAvatarMenu email={data.email} picture={data.picture} />
           </div>
 
           {activeSection === "scans" && (
             <div>
+              <p
+                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
+                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+              >
+                Free Scans
+              </p>
               <h1
-                className="text-2xl font-bold text-[#12171D]"
+                className="mt-1 text-2xl font-extrabold text-[#12171D]"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 My Scans
@@ -325,8 +346,14 @@ function DashboardInner() {
 
           {activeSection === "report" && (
             <div>
+              <p
+                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
+                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+              >
+                Reddit Intel Report
+              </p>
               <h1
-                className="text-2xl font-bold text-[#12171D]"
+                className="mt-1 text-2xl font-extrabold text-[#12171D]"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Report
@@ -384,7 +411,8 @@ function DashboardInner() {
               </div>
 
               <h2
-                className="mt-8 text-sm font-bold uppercase tracking-wide text-[#12171D]/80"
+                className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-[#12171D]/50"
+                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Your report orders
               </h2>
@@ -394,8 +422,14 @@ function DashboardInner() {
 
           {activeSection === "posts" && (
             <div>
+              <p
+                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
+                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+              >
+                Posting Service
+              </p>
               <h1
-                className="text-2xl font-bold text-[#12171D]"
+                className="mt-1 text-2xl font-extrabold text-[#12171D]"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Sub Reddit Posts
@@ -430,17 +464,18 @@ function DashboardInner() {
                 <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
                   Number of posts
                 </label>
-                <div className="mt-2 flex items-center gap-3">
+                <div className="mt-3 flex items-center gap-4">
                   <button
                     onClick={function () {
                       setPostsQty(Math.max(1, postsQty - 1));
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-lg text-white transition-colors hover:border-[#2DD4BF]/50" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#2DD4BF] hover:bg-[#2DD4BF]/10"
+                    style={{ backgroundColor: "rgba(6,32,29,0.6)" }}
                   >
                     −
                   </button>
                   <span
-                    className="w-8 text-center text-lg font-bold text-white"
+                    className="w-10 text-center text-2xl font-extrabold text-white"
                     style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                   >
                     {postsQty}
@@ -449,7 +484,8 @@ function DashboardInner() {
                     onClick={function () {
                       setPostsQty(Math.min(15, postsQty + 1));
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-lg text-white transition-colors hover:border-[#2DD4BF]/50" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#2DD4BF] hover:bg-[#2DD4BF]/10"
+                    style={{ backgroundColor: "rgba(6,32,29,0.6)" }}
                   >
                     +
                   </button>
@@ -543,7 +579,7 @@ function DashboardInner() {
                 )}
               </div>
 
-              <h2 className="mt-8 text-sm font-bold uppercase tracking-wide text-[#12171D]/80">
+              <h2 className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-[#12171D]/50" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
                 Your posting orders
               </h2>
               <OrderList orders={postsOrders} />
@@ -552,8 +588,14 @@ function DashboardInner() {
 
           {activeSection === "comments" && (
             <div>
+              <p
+                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
+                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+              >
+                Commenting Service
+              </p>
               <h1
-                className="text-2xl font-bold text-[#12171D]"
+                className="mt-1 text-2xl font-extrabold text-[#12171D]"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Sub Reddit Comments
@@ -587,17 +629,18 @@ function DashboardInner() {
                 <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
                   Number of comments
                 </label>
-                <div className="mt-2 flex items-center gap-3">
+                <div className="mt-3 flex items-center gap-4">
                   <button
                     onClick={function () {
                       setCommentsQty(Math.max(1, commentsQty - 1));
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-lg text-white transition-colors hover:border-[#2DD4BF]/50" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#2DD4BF] hover:bg-[#2DD4BF]/10"
+                    style={{ backgroundColor: "rgba(6,32,29,0.6)" }}
                   >
                     −
                   </button>
                   <span
-                    className="w-8 text-center text-lg font-bold text-white"
+                    className="w-10 text-center text-2xl font-extrabold text-white"
                     style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                   >
                     {commentsQty}
@@ -606,7 +649,8 @@ function DashboardInner() {
                     onClick={function () {
                       setCommentsQty(Math.min(15, commentsQty + 1));
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-lg text-white transition-colors hover:border-[#2DD4BF]/50" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#2DD4BF] hover:bg-[#2DD4BF]/10"
+                    style={{ backgroundColor: "rgba(6,32,29,0.6)" }}
                   >
                     +
                   </button>
@@ -701,7 +745,7 @@ function DashboardInner() {
                 )}
               </div>
 
-              <h2 className="mt-8 text-sm font-bold uppercase tracking-wide text-[#12171D]/80">
+              <h2 className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-[#12171D]/50" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
                 Your comment orders
               </h2>
               <OrderList orders={commentsOrders} />
