@@ -20,9 +20,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "RedHiveLabs — The #1 Reddit Placement Intelligence Tool",
+  title: "RedHiveLabs — Reddit Marketing Intel",
   description:
-    "Scan Reddit for the subreddits where your customers are already talking. Free top-5 scan, full placement report for $99.",
+    "Scan Reddit for the subreddits where your customers are already talking. Free scan, full Reddit Intel Report for $49, plus Reddit posting and commenting services.",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
