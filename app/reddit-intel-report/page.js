@@ -1,38 +1,11 @@
 import Link from "next/link";
-import ServicesNavDropdown from "../../components/ServicesNavDropdown.js";
+import SiteNav from "../../components/SiteNav.js";
 
 export const metadata = {
   title: "Reddit Intel Report — Know Before You Post | RedHiveLabs",
   description:
     "Removed, shadowbanned, ignored — not a bad post, just the wrong subreddit. Get the exact subreddits, moderators, and days that work for your keyword, before you post.",
 };
-
-function TopNav() {
-  return (
-    <nav className="mx-auto mt-6 flex max-w-4xl items-center justify-between gap-2 rounded-full bg-[#12171D] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)] sm:gap-3 sm:px-6">
-      <Link href="/">
-        <img
-          src="/lockup-horizontal-white.svg"
-          alt="RedHiveLabs"
-          className="w-auto flex-shrink-0"
-          style={{ height: "32px" }}
-        />
-      </Link>
-      <div
-        className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm"
-        style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-      >
-        <ServicesNavDropdown />
-        <Link href="/reddit-intel-report" className="hover:text-white">
-          Reddit Intel Report
-        </Link>
-        <Link href="/about" className="hover:text-white">
-          About Me
-        </Link>
-      </div>
-    </nav>
-  );
-}
 
 function Eyebrow({ children }) {
   return (
@@ -120,7 +93,7 @@ export default function RedditIntelReportPage() {
           "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
       }}
     >
-      <TopNav />
+      <SiteNav />
 
       {/* HERO */}
       <div className="mx-auto mt-20 max-w-2xl text-center">
