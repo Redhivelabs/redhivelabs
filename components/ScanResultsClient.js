@@ -426,12 +426,14 @@ export default function ScanResultsClient({ keyword }) {
                 className="text-2xl font-extrabold text-white sm:text-3xl"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
-                This was the preview.
+                One of these subreddits is going to remove your post.
+                This tells you which.
               </p>
               <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-white/70">
-                The full Reddit Intel Report ranks 10-15 subreddits, flags
-                exact removal rates, and tells you exactly when to post —
-                reviewed by a real person before it lands in your inbox.
+                The full report scores every subreddit by real removal rate,
+                flags the ones that&apos;ll bury you, and tells you exactly
+                when to post in the ones that won&apos;t. Reviewed by hand,
+                not a bot.
               </p>
               <p
                 className="mt-4 text-3xl font-extrabold text-white"
