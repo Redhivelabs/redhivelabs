@@ -3,7 +3,7 @@ import ServicesNavDropdown from "../../../components/ServicesNavDropdown.js";
 import PackageCard from "../../../components/PackageCard.js";
 
 export const metadata = {
-  title: "Sub Reddit Posts — RedHiveLabs",
+  title: "Buy Reddit Posts — RedHiveLabs",
   description:
     "Real posts, through real aged accounts, in subreddits that won't remove them. $30 per post.",
 };
@@ -48,7 +48,7 @@ export default function SubRedditPostsPage() {
           className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Sub Reddit Posts
+          Buy Reddit Posts
         </p>
         <h1
           className="mt-4 text-4xl font-extrabold leading-tight text-[#12171D] sm:text-5xl"

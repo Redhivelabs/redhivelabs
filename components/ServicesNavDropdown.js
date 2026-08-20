@@ -65,7 +65,7 @@ export default function ServicesNavDropdown() {
               setOpen(false);
             }}
           >
-            Sub Reddit Posts
+            Buy Reddit Posts
           </Link>
           <Link
             href="/services/comments"
@@ -74,7 +74,7 @@ export default function ServicesNavDropdown() {
               setOpen(false);
             }}
           >
-            Sub Reddit Comments
+            Buy Reddit Comments
           </Link>
         </div>
       )}

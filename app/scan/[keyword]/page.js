@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import NavAuthStatus from "../../../components/NavAuthStatus.js";
+import ServicesNavDropdown from "../../../components/ServicesNavDropdown.js";
 
 function hasScannedBefore() {
   return document.cookie
@@ -128,11 +129,12 @@ export default function ScanResults() {
           className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          <Link href="/services" className="hover:text-white">
-            Services
+          <ServicesNavDropdown />
+          <Link href="/reddit-intel-report" className="hover:text-white">
+            Reddit Intel Report
           </Link>
           <Link href="/about" className="hover:text-white">
-            About
+            About Me
           </Link>
           <NavAuthStatus />
         </div>

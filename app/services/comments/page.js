@@ -3,7 +3,7 @@ import ServicesNavDropdown from "../../../components/ServicesNavDropdown.js";
 import PackageCard from "../../../components/PackageCard.js";
 
 export const metadata = {
-  title: "Sub Reddit Comments — RedHiveLabs",
+  title: "Buy Reddit Comments — RedHiveLabs",
   description:
     "Real comments on relevant threads, through real aged accounts. $15 per comment.",
 };
@@ -48,7 +48,7 @@ export default function SubRedditCommentsPage() {
           className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Sub Reddit Comments
+          Buy Reddit Comments
         </p>
         <h1
           className="mt-4 text-4xl font-extrabold leading-tight text-[#12171D] sm:text-5xl"
