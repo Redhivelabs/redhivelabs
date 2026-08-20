@@ -6,6 +6,26 @@ import Link from "next/link";
 export default function ServicesNavDropdown() {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef(null);
+  const closeTimer = useRef(null);
+
+  function clearCloseTimer() {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  }
+
+  function openNow() {
+    clearCloseTimer();
+    setOpen(true);
+  }
+
+  function closeSoon() {
+    clearCloseTimer();
+    closeTimer.current = setTimeout(function () {
+      setOpen(false);
+    }, 250);
+  }
 
   useEffect(function () {
     function handleClickOutside(e) {
@@ -16,6 +36,7 @@ export default function ServicesNavDropdown() {
     document.addEventListener("mousedown", handleClickOutside);
     return function () {
       document.removeEventListener("mousedown", handleClickOutside);
+      clearCloseTimer();
     };
   }, []);
 
@@ -23,12 +44,8 @@ export default function ServicesNavDropdown() {
     <div
       ref={wrapperRef}
       className="relative"
-      onMouseEnter={function () {
-        setOpen(true);
-      }}
-      onMouseLeave={function () {
-        setOpen(false);
-      }}
+      onMouseEnter={openNow}
+      onMouseLeave={closeSoon}
     >
       <button
         type="button"
@@ -57,6 +74,8 @@ export default function ServicesNavDropdown() {
         <div
           className="absolute left-0 top-full z-50 mt-2 w-52 overflow-hidden rounded-2xl bg-[#12171D] py-2 shadow-[0_16px_40px_-8px_rgba(0,0,0,0.5)]"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+          onMouseEnter={openNow}
+          onMouseLeave={closeSoon}
         >
           <Link
             href="/services/posts"
