@@ -30,10 +30,6 @@ export default function PayPalButton({ orderType, keyword, quantity, notes, find
           const data = await res.json();
 
           if (data.error) {
-            if (res.status === 401) {
-              router.push("/login");
-              throw new Error("Not logged in");
-            }
             throw new Error(data.error);
           }
 
@@ -55,6 +51,10 @@ export default function PayPalButton({ orderType, keyword, quantity, notes, find
               quantity: result.quantity || "",
               amount: result.amount || "",
             });
+            if (result.guestCheckout) {
+              params.set("guest", "true");
+              params.set("email", result.email || "");
+            }
             router.push("/order-confirmed?" + params.toString());
           } else {
             alert("Payment could not be completed. Please try again.");

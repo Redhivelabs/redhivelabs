@@ -19,25 +19,27 @@ const LABELS = {
   comments: "Subreddit commenting service",
 };
 
-export async function POST(request) {
+// Returns the logged-in user's id if a valid session exists, or null if not.
+// Unlike before, a missing/invalid session is no longer an error here — it
+// just means this order will be a guest checkout, resolved to a real user
+// account after payment succeeds (see capture-order).
+async function getSessionUserId() {
   try {
     const cookieStore = await cookies();
     const sessionToken = cookieStore.get("session")?.value;
-
-    if (!sessionToken) {
-      return Response.json(
-        { error: "You must be logged in to place an order" },
-        { status: 401 }
-      );
-    }
+    if (!sessionToken) return null;
 
     const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
     const { payload } = await jwtVerify(sessionToken, secret);
-    const userId = payload.userId;
+    return payload.userId || null;
+  } catch (e) {
+    return null;
+  }
+}
 
-    if (!userId) {
-      return Response.json({ error: "Invalid session" }, { status: 401 });
-    }
+export async function POST(request) {
+  try {
+    const userId = await getSessionUserId();
 
     const body = await request.json();
     const keyword = (body.keyword || "").trim();
@@ -65,11 +67,12 @@ export async function POST(request) {
     const unitPrice = PRICES[orderType] + (findSubreddit ? FIND_SUBREDDIT_FEE : 0);
     const totalAmount = unitPrice * quantity;
 
-    // Create a pending order in our own database first
+    // Create a pending order in our own database first. userId is null for
+    // guest checkouts — it gets filled in once payment succeeds.
     const inserted = await db
       .insert(orders)
       .values({
-        userId,
+        userId: userId,
         keyword,
         status: "pending",
         amount: totalAmount,

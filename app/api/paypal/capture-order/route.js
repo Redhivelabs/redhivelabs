@@ -2,6 +2,7 @@ import { db } from "../../../../db/client.js";
 import { orders, jobs, users } from "../../../../db/schema.js";
 import { eq } from "drizzle-orm";
 import { getPayPalAccessToken, PAYPAL_BASE_URL } from "../../../../lib/paypal.js";
+import { SignJWT } from "jose";
 
 const ORDER_TYPE_LABELS = {
   report: "Subreddit Placement Report",
@@ -41,11 +42,65 @@ async function sendOrderConfirmationEmail({ toEmail, order }) {
 
   if (!emailRes.ok) {
     const errText = await emailRes.text();
-    // Don't fail the whole request just because the email didn't send —
-    // the payment already succeeded and the order already exists.
-    // Just log it so it's visible in the server logs.
     console.error("Order confirmation email failed:", errText.slice(0, 300));
   }
+}
+
+// Sends a magic login link to a guest who just paid without an account yet —
+// same mechanism as the existing email login flow (app/api/auth/send), just
+// triggered automatically after a successful guest checkout instead of by
+// the person typing their email into a login form.
+async function sendGuestLoginLink({ toEmail }) {
+  try {
+    const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
+    const token = await new SignJWT({ email: toEmail })
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("15m")
+      .sign(secret);
+
+    const baseUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://redhivelabs.com"
+        : "http://localhost:3000";
+
+    const magicLink = baseUrl + "/api/auth/verify?token=" + encodeURIComponent(token);
+
+    const emailRes = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + process.env.RESEND_API_KEY,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "RedHiveLabs <login@redhivelabs.com>",
+        to: toEmail,
+        subject: "Your login link — RedHiveLabs",
+        html:
+          "<p>Thanks for your order! Click below to log in and track your report.</p>" +
+          '<p><a href="' + magicLink + '">Log in to RedHiveLabs</a></p>' +
+          "<p>This link expires in 15 minutes. If it expires, just come back to " +
+          "redhivelabs.com and sign in with this same email address.</p>",
+      }),
+    });
+
+    if (!emailRes.ok) {
+      const errText = await emailRes.text();
+      console.error("Guest login link email failed:", errText.slice(0, 300));
+    }
+  } catch (e) {
+    console.error("Guest login link email threw:", e.message);
+  }
+}
+
+// Finds an existing user by email, or creates a new one. Used to attach a
+// real account to a guest order once we know their email from PayPal.
+async function findOrCreateUserByEmail(email) {
+  const existing = await db.select().from(users).where(eq(users.email, email));
+  if (existing[0]) return existing[0];
+
+  const inserted = await db.insert(users).values({ email }).returning();
+  return inserted[0];
 }
 
 export async function POST(request) {
@@ -108,18 +163,40 @@ export async function POST(request) {
       progress: 0,
     });
 
-    // Look up the customer's email (from their Google/magic-link account)
-    // and send them an order confirmation. This never blocks or fails
-    // the response — payment already succeeded, so a flaky email send
-    // shouldn't turn into an error page for the customer.
-    const userRows = await db.select().from(users).where(eq(users.id, order.userId));
-    const customerEmail = userRows[0] ? userRows[0].email : null;
+    let customerEmail = null;
+    let isGuestCheckout = false;
 
+    if (order.userId) {
+      // Normal logged-in checkout — look up their email as before.
+      const userRows = await db.select().from(users).where(eq(users.id, order.userId));
+      customerEmail = userRows[0] ? userRows[0].email : null;
+    } else {
+      // Guest checkout — this order had no account attached at payment
+      // time. PayPal's capture response includes the payer's email, so we
+      // use that to find or create their account and link it to the order.
+      isGuestCheckout = true;
+      const payerEmail = captureData.payer && captureData.payer.email_address
+        ? captureData.payer.email_address
+        : null;
+
+      if (payerEmail) {
+        const user = await findOrCreateUserByEmail(payerEmail);
+        customerEmail = user.email;
+        await db.update(orders).set({ userId: user.id }).where(eq(orders.id, order.id));
+      }
+    }
+
+    // Send confirmation + (for guests) a login link. Never let an email
+    // failure block the response — payment already succeeded.
     if (customerEmail) {
       try {
         await sendOrderConfirmationEmail({ toEmail: customerEmail, order });
       } catch (emailError) {
         console.error("Order confirmation email threw:", emailError.message);
+      }
+
+      if (isGuestCheckout) {
+        await sendGuestLoginLink({ toEmail: customerEmail });
       }
     }
 
@@ -130,6 +207,8 @@ export async function POST(request) {
       keyword: order.keyword,
       quantity: order.quantity,
       amount: order.amount,
+      guestCheckout: isGuestCheckout,
+      email: isGuestCheckout ? customerEmail : null,
     });
   } catch (error) {
     return Response.json(

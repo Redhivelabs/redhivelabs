@@ -1,6 +1,6 @@
 import { pgTable, serial, text, timestamp, integer, boolean, jsonb } from "drizzle-orm/pg-core";
 
-// USERS — anyone who signs up via magic link
+// USERS — anyone who signs up via Google OAuth, magic link, or guest checkout
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
@@ -16,21 +16,23 @@ export const scans = pgTable("scans", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-// ORDERS — paid $99 report purchases
+// ORDERS — paid report/posts/comments purchases.
+// userId is nullable to support guest checkout (pay first via PayPal, account
+// gets created/linked automatically after payment using the PayPal payer email).
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull().references(() => users.id),
+  userId: integer("user_id").references(() => users.id),
   keyword: text("keyword").notNull(),
   status: text("status").notNull().default("pending"), // pending, paid, fulfilled
   paypalOrderId: text("paypal_order_id"),
-  amount: integer("amount").notNull().default(69),
+  amount: integer("amount").notNull().default(49),
   orderType: text("order_type").notNull().default("report"), // report, posts, comments
   quantity: integer("quantity").notNull().default(1),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-// REPORTS — the finished $99 report, linked to an order
+// REPORTS — the finished report, linked to an order
 export const reports = pgTable("reports", {
   id: serial("id").primaryKey(),
   orderId: integer("order_id").notNull().references(() => orders.id),

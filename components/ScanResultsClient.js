@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import SiteNav from "./SiteNav.js";
+import PayPalButton from "./PayPalButton.js";
 
 function hasScannedBefore() {
   return document.cookie
@@ -409,40 +410,43 @@ export default function ScanResultsClient({ keyword }) {
             </div>
 
             <div
-              className="mt-10 rounded-2xl p-8 text-center shadow-[0_16px_40px_-12px_rgba(11,110,98,0.35)]"
+              className="mt-10 rounded-3xl p-8 text-center sm:p-10"
               style={{
-                background: "linear-gradient(180deg, #12171D 0%, #0B1410 100%)",
+                background:
+                  "radial-gradient(140% 120% at 10% 0%, #14A08C 0%, #0B6E62 32%, #063D37 100%)",
+                boxShadow:
+                  "inset 0 1px 0 rgba(255,255,255,0.12), 0 24px 60px -16px rgba(11,110,98,0.45)",
               }}
             >
-              <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full bg-[#0B6E62]/20 px-3 py-1 text-xs font-medium text-[#1FBFA8]">
+              <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white/70">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#1FBFA8]" />
-                Full Placement Report
+                Free preview only
               </div>
               <p
-                className="text-2xl font-bold text-white"
+                className="text-2xl font-extrabold text-white sm:text-3xl"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
-                Get the full picture
+                This was the preview.
               </p>
-              <p className="mx-auto mt-2 max-w-sm text-sm text-white/60">
-                10-15 curated subreddits, posting rules, removal risk, best
-                times to post, and real evidence — one report, $49 USD.
+              <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-white/70">
+                The full Reddit Intel Report ranks 10-15 subreddits, flags
+                exact removal rates, and tells you exactly when to post —
+                reviewed by a real person before it lands in your inbox.
               </p>
-              <a
-                href={
-                  isLoggedIn
-                    ? "/dashboard?order=report&keyword=" + encodeURIComponent(keyword)
-                    : "/api/auth/google?next=" +
-                      encodeURIComponent(
-                        "/dashboard?order=report&keyword=" + keyword
-                      )
-                }
-                className="mx-auto mt-6 block w-full max-w-xs rounded-full bg-[#0B6E62] px-8 py-3.5 text-center font-medium text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
+              <p
+                className="mt-4 text-3xl font-extrabold text-white"
+                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
-                {isLoggedIn ? "Order this report" : "Sign in to order"}
-              </a>
-              <p className="mt-3 text-xs text-white/30">
-                Secure checkout inside your dashboard
+                $49
+              </p>
+
+              <div className="mx-auto mt-5 max-w-xs rounded-xl bg-white p-1.5">
+                <PayPalButton orderType="report" keyword={keyword} quantity={1} />
+              </div>
+
+              <p className="mt-4 text-xs text-white/50">
+                No account needed to pay — we&apos;ll email you a login link
+                right after.
               </p>
             </div>
           </>

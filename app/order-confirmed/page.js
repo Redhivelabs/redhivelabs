@@ -18,16 +18,29 @@ function OrderConfirmedContent() {
   const keyword = searchParams.get("keyword");
   const quantity = searchParams.get("quantity");
   const amount = searchParams.get("amount");
+  const isGuest = searchParams.get("guest") === "true";
+  const email = searchParams.get("email");
 
   const label = ORDER_TYPE_LABELS[orderType] || orderType;
 
   return (
     <div style={{ maxWidth: 560, margin: "80px auto", padding: "0 24px", textAlign: "center" }}>
       <h1 style={{ fontSize: 28, marginBottom: 12 }}>Thanks — your order is in!</h1>
-      <p style={{ color: "#555", marginBottom: 32 }}>
-        We&apos;ve sent a confirmation to your email. Every order is reviewed and prepared
-        by hand, so it isn&apos;t instant — we&apos;ll email you again as soon as it&apos;s ready.
-      </p>
+
+      {isGuest ? (
+        <p style={{ color: "#555", marginBottom: 32 }}>
+          We&apos;ve sent your order confirmation and a login link to{" "}
+          <strong>{email}</strong>. Click the link anytime to check on your
+          report — every order is reviewed and prepared by hand, so it
+          isn&apos;t instant.
+        </p>
+      ) : (
+        <p style={{ color: "#555", marginBottom: 32 }}>
+          We&apos;ve sent a confirmation to your email. Every order is reviewed
+          and prepared by hand, so it isn&apos;t instant — we&apos;ll email you
+          again as soon as it&apos;s ready.
+        </p>
+      )}
 
       {orderId && (
         <div
@@ -78,6 +91,13 @@ function OrderConfirmedContent() {
       >
         Go to your dashboard
       </Link>
+
+      {isGuest && (
+        <p style={{ marginTop: 16, fontSize: 13, color: "#888" }}>
+          Don&apos;t have an account yet? Use the login link we emailed you —
+          clicking &quot;dashboard&quot; now will just ask you to sign in.
+        </p>
+      )}
     </div>
   );
 }
