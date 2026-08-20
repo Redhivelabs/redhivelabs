@@ -30,12 +30,28 @@ export const metadata = {
   },
 };
 
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "RedHiveLabs",
+  url: "https://redhivelabs.com",
+  description:
+    "RedHiveLabs helps businesses find the right subreddits to reach their buyers, with a free Reddit scan, a paid Reddit Intel Report, and done-for-you Reddit posting and commenting services.",
+  sameAs: ["https://twitter.com/Redhivelabs"],
+};
+
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
       className={`${archivo.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </head>
       <body
         className="min-h-full flex flex-col overflow-x-hidden"
         style={{ fontFamily: "var(--font-source-serif), serif" }}

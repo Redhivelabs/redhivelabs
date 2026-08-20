@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /api
+Disallow: /login
+Disallow: /order-confirmed
+
+Sitemap: https://redhivelabs.com/sitemap.xml

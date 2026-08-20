@@ -85,6 +85,21 @@ const FAQS = [
 ];
 
 export default function RedditIntelReportPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map(function (item) {
+      return {
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.a,
+        },
+      };
+    }),
+  };
+
   return (
     <div
       className="min-h-screen px-6 pb-24"
@@ -93,6 +108,10 @@ export default function RedditIntelReportPage() {
           "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
       }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <SiteNav />
 
       {/* HERO */}
