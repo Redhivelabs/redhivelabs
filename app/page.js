@@ -36,7 +36,7 @@ export default function Home() {
         </h1>
 
         <p className="mx-auto mt-5 max-w-lg text-lg text-[#12171D]/70">
-          Discover the Reddit Communities That Matter
+          One search. Every subreddit that matters, ranked.
         </p>
 
         <div className="relative mx-auto mt-9 max-w-xl">

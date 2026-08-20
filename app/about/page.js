@@ -99,6 +99,41 @@ export default function About() {
             feels automated — the nuance is the whole product, and you can&apos;t
             outsource it to a bot.
           </p>
+
+          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-[#12171D]/8 pt-4 text-sm">
+            <a
+              href="https://t.me/Redhivelabs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[#12171D]/60 hover:text-[#0B6E62]"
+            >
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                <path d="M21.94 4.6c.28-1.13-.42-1.66-1.44-1.28L2.7 10.2c-1.1.44-1.08 1.06-.19 1.34l4.53 1.41 10.5-6.62c.5-.32.95-.14.58.2L9.9 14.35l-.35 4.94c.5 0 .72-.23.99-.5l2.38-2.3 4.94 3.63c.91.5 1.56.24 1.79-.85l3.29-14.7z" />
+              </svg>
+              @Redhivelabs
+            </a>
+            <a
+              href="mailto:Prakash@redhivelabs.com"
+              className="flex items-center gap-1.5 text-[#12171D]/60 hover:text-[#0B6E62]"
+            >
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="M2 7l10 6 10-6" />
+              </svg>
+              Prakash@redhivelabs.com
+            </a>
+            <a
+              href="https://twitter.com/redhivelabs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[#12171D]/60 hover:text-[#0B6E62]"
+            >
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+              @redhivelabs
+            </a>
+          </div>
         </div>
       </div>
 
