@@ -79,7 +79,7 @@ export default function Home() {
               type="submit"
               className="rounded-full bg-[#0B6E62] px-8 py-4 font-medium text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53] hover:shadow-[0_10px_24px_-6px_rgba(11,110,98,0.6)]"
             >
-              Find My Audience
+              Find My Buyers
             </button>
           </form>
         </div>
