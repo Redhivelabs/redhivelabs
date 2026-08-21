@@ -42,7 +42,7 @@ export default function NavAuthStatus() {
 
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/");
+    window.location.href = "/";
   }
 
   if (status.loading) {
