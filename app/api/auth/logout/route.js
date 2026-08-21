@@ -1,11 +1,15 @@
+import { cookies } from "next/headers";
+
 export async function POST() {
-  const headers = new Headers();
-  headers.append(
-    "Set-Cookie",
-    "session=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0"
-  );
-  return new Response(JSON.stringify({ success: true }), {
-    status: 200,
-    headers,
-  });
+  try {
+    const cookieStore = await cookies();
+    cookieStore.delete("session");
+
+    return Response.json({ success: true });
+  } catch (error) {
+    return Response.json(
+      { error: "Logout failed", details: error.message },
+      { status: 500 }
+    );
+  }
 }
