@@ -426,11 +426,11 @@ export default function ScanResultsClient({ keyword }) {
                 className="text-2xl font-extrabold text-white sm:text-3xl"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
-                You just saw 5. One of them gets you removed.
+                You Just Saw Few. One of Them Gets You Removed.
               </p>
               <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-white/70">
-                Real removal rates. The exact days and hours to post. Reviewed
-                by hand, not a bot.
+                Real Removal Rates. The exact days and hours to post. Reviewed
+                by Human, not a Bot.
               </p>
 
               <div className="mx-auto mt-6 max-w-xs rounded-2xl border border-white/10 bg-white/[0.06] p-5">
