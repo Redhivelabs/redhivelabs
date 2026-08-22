@@ -132,13 +132,13 @@ export default function RedditIntelReportPage() {
           className="mt-4 text-4xl font-extrabold leading-tight text-[#12171D] sm:text-5xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Your buyers are on Reddit. Your posts keep getting removed.
+          Your Buyers are on Reddit. Your Posts Keep Getting Removed.
         </h1>
         <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-[#12171D]/70">
-          Wrong room, wrong time — gone in minutes. We tell you the right ones.
+          Wrong Subreddit, Wrong Time — Gone in Minutes. We tell you the right ones.
         </p>
         <div className="mt-8 flex flex-col items-center gap-3">
-          <CTAButton>Show me the right subreddits — $49*</CTAButton>
+          <CTAButton>Show me the Right Subreddits — $49*</CTAButton>
           <p className="max-w-sm text-xs text-[#12171D]/40">
             * No more &quot;removed, no reason given.&quot; Just the rooms that&apos;ll
             actually let your post live.
