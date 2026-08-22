@@ -4,7 +4,7 @@ import SiteNav from "../../components/SiteNav.js";
 export const metadata = {
   title: "Reddit Intel Report — Know Before You Post | RedHiveLabs",
   description:
-    "Reddit is where your buyers do their real research — and most brands get removed before they're ever seen. Get the exact subreddits, rules, and timing for your keyword, before you post.",
+    "Your buyers are on Reddit. Your posts keep getting removed. We tell you where to post, when, and how — before you hit submit.",
 };
 
 function Eyebrow({ children }) {
@@ -41,51 +41,57 @@ function CTAButton({ children, href = "/dashboard?order=report", subtle = false 
   );
 }
 
+const HERO_CHECKS = [
+  "The subreddits that won't remove you",
+  "The exact days and hours to post",
+  "What your buyers are already asking",
+];
+
 const PAIN_POINTS = [
-  "You spent an hour on the post. Removed in four minutes. No reason given.",
+  "Spent an hour on the post. Gone in four minutes.",
   "Zero upvotes, zero comments, zero explanation. Shadowbanned, probably.",
-  "Third rejected post this week — and now your account's flagged as spam.",
-  "Or the quiet one nobody notices: you posted in a dead subreddit, and nobody was ever going to see it anyway.",
+  "Third removal this week. Now your account's flagged as spam.",
+  "Or worse — it stayed up in a dead subreddit nobody reads.",
 ];
 
 const IN_SCOPE = [
-  "The removal reality — the real removal rate for every subreddit on your shortlist, so you know your actual odds before you post",
-  "The rules that are actually enforced — karma minimums, account-age gates, self-promo limits, flair requirements (the ones that quietly kill posts)",
-  "The timing that works — the specific days and hours top posts in each subreddit actually went live",
-  "A ready-to-use angle — written for your exact keyword, not a swipe-file template",
-  "The conversations already happening — real questions your buyers are asking right now, so you know precisely what to write",
+  "Real removal rate for every subreddit on your list",
+  "The rules that actually get enforced — karma, account age, self-promo, flair",
+  "The days and hours that actually work",
+  "An angle written for your keyword, not a template",
+  "The exact questions your buyers are asking right now",
 ];
 
 const OUT_OF_SCOPE = [
-  "A promise your post goes viral",
-  "A done-for-you posting service (that's separate, if you want it)",
-  "Reddit ads or paid promotion",
+  "A promise you go viral",
+  "Us posting for you (that's a different service)",
+  "Reddit ads",
 ];
 
 const FAQS = [
   {
     q: "Will this get my account banned?",
-    a: "No. Reading a PDF has never banned anyone. This exists precisely so you don't get banned.",
+    a: "No. Reading a PDF has never banned anyone. This is how you avoid it.",
   },
   {
-    q: "I've never posted on Reddit. Is this for me?",
-    a: "Especially you. It tells you which subreddits actually tolerate new, low-karma accounts — before you learn the hard way and torch your first one.",
+    q: "Never posted on Reddit. Still for me?",
+    a: "Especially you. It shows you which subreddits go easy on new accounts — before you torch your first one.",
   },
   {
-    q: "We're a company, not a solo poster. Still relevant?",
-    a: "More so. If you're evaluating Reddit as a channel, this is your due diligence: real removal risk, real audience size, real timing — before you commit a team's hours to it.",
+    q: "We're a company, not one guy with a Reddit account.",
+    a: "Even better. This is your due diligence before you put a team's hours into a channel.",
   },
   {
-    q: "How fast do I get it?",
-    a: "Within 24-48 hours. A real person reviews every report before it goes out, so it's not instant — but you'll have it in your inbox within a day or two, often sooner.",
+    q: "How fast?",
+    a: "24-48 hours. A real person checks every report before it goes out.",
   },
   {
-    q: "Is this a subscription?",
-    a: "$49. Once. Nothing recurring, ever.",
+    q: "Subscription?",
+    a: "No. $49. Once. That's the whole thing.",
   },
   {
-    q: "Can I get one for a different keyword later?",
-    a: "Order another anytime — same price, same process.",
+    q: "Another keyword later?",
+    a: "Order another. Same price, same deal.",
   },
 ];
 
@@ -120,28 +126,36 @@ export default function RedditIntelReportPage() {
       <SiteNav />
 
       {/* HERO */}
-      <div className="mx-auto mt-20 max-w-3xl text-center">
+      <div className="mx-auto mt-20 max-w-2xl text-center">
         <Eyebrow>Reddit Intel Report</Eyebrow>
         <h1
           className="mt-4 text-4xl font-extrabold leading-tight text-[#12171D] sm:text-5xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Reddit is where your buyers do their real research. Most brands get
-          removed before they&apos;re ever seen.
+          Your buyers are on Reddit. Your posts keep getting removed.
         </h1>
-        <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-[#12171D]/70">
-          Wrong subreddit, wrong moderator, wrong day — and your post is gone in
-          minutes, with no reason given. This report tells you exactly where,
-          when, and how to post for your niche{" "}
-          <span className="font-semibold text-[#12171D]">before</span> you spend
-          a dollar or burn an account.
+        <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-[#12171D]/70">
+          Wrong room, wrong time — gone in minutes. We tell you the right ones.
         </p>
         <div className="mt-8 flex flex-col items-center gap-3">
-          <CTAButton>Show me the right subreddits — $49</CTAButton>
+          <CTAButton>Show me the right subreddits — $49*</CTAButton>
           <p className="max-w-sm text-xs text-[#12171D]/40">
-            One keyword. One report. Every subreddit ranked by real removal
-            rate, activity, and buyer intent.
+            * No more &quot;removed, no reason given.&quot; Just the rooms that&apos;ll
+            actually let your post live.
           </p>
+        </div>
+
+        <div className="mx-auto mt-8 flex max-w-sm flex-col gap-2 text-left sm:mx-auto sm:inline-flex sm:items-start">
+          {HERO_CHECKS.map(function (item) {
+            return (
+              <div key={item} className="flex items-center gap-2 text-sm text-[#12171D]/70">
+                <span className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-[#0B6E62]/15 text-[10px] font-bold text-[#0B6E62]">
+                  ✓
+                </span>
+                {item}
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -152,20 +166,14 @@ export default function RedditIntelReportPage() {
           className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Reddit won&apos;t tell you the rules. It just enforces them — on you.
+          Reddit won&apos;t tell you the rules. It just enforces them. On you.
         </h2>
 
-        <p className="mt-6 text-base leading-relaxed text-[#12171D]/70">
-          Reddit drives some of the highest-intent traffic on the internet.
-          People don&apos;t go there to be sold to; they go to ask{" "}
-          <span className="italic">&quot;what actually works?&quot;</span> and{" "}
-          <span className="italic">&quot;what should I buy?&quot;</span> — and
-          they trust the answers more than any ad. That&apos;s exactly why
-          it&apos;s worth getting right, and exactly why it punishes guesswork so
-          hard:
+        <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-[#12171D]/40">
+          Your last few attempts, probably:
         </p>
 
-        <div className="mt-8 flex flex-col gap-3">
+        <div className="mt-4 flex flex-col gap-3">
           {PAIN_POINTS.map(function (p) {
             return (
               <div
@@ -180,43 +188,37 @@ export default function RedditIntelReportPage() {
         </div>
 
         <p className="mt-8 text-base leading-relaxed text-[#12171D]/70">
-          Meanwhile, somewhere in your exact niche, there&apos;s a subreddit with
-          a real, active audience and a moderator who barely lifts a finger. Your
-          buyers are already in there, asking the exact questions your product
-          answers.{" "}
-          <span className="font-semibold text-[#12171D]">
-            You just don&apos;t know which room it is.
-          </span>{" "}
-          That&apos;s the entire job of this report.
+          Somewhere in your niche there&apos;s a subreddit full of your buyers,
+          run by a mod who barely shows up. You just don&apos;t know which one.
+        </p>
+        <p
+          className="mt-2 text-base font-bold text-[#12171D]"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
+          That&apos;s the whole report.
         </p>
       </div>
 
       {/* THE REFRAME */}
       <div className="mx-auto mt-24 max-w-2xl">
-        <Eyebrow>Why this is worth $49 and not $0</Eyebrow>
+        <Eyebrow>Why this, and not a free Google search</Eyebrow>
         <h2
           className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          The problem was never your post. It was the room you posted it in.
+          It was never your post. It was the room.
         </h2>
-
-        <p className="mt-6 text-base leading-relaxed text-[#12171D]/70">
-          Every &quot;failed&quot; Reddit attempt gets blamed on the content.
-          It&apos;s almost never the content. It&apos;s that Reddit is 100,000+
-          separate rooms, each with its own rules, its own enforcement, its own
-          culture, and its own best time to speak — and none of them are written
-          down anywhere you can find.
-        </p>
         <p className="mt-4 text-base leading-relaxed text-[#12171D]/70">
-          Guess wrong and you don&apos;t just lose the post. You train the
-          algorithm to distrust your account, so the{" "}
-          <span className="italic">next</span> post starts in a hole too. Get it
-          right — one time, in the right room — and Reddit becomes the cheapest
-          high-intent channel you have.
+          Reddit is 100,000+ rooms. Each with its own rules, nobody wrote down.
+          Guess wrong and you don&apos;t just lose the post — you teach the
+          algorithm to bury the next one too.
         </p>
-        <p className="mt-4 text-base font-semibold leading-relaxed text-[#12171D]">
-          This report is the map. So the first move you make is the right one.
+        <p
+          className="mt-2 text-base font-bold text-[#12171D]"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
+          Get it right once, and Reddit&apos;s the cheapest buyers you&apos;ll ever
+          find.
         </p>
       </div>
 
@@ -228,7 +230,7 @@ export default function RedditIntelReportPage() {
             className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            Exactly what you get. And what you don&apos;t.
+            What you get. What you don&apos;t.
           </h2>
         </div>
 
@@ -238,7 +240,7 @@ export default function RedditIntelReportPage() {
               className="text-sm font-bold uppercase tracking-wide text-[#0B6E62]"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
-              What&apos;s in the report
+              In the report
             </h3>
             <ul className="mt-4 flex flex-col gap-3">
               {IN_SCOPE.map(function (item) {
@@ -257,7 +259,7 @@ export default function RedditIntelReportPage() {
               className="text-sm font-bold uppercase tracking-wide text-[#12171D]/50"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
-              What it&apos;s not
+              Not in it
             </h3>
             <ul className="mt-4 flex flex-col gap-3">
               {OUT_OF_SCOPE.map(function (item) {
@@ -273,30 +275,6 @@ export default function RedditIntelReportPage() {
         </div>
       </div>
 
-      {/* CREDIBILITY / RIGOR */}
-      <div className="mx-auto mt-24 max-w-2xl">
-        <Eyebrow>How we actually know this</Eyebrow>
-        <h2
-          className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
-          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-        >
-          Real data. Then a real human.
-        </h2>
-
-        <p className="mt-6 text-base leading-relaxed text-[#12171D]/70">
-          Every report starts with live Reddit data — actual recent posts,
-          actual removal patterns, actual activity and timing for your keyword,
-          pulled and scored across every subreddit that matters for your niche.
-          No recycled lists, no &quot;top 10 subreddits for marketing&quot; fluff
-          you could&apos;ve Googled.
-        </p>
-        <p className="mt-4 text-base leading-relaxed text-[#12171D]/70">
-          Then a person reviews it before it reaches you. That&apos;s why it
-          isn&apos;t instant — and it&apos;s the whole point. You get analysis you
-          can act on immediately, not a raw data dump you have to interpret.
-        </p>
-      </div>
-
       {/* HOW IT WORKS */}
       <div className="mx-auto mt-24 max-w-3xl">
         <div className="text-center">
@@ -305,15 +283,15 @@ export default function RedditIntelReportPage() {
             className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            Three steps. That&apos;s it.
+            Three steps. Done.
           </h2>
         </div>
 
         <div className="mt-10 grid gap-8 sm:grid-cols-3">
           {[
-            { n: "1", t: "Give us your keyword — the product, service, or topic you want to talk about" },
-            { n: "2", t: "We run the recon — real posts, real removal data, real timing, scored and ranked" },
-            { n: "3", t: "Your report lands in your inbox — reviewed, ranked, and ready to act on" },
+            { n: "1", t: "Give us your keyword." },
+            { n: "2", t: "We run the recon — real posts, real removal data, real timing." },
+            { n: "3", t: "Report hits your inbox. Go post." },
           ].map(function (step) {
             return (
               <div key={step.n} className="text-center">
@@ -332,11 +310,11 @@ export default function RedditIntelReportPage() {
         </div>
       </div>
 
-      {/* THE ALTERNATIVE (blunt reframe) */}
+      {/* THE ALTERNATIVE */}
       <div className="mx-auto mt-24 max-w-2xl text-center">
         <p className="text-base leading-relaxed text-[#12171D]/60">
-          Or keep posting blind: write it, cross your fingers, get removed, blame
-          the algorithm, repeat next week. That works too, technically.
+          Or keep guessing. Write it, cross your fingers, get removed, blame the
+          algorithm, repeat. That works too. Technically.
         </p>
       </div>
 
@@ -364,12 +342,11 @@ export default function RedditIntelReportPage() {
             $49
           </p>
           <p className="mt-2 text-sm text-white/70">
-            One keyword. One report. One-time.
+            One keyword. One report. Once. No subscription, no upsell.
           </p>
           <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-white/60">
-            Less than an hour of your time. Roughly the cost of one removed post
-            you&apos;ll never get back — except this one tells you where the{" "}
-            <span className="italic">next</span> one lands.
+            Cheaper than the hour you&apos;ll waste on a post that gets removed
+            anyway.
           </p>
           <div className="mt-8 flex justify-center">
             <CTAButton subtle href="/dashboard?order=report">
@@ -416,14 +393,14 @@ export default function RedditIntelReportPage() {
           className="text-xl font-bold text-[#12171D]"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          You made it to the bottom. That means you&apos;re tired of guessing too.
+          You scrolled all the way down here.
         </p>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[#12171D]/60">
-          One keyword. One report. The exact rooms where your buyers are already
-          waiting — and how to walk in without getting thrown out.
+        <p className="mx-auto mt-2 max-w-sm text-sm text-[#12171D]/60">
+          So you&apos;re clearly tired of guessing. Get the report. Post in the
+          right room for once.
         </p>
         <div className="mt-6">
-          <CTAButton>Show me the subreddits — $49</CTAButton>
+          <CTAButton>Fine, show me the subreddits — $49</CTAButton>
         </div>
       </div>
     </div>
