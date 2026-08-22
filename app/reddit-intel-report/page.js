@@ -139,10 +139,6 @@ export default function RedditIntelReportPage() {
         </p>
         <div className="mt-8 flex flex-col items-center gap-3">
           <CTAButton>Show me the Right Subreddits — $49*</CTAButton>
-          <p className="max-w-sm text-xs text-[#12171D]/40">
-            * No more &quot;removed, no reason given.&quot; Just the rooms that&apos;ll
-            actually let your post live.
-          </p>
         </div>
 
         <div className="mx-auto mt-8 flex max-w-sm flex-col gap-2 text-left sm:mx-auto sm:inline-flex sm:items-start">
