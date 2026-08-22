@@ -36,13 +36,13 @@ export default function About() {
           className="mt-4 text-4xl font-extrabold leading-tight text-[#12171D] sm:text-6xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          I learned Reddit the hard way.
+          I Learned Reddit The Hard Way.
         </h1>
         <p
           className="mx-auto mt-4 max-w-xl text-xl font-bold text-[#12171D]/80"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Removed posts, dead accounts, wasted weeks.
+          Removed Posts, Dead Accounts, Wasted Weeks.
         </p>
         <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-[#12171D]/70">
           So I built what I wish I&apos;d had on day one — cheaper than the
