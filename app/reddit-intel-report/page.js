@@ -4,7 +4,7 @@ import SiteNav from "../../components/SiteNav.js";
 export const metadata = {
   title: "Reddit Intel Report — Know Before You Post | RedHiveLabs",
   description:
-    "Your buyers are on Reddit. Your posts keep getting removed. We tell you where to post, when, and how — before you hit submit.",
+    "Your Buyers are on Reddit. Your Posts Keep Getting Removed. We tell you where to post, when, and how — before you hit submit.",
 };
 
 function Eyebrow({ children }) {
