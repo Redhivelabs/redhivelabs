@@ -45,8 +45,8 @@ export default function About() {
           Removed posts, dead accounts, wasted weeks.
         </p>
         <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-[#12171D]/70">
-          So I built the thing I wish I&apos;d had on day one — and now it&apos;s
-          yours for a lot less than the years it cost me.
+          So I built what I wish I&apos;d had on day one — cheaper than the
+          years it cost me.
         </p>
       </div>
 
