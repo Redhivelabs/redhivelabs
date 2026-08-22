@@ -212,8 +212,13 @@ function DashboardInner() {
       }}
     >
       <div className="mx-auto flex max-w-6xl gap-6 px-6 py-6">
-        <aside className="hidden w-56 flex-shrink-0 sm:block">
-          <div className="rounded-2xl bg-[#12171D] p-4 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)]">
+        <aside className="hidden w-64 flex-shrink-0 sm:block">
+          <div
+            className="rounded-2xl p-4 shadow-[0_12px_32px_-8px_rgba(18,23,29,0.45)]"
+            style={{
+              background: "linear-gradient(160deg, #171D24 0%, #12171D 60%, #0D1116 100%)",
+            }}
+          >
             <Link href="/" className="block px-2 pb-5">
               <img
                 src="/lockup-horizontal-white.svg"
@@ -222,6 +227,30 @@ function DashboardInner() {
                 style={{ height: "28px" }}
               />
             </Link>
+
+            <div className="mb-5 flex items-center gap-3 rounded-xl border border-white/8 p-3" style={{ backgroundColor: "rgba(255,255,255,0.03)" }}>
+              {data.picture ? (
+                <img
+                  src={data.picture}
+                  alt={data.email}
+                  className="h-9 w-9 flex-shrink-0 rounded-full border border-white/15"
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#1FBFA8] text-sm font-bold text-white">
+                  {data.email ? data.email[0].toUpperCase() : "?"}
+                </span>
+              )}
+              <div className="min-w-0">
+                <p className="truncate text-xs font-bold text-white" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
+                  {data.email}
+                </p>
+                <p className="text-[10px] font-medium uppercase tracking-wide text-[#1FBFA8]">
+                  Account
+                </p>
+              </div>
+            </div>
+
             <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-white/30">
               Menu
             </p>
@@ -234,10 +263,13 @@ function DashboardInner() {
                     onClick={function () {
                       setActiveSection(section.key);
                     }}
-                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium transition-colors"
+                    className="flex items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium transition-all"
                     style={{
-                      backgroundColor: isActive ? "#0B6E62" : "transparent",
+                      background: isActive
+                        ? "linear-gradient(135deg, #0F8A7B 0%, #0B6E62 100%)"
+                        : "transparent",
                       color: isActive ? "#FFFFFF" : "rgba(255,255,255,0.65)",
+                      boxShadow: isActive ? "0 8px 20px -6px rgba(31,191,168,0.5)" : "none",
                       fontFamily: "var(--font-archivo), sans-serif",
                     }}
                   >
@@ -390,22 +422,34 @@ function DashboardInner() {
                   </p>
                 )}
 
-                <div className="mt-5 flex items-center justify-between">
-                  <span
-                    className="text-2xl font-bold text-white"
-                    style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-                  >
-                    $49 USD
-                  </span>
+                <div className="mt-6 border-t border-white/10 pt-5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-white/70">
+                      Reddit Intel Report
+                    </span>
+                    <span
+                      className="text-2xl font-extrabold text-white"
+                      style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                    >
+                      $49 USD
+                    </span>
+                  </div>
                 </div>
 
                 {reportKeyword.trim() && (
-                  <div className="mt-4 rounded-xl bg-white p-1.5">
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-white p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
                     <PayPalButton
                       orderType="report"
                       keyword={reportKeyword.trim()}
                       quantity={1}
                     />
+                    <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-[#12171D]/40">
+                      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="5" y="11" width="14" height="9" rx="2" />
+                        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                      </svg>
+                      Secure checkout via PayPal
+                    </div>
                   </div>
                 )}
               </div>
@@ -546,21 +590,30 @@ function DashboardInner() {
                   </p>
                 )}
 
-                <div className="mt-5 flex items-center justify-between">
-                  <span className="text-sm text-white/70">
-                    Total
-                    {postsFindSubreddit ? " (incl. find-subreddit add-on)" : ""}
-                  </span>
-                  <span
-                    className="text-2xl font-bold text-white"
-                    style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-                  >
-                    ${(PRICES.posts + (postsFindSubreddit ? 5 : 0)) * postsQty} USD
-                  </span>
+                <div className="mt-6 border-t border-white/10 pt-5">
+                  <div className="flex items-center justify-between text-sm text-white/60">
+                    <span>{postsQty} × ${PRICES.posts} per post</span>
+                    <span>${PRICES.posts * postsQty} USD</span>
+                  </div>
+                  {postsFindSubreddit && (
+                    <div className="mt-1.5 flex items-center justify-between text-sm text-white/60">
+                      <span>Find-subreddit add-on</span>
+                      <span>+${5 * postsQty} USD</span>
+                    </div>
+                  )}
+                  <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
+                    <span className="text-sm font-medium text-white/70">Total</span>
+                    <span
+                      className="text-2xl font-extrabold text-white"
+                      style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                    >
+                      ${(PRICES.posts + (postsFindSubreddit ? 5 : 0)) * postsQty} USD
+                    </span>
+                  </div>
                 </div>
 
                 {postsKeyword.trim() && (
-                  <div className="mt-4 rounded-xl bg-white p-1.5">
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-white p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
                     <PayPalButton
                       orderType="posts"
                       keyword={postsKeyword.trim()}
@@ -575,6 +628,13 @@ function DashboardInner() {
                         (postsFindSubreddit ? "Yes (+$5/post)" : "No")
                       }
                     />
+                    <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-[#12171D]/40">
+                      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="5" y="11" width="14" height="9" rx="2" />
+                        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                      </svg>
+                      Secure checkout via PayPal
+                    </div>
                   </div>
                 )}
               </div>
@@ -712,21 +772,30 @@ function DashboardInner() {
                   </p>
                 )}
 
-                <div className="mt-5 flex items-center justify-between">
-                  <span className="text-sm text-white/70">
-                    Total
-                    {commentsFindSubreddit ? " (incl. find-subreddit add-on)" : ""}
-                  </span>
-                  <span
-                    className="text-2xl font-bold text-white"
-                    style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-                  >
-                    ${(PRICES.comments + (commentsFindSubreddit ? 5 : 0)) * commentsQty} USD
-                  </span>
+                <div className="mt-6 border-t border-white/10 pt-5">
+                  <div className="flex items-center justify-between text-sm text-white/60">
+                    <span>{commentsQty} × ${PRICES.comments} per comment</span>
+                    <span>${PRICES.comments * commentsQty} USD</span>
+                  </div>
+                  {commentsFindSubreddit && (
+                    <div className="mt-1.5 flex items-center justify-between text-sm text-white/60">
+                      <span>Find-subreddit add-on</span>
+                      <span>+${5 * commentsQty} USD</span>
+                    </div>
+                  )}
+                  <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
+                    <span className="text-sm font-medium text-white/70">Total</span>
+                    <span
+                      className="text-2xl font-extrabold text-white"
+                      style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                    >
+                      ${(PRICES.comments + (commentsFindSubreddit ? 5 : 0)) * commentsQty} USD
+                    </span>
+                  </div>
                 </div>
 
                 {commentsKeyword.trim() && (
-                  <div className="mt-4 rounded-xl bg-white p-1.5">
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-white p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
                     <PayPalButton
                       orderType="comments"
                       keyword={commentsKeyword.trim()}
@@ -741,6 +810,13 @@ function DashboardInner() {
                         (commentsFindSubreddit ? "Yes (+$5/comment)" : "No")
                       }
                     />
+                    <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-[#12171D]/40">
+                      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="5" y="11" width="14" height="9" rx="2" />
+                        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                      </svg>
+                      Secure checkout via PayPal
+                    </div>
                   </div>
                 )}
               </div>
