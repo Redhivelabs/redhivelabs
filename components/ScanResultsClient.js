@@ -420,35 +420,48 @@ export default function ScanResultsClient({ keyword }) {
             >
               <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white/70">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#1FBFA8]" />
-                Free preview only
+                Free preview
               </div>
               <p
                 className="text-2xl font-extrabold text-white sm:text-3xl"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
-                One of these subreddits is going to remove your post.
-                This tells you which.
+                You just saw 5. One of them gets you removed.
               </p>
               <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-white/70">
-                The full report scores every subreddit by real removal rate,
-                flags the ones that&apos;ll bury you, and tells you exactly
-                when to post in the ones that won&apos;t. Reviewed by hand,
-                not a bot.
-              </p>
-              <p
-                className="mt-4 text-3xl font-extrabold text-white"
-                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-              >
-                $49
+                Real removal rates. The exact days and hours to post. Reviewed
+                by hand, not a bot.
               </p>
 
-              <div className="mx-auto mt-5 max-w-xs rounded-xl bg-white p-1.5">
-                <PayPalButton orderType="report" keyword={keyword} quantity={1} />
+              <div className="mx-auto mt-6 max-w-xs rounded-2xl border border-white/10 bg-white/[0.06] p-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <span className="text-xs font-medium uppercase tracking-wide text-white/60">
+                    Reddit Intel Report
+                  </span>
+                  <span
+                    className="text-2xl font-extrabold text-white"
+                    style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                  >
+                    $49
+                  </span>
+                </div>
+
+                <div className="mt-4 rounded-xl border border-white/10 bg-white p-3">
+                  <PayPalButton orderType="report" keyword={keyword} quantity={1} />
+                </div>
+
+                <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-white/50">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="5" y="11" width="14" height="9" rx="2" />
+                    <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                  </svg>
+                  Secure checkout via PayPal
+                </div>
               </div>
 
               <p className="mt-4 text-xs text-white/50">
-                No account needed to pay — we&apos;ll email you a login link
-                right after.
+                No account needed — we&apos;ll email your login link right
+                after.
               </p>
             </div>
           </>
