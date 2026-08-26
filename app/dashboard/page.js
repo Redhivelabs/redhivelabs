@@ -8,7 +8,7 @@ import DashboardAvatarMenu from "../../components/DashboardAvatarMenu.js";
 
 const sections = [
   { key: "scans", label: "My Scans", mobileLabel: "Scans", icon: "search" },
-  { key: "report", label: "Report", mobileLabel: "Report", icon: "doc" },
+  { key: "report", label: "Reddit Intel Report", mobileLabel: "Report", icon: "doc" },
   { key: "posts", label: "Sub Reddit Posts", mobileLabel: "Posts", icon: "edit" },
   { key: "comments", label: "Sub Reddit Comments", mobileLabel: "Comments", icon: "chat" },
 ];
@@ -55,17 +55,17 @@ const PRICES = { report: 49, posts: 30, comments: 15 };
 
 function statusLabel(order) {
   if (order.orderType === "report") {
-    if (order.pdfUrl) return { text: "Ready", color: "#0B6E62" };
-    return { text: "In Progress", color: "#8F5D0C" };
+    if (order.pdfUrl) return { text: "Ready", color: "#FF6A1A" };
+    return { text: "In Progress", color: "#E0A542" };
   }
-  if (order.status === "fulfilled") return { text: "Completed", color: "#0B6E62" };
-  return { text: "In Progress", color: "#8F5D0C" };
+  if (order.status === "fulfilled") return { text: "Completed", color: "#FF6A1A" };
+  return { text: "In Progress", color: "#E0A542" };
 }
 
 function OrderList({ orders }) {
   if (orders.length === 0) {
     return (
-      <p className="mt-6 text-sm text-[#12171D]/60">
+      <p className="mt-6 text-sm text-white/60">
         No orders yet in this category.
       </p>
     );
@@ -77,19 +77,19 @@ function OrderList({ orders }) {
         return (
           <div
             key={order.orderId}
-            className="rounded-2xl border-l-4 bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]"
+            className="rounded-2xl border border-white/8 border-l-4 bg-[#15171A] p-5 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]"
             style={{ borderLeftColor: s.color }}
           >
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p
-                  className="font-bold text-[#12171D]"
+                  className="font-bold text-white"
                   style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                 >
                   {order.keyword}
                   {order.quantity > 1 ? " × " + order.quantity : ""}
                 </p>
-                <p className="mt-1 text-xs text-[#12171D]/40">
+                <p className="mt-1 text-xs text-white/40">
                   ${order.amount} USD ·{" "}
                   {new Date(order.createdAt).toLocaleDateString("en-US", {
                     month: "short",
@@ -110,7 +110,7 @@ function OrderList({ orders }) {
                 href={order.pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block rounded-full bg-[#0B6E62] px-5 py-2 text-sm font-bold text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
+                className="mt-4 inline-block rounded-full bg-[#FF6A1A] px-5 py-2 text-sm font-bold text-white shadow-[0_8px_20px_-6px_rgba(255,106,26,0.5)] transition-all hover:bg-[#E85A0C]"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Download Report
@@ -131,7 +131,6 @@ function DashboardInner() {
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("report");
 
-  const [reportKeyword, setReportKeyword] = useState("");
   const [postsKeyword, setPostsKeyword] = useState("");
   const [postsQty, setPostsQty] = useState(1);
   const [postsUrl, setPostsUrl] = useState("");
@@ -169,7 +168,6 @@ function DashboardInner() {
       setActiveSection(orderParam);
     }
     if (keywordParam) {
-      setReportKeyword(keywordParam);
       setPostsKeyword(keywordParam);
       setCommentsKeyword(keywordParam);
     }
@@ -185,10 +183,10 @@ function DashboardInner() {
         className="flex min-h-screen items-center justify-center px-6"
         style={{
           background:
-            "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
+            "radial-gradient(ellipse at top, #15171A 0%, #0D0E10 55%, #08090B 100%)",
         }}
       >
-        <p className="text-[#12171D]/60">Loading...</p>
+        <p className="text-white/50">Loading...</p>
       </div>
     );
   }
@@ -208,24 +206,31 @@ function DashboardInner() {
       className="min-h-screen"
       style={{
         background:
-          "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
+          "radial-gradient(ellipse at top, #15171A 0%, #0D0E10 55%, #08090B 100%)",
       }}
     >
       <div className="mx-auto flex max-w-6xl gap-6 px-6 py-6">
         <aside className="hidden w-64 flex-shrink-0 sm:block">
           <div
-            className="rounded-2xl p-4 shadow-[0_12px_32px_-8px_rgba(18,23,29,0.45)]"
+            className="rounded-2xl border border-white/8 p-4 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.55)]"
             style={{
-              background: "linear-gradient(160deg, #171D24 0%, #12171D 60%, #0D1116 100%)",
+              background: "linear-gradient(160deg, #1B1E22 0%, #131518 60%, #08090B 100%)",
             }}
           >
-            <Link href="/" className="block px-2 pb-5">
+            <Link href="/" className="flex items-center gap-2.5 px-2 pb-5">
               <img
-                src="/lockup-horizontal-white.svg"
-                alt="RedHiveLabs"
-                className="w-auto"
-                style={{ height: "28px" }}
+                src="/brand/wolf-icon.png"
+                alt="Wolf of Reddit"
+                className="h-8 w-8 flex-shrink-0 rounded-full"
               />
+              <span
+                className="inline-flex items-baseline gap-1.5 text-sm font-extrabold tracking-tight text-white"
+                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+              >
+                <span>WOLF</span>
+                <span>OF</span>
+                <span style={{ color: "var(--color-accent)" }}>REDDIT</span>
+              </span>
             </Link>
 
             <div className="mb-5 flex items-center gap-3 rounded-xl border border-white/8 p-3" style={{ backgroundColor: "rgba(255,255,255,0.03)" }}>
@@ -237,7 +242,7 @@ function DashboardInner() {
                   referrerPolicy="no-referrer"
                 />
               ) : (
-                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#1FBFA8] text-sm font-bold text-white">
+                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#FF6A1A] text-sm font-bold text-white">
                   {data.email ? data.email[0].toUpperCase() : "?"}
                 </span>
               )}
@@ -245,7 +250,7 @@ function DashboardInner() {
                 <p className="truncate text-xs font-bold text-white" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
                   {data.email}
                 </p>
-                <p className="text-[10px] font-medium uppercase tracking-wide text-[#1FBFA8]">
+                <p className="text-[10px] font-medium uppercase tracking-wide text-[#FF6A1A]">
                   Account
                 </p>
               </div>
@@ -266,10 +271,10 @@ function DashboardInner() {
                     className="flex items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium transition-all"
                     style={{
                       background: isActive
-                        ? "linear-gradient(135deg, #0F8A7B 0%, #0B6E62 100%)"
+                        ? "linear-gradient(135deg, #FF8A42 0%, #FF6A1A 100%)"
                         : "transparent",
                       color: isActive ? "#FFFFFF" : "rgba(255,255,255,0.65)",
-                      boxShadow: isActive ? "0 8px 20px -6px rgba(31,191,168,0.5)" : "none",
+                      boxShadow: isActive ? "0 8px 20px -6px rgba(255,106,26,0.5)" : "none",
                       fontFamily: "var(--font-archivo), sans-serif",
                     }}
                   >
@@ -284,18 +289,25 @@ function DashboardInner() {
 
         <main className="min-w-0 flex-1">
           <div className="mb-4 flex flex-col gap-3 sm:hidden">
-            <div className="flex items-center justify-between rounded-full bg-[#12171D] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)]">
-              <Link href="/" className="flex items-center px-1">
+            <div className="flex items-center justify-between rounded-full border border-white/8 bg-[#15171A] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)]">
+              <Link href="/" className="flex items-center gap-2 px-1">
                 <img
-                  src="/lockup-horizontal-white.svg"
-                  alt="RedHiveLabs"
-                  className="w-auto"
-                  style={{ height: "24px" }}
+                  src="/brand/wolf-icon.png"
+                  alt="Wolf of Reddit"
+                  className="h-6 w-6 flex-shrink-0 rounded-full"
                 />
+                <span
+                  className="inline-flex items-baseline gap-1 text-xs font-extrabold tracking-tight text-white"
+                  style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                >
+                  <span>WOLF</span>
+                  <span>OF</span>
+                  <span style={{ color: "var(--color-accent)" }}>REDDIT</span>
+                </span>
               </Link>
               <DashboardAvatarMenu email={data.email} picture={data.picture} />
             </div>
-            <div className="flex items-center gap-1.5 overflow-x-auto rounded-full bg-[#12171D] p-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)]">
+            <div className="flex items-center gap-1.5 overflow-x-auto rounded-full border border-white/8 bg-[#15171A] p-1.5 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)]">
               {sections.map(function (section) {
                 const isActive = activeSection === section.key;
                 return (
@@ -306,7 +318,7 @@ function DashboardInner() {
                     }}
                     className="flex-shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-xs font-bold transition-colors"
                     style={{
-                      backgroundColor: isActive ? "#0B6E62" : "transparent",
+                      backgroundColor: isActive ? "#FF6A1A" : "transparent",
                       color: isActive ? "#FFFFFF" : "rgba(255,255,255,0.55)",
                       fontFamily: "var(--font-archivo), sans-serif",
                     }}
@@ -325,24 +337,24 @@ function DashboardInner() {
           {activeSection === "scans" && (
             <div>
               <p
-                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
+                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#FF6A1A]"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Free Scans
               </p>
               <h1
-                className="mt-1 text-2xl font-extrabold text-[#12171D]"
+                className="mt-1 text-2xl font-extrabold text-white"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 My Scans
               </h1>
-              <p className="mt-1 text-sm text-[#12171D]/60">
+              <p className="mt-1 text-sm text-white/60">
                 Your last 20 free scans.
               </p>
               {data.scans.length === 0 ? (
-                <p className="mt-6 text-sm text-[#12171D]/60">
+                <p className="mt-6 text-sm text-white/60">
                   No scans yet.{" "}
-                  <Link href="/" className="text-[#0B6E62] hover:underline">
+                  <Link href="/" className="text-[#FF6A1A] hover:underline">
                     Run a free scan
                   </Link>
                 </p>
@@ -356,12 +368,12 @@ function DashboardInner() {
                         className="block rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)] transition-shadow hover:shadow-[0_8px_28px_-8px_rgba(18,23,29,0.2)]"
                       >
                         <p
-                          className="font-bold text-[#12171D]"
+                          className="font-bold text-white"
                           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                         >
                           {scan.keyword}
                         </p>
-                        <p className="mt-1 text-xs text-[#12171D]/40">
+                        <p className="mt-1 text-xs text-white/40">
                           {new Date(scan.createdAt).toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",
@@ -379,83 +391,23 @@ function DashboardInner() {
           {activeSection === "report" && (
             <div>
               <p
-                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
+                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#FF6A1A]"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Reddit Intel Report
               </p>
               <h1
-                className="mt-1 text-2xl font-extrabold text-[#12171D]"
+                className="mt-1 text-2xl font-extrabold text-white"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
-                Report
+                Reddit Intel Report
               </h1>
-              <p className="mt-1 text-sm text-[#12171D]/60">
+              <p className="mt-1 text-sm text-white/60">
                 10-15 curated subreddits, rules, timing, and removal risk.
               </p>
 
-              <div
-                className="mt-6 rounded-2xl p-6"
-                style={{
-                  background:
-                    "radial-gradient(140% 120% at 10% 0%, #14A08C 0%, #0B6E62 32%, #063D37 100%)",
-                  boxShadow:
-                    "inset 0 1px 0 rgba(255,255,255,0.12), 0 16px 40px -12px rgba(11,110,98,0.4)",
-                }}
-              >
-                <label className="text-xs font-medium uppercase tracking-wide text-white/70">
-                  Keyword
-                </label>
-                <input
-                  type="text"
-                  value={reportKeyword}
-                  onChange={function (e) {
-                    setReportKeyword(e.target.value);
-                  }}
-                  placeholder="e.g. skincare for sensitive skin"
-                  className="mt-2 w-full rounded-full border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
-                />
-
-                {!reportKeyword.trim() && (
-                  <p className="mt-4 text-xs font-medium text-[#A6F0E0]">
-                    Enter a keyword above to unlock checkout.
-                  </p>
-                )}
-
-                <div className="mt-6 border-t border-white/10 pt-5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-white/70">
-                      Reddit Intel Report
-                    </span>
-                    <span
-                      className="text-2xl font-extrabold text-white"
-                      style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-                    >
-                      $49 USD
-                    </span>
-                  </div>
-                </div>
-
-                {reportKeyword.trim() && (
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-white p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
-                    <PayPalButton
-                      orderType="report"
-                      keyword={reportKeyword.trim()}
-                      quantity={1}
-                    />
-                    <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-[#12171D]/40">
-                      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="5" y="11" width="14" height="9" rx="2" />
-                        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-                      </svg>
-                      Secure checkout via PayPal
-                    </div>
-                  </div>
-                )}
-              </div>
-
               <h2
-                className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-[#12171D]/50"
+                className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-white/50"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Your report orders
@@ -467,31 +419,23 @@ function DashboardInner() {
           {activeSection === "posts" && (
             <div>
               <p
-                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
+                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#FF6A1A]"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Posting Service
               </p>
               <h1
-                className="mt-1 text-2xl font-extrabold text-[#12171D]"
+                className="mt-1 text-2xl font-extrabold text-white"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Sub Reddit Posts
               </h1>
-              <p className="mt-1 text-sm text-[#12171D]/60">
+              <p className="mt-1 text-sm text-white/60">
                 We post your content to the subreddits you choose. $30 per
                 post.
               </p>
 
-              <div
-                className="mt-6 rounded-2xl p-6"
-                style={{
-                  background:
-                    "radial-gradient(140% 120% at 10% 0%, #14A08C 0%, #0B6E62 32%, #063D37 100%)",
-                  boxShadow:
-                    "inset 0 1px 0 rgba(255,255,255,0.12), 0 16px 40px -12px rgba(11,110,98,0.4)",
-                }}
-              >
+              <div className="mt-6 rounded-2xl border border-white/8 bg-[#15171A] p-6 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
                 <label className="text-xs font-medium uppercase tracking-wide text-white/70">
                   Keyword / subreddit focus
                 </label>
@@ -502,7 +446,7 @@ function DashboardInner() {
                     setPostsKeyword(e.target.value);
                   }}
                   placeholder="e.g. skincare for sensitive skin"
-                  className="mt-2 w-full rounded-full border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
+                  className="mt-2 w-full rounded-full border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
                 />
 
                 <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
@@ -513,8 +457,7 @@ function DashboardInner() {
                     onClick={function () {
                       setPostsQty(Math.max(1, postsQty - 1));
                     }}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#2DD4BF] hover:bg-[#2DD4BF]/10"
-                    style={{ backgroundColor: "rgba(6,32,29,0.6)" }}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0D0E10] text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#FF6A1A] hover:bg-[#FF6A1A]/10"
                   >
                     −
                   </button>
@@ -528,8 +471,7 @@ function DashboardInner() {
                     onClick={function () {
                       setPostsQty(Math.min(15, postsQty + 1));
                     }}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#2DD4BF] hover:bg-[#2DD4BF]/10"
-                    style={{ backgroundColor: "rgba(6,32,29,0.6)" }}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0D0E10] text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#FF6A1A] hover:bg-[#FF6A1A]/10"
                   >
                     +
                   </button>
@@ -545,7 +487,7 @@ function DashboardInner() {
                   }}
                   rows={3}
                   placeholder={"https://www.reddit.com/r/subreddit\nAdd one per line if you have more than one"}
-                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
+                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
                 />
 
                 <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
@@ -559,20 +501,20 @@ function DashboardInner() {
                   maxLength={300}
                   rows={3}
                   placeholder="Anything we should know before posting?"
-                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
+                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
                 />
                 <p className="mt-1 text-right text-xs text-white/40">
                   {postsInstructions.length}/300
                 </p>
 
-                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 p-4 transition-colors hover:border-[#2DD4BF]/40" style={{ backgroundColor: "rgba(6,32,29,0.3)" }}>
+                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 p-4 transition-colors hover:border-[#FF6A1A]/40 bg-[#0D0E10]">
                   <input
                     type="checkbox"
                     checked={postsFindSubreddit}
                     onChange={function (e) {
                       setPostsFindSubreddit(e.target.checked);
                     }}
-                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#2DD4BF]"
+                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#FF6A1A]"
                   />
                   <span className="text-sm text-white">
                     <span className="font-medium">
@@ -585,7 +527,7 @@ function DashboardInner() {
                 </label>
 
                 {!postsKeyword.trim() && (
-                  <p className="mt-4 text-xs font-medium text-[#A6F0E0]">
+                  <p className="mt-4 text-xs font-medium text-[#FF6A1A]">
                     Enter a keyword above to unlock checkout.
                   </p>
                 )}
@@ -604,8 +546,8 @@ function DashboardInner() {
                   <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
                     <span className="text-sm font-medium text-white/70">Total</span>
                     <span
-                      className="text-2xl font-extrabold text-white"
-                      style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                      className="text-2xl font-extrabold"
+                      style={{ color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
                     >
                       ${(PRICES.posts + (postsFindSubreddit ? 5 : 0)) * postsQty} USD
                     </span>
@@ -613,7 +555,7 @@ function DashboardInner() {
                 </div>
 
                 {postsKeyword.trim() && (
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-white p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-[#191B1F] p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
                     <PayPalButton
                       orderType="posts"
                       keyword={postsKeyword.trim()}
@@ -628,7 +570,7 @@ function DashboardInner() {
                         (postsFindSubreddit ? "Yes (+$5/post)" : "No")
                       }
                     />
-                    <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-[#12171D]/40">
+                    <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-white/40">
                       <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
                         <rect x="5" y="11" width="14" height="9" rx="2" />
                         <path d="M8 11V7a4 4 0 0 1 8 0v4" />
@@ -639,7 +581,7 @@ function DashboardInner() {
                 )}
               </div>
 
-              <h2 className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-[#12171D]/50" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
+              <h2 className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-white/50" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
                 Your posting orders
               </h2>
               <OrderList orders={postsOrders} />
@@ -649,30 +591,22 @@ function DashboardInner() {
           {activeSection === "comments" && (
             <div>
               <p
-                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
+                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#FF6A1A]"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Commenting Service
               </p>
               <h1
-                className="mt-1 text-2xl font-extrabold text-[#12171D]"
+                className="mt-1 text-2xl font-extrabold text-white"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
                 Sub Reddit Comments
               </h1>
-              <p className="mt-1 text-sm text-[#12171D]/60">
+              <p className="mt-1 text-sm text-white/60">
                 We leave real comments on relevant threads. $15 per comment.
               </p>
 
-              <div
-                className="mt-6 rounded-2xl p-6"
-                style={{
-                  background:
-                    "radial-gradient(140% 120% at 10% 0%, #14A08C 0%, #0B6E62 32%, #063D37 100%)",
-                  boxShadow:
-                    "inset 0 1px 0 rgba(255,255,255,0.12), 0 16px 40px -12px rgba(11,110,98,0.4)",
-                }}
-              >
+              <div className="mt-6 rounded-2xl border border-white/8 bg-[#15171A] p-6 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
                 <label className="text-xs font-medium uppercase tracking-wide text-white/70">
                   Keyword / subreddit focus
                 </label>
@@ -683,7 +617,7 @@ function DashboardInner() {
                     setCommentsKeyword(e.target.value);
                   }}
                   placeholder="e.g. skincare for sensitive skin"
-                  className="mt-2 w-full rounded-full border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
+                  className="mt-2 w-full rounded-full border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
                 />
 
                 <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
@@ -694,8 +628,7 @@ function DashboardInner() {
                     onClick={function () {
                       setCommentsQty(Math.max(1, commentsQty - 1));
                     }}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#2DD4BF] hover:bg-[#2DD4BF]/10"
-                    style={{ backgroundColor: "rgba(6,32,29,0.6)" }}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0D0E10] text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#FF6A1A] hover:bg-[#FF6A1A]/10"
                   >
                     −
                   </button>
@@ -709,8 +642,7 @@ function DashboardInner() {
                     onClick={function () {
                       setCommentsQty(Math.min(15, commentsQty + 1));
                     }}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#2DD4BF] hover:bg-[#2DD4BF]/10"
-                    style={{ backgroundColor: "rgba(6,32,29,0.6)" }}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0D0E10] text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#FF6A1A] hover:bg-[#FF6A1A]/10"
                   >
                     +
                   </button>
@@ -726,7 +658,7 @@ function DashboardInner() {
                   }}
                   rows={3}
                   placeholder={"https://www.reddit.com/r/subreddit\nAdd one per line if you have more than one"}
-                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
+                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
                 />
 
                 <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
@@ -740,20 +672,20 @@ function DashboardInner() {
                   maxLength={300}
                   rows={3}
                   placeholder="Anything we should know before commenting?"
-                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#2DD4BF]" style={{ backgroundColor: "rgba(6,32,29,0.45)" }}
+                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
                 />
                 <p className="mt-1 text-right text-xs text-white/40">
                   {commentsInstructions.length}/300
                 </p>
 
-                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 p-4 transition-colors hover:border-[#2DD4BF]/40" style={{ backgroundColor: "rgba(6,32,29,0.3)" }}>
+                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 p-4 transition-colors hover:border-[#FF6A1A]/40 bg-[#0D0E10]">
                   <input
                     type="checkbox"
                     checked={commentsFindSubreddit}
                     onChange={function (e) {
                       setCommentsFindSubreddit(e.target.checked);
                     }}
-                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#2DD4BF]"
+                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#FF6A1A]"
                   />
                   <span className="text-sm text-white">
                     <span className="font-medium">
@@ -767,7 +699,7 @@ function DashboardInner() {
                 </label>
 
                 {!commentsKeyword.trim() && (
-                  <p className="mt-4 text-xs font-medium text-[#A6F0E0]">
+                  <p className="mt-4 text-xs font-medium text-[#FF6A1A]">
                     Enter a keyword above to unlock checkout.
                   </p>
                 )}
@@ -786,8 +718,8 @@ function DashboardInner() {
                   <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
                     <span className="text-sm font-medium text-white/70">Total</span>
                     <span
-                      className="text-2xl font-extrabold text-white"
-                      style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                      className="text-2xl font-extrabold"
+                      style={{ color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
                     >
                       ${(PRICES.comments + (commentsFindSubreddit ? 5 : 0)) * commentsQty} USD
                     </span>
@@ -795,7 +727,7 @@ function DashboardInner() {
                 </div>
 
                 {commentsKeyword.trim() && (
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-white p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-[#191B1F] p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
                     <PayPalButton
                       orderType="comments"
                       keyword={commentsKeyword.trim()}
@@ -810,7 +742,7 @@ function DashboardInner() {
                         (commentsFindSubreddit ? "Yes (+$5/comment)" : "No")
                       }
                     />
-                    <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-[#12171D]/40">
+                    <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-white/40">
                       <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
                         <rect x="5" y="11" width="14" height="9" rx="2" />
                         <path d="M8 11V7a4 4 0 0 1 8 0v4" />
@@ -821,7 +753,7 @@ function DashboardInner() {
                 )}
               </div>
 
-              <h2 className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-[#12171D]/50" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
+              <h2 className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-white/50" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
                 Your comment orders
               </h2>
               <OrderList orders={commentsOrders} />

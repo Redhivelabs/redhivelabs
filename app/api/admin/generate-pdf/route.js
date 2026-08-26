@@ -35,7 +35,7 @@ export async function POST(request) {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition":
-          'attachment; filename="RedHiveLabs-' + keyword.replace(/\s+/g, "-") + '-report.pdf"',
+          'attachment; filename="WolfOfReddit-' + keyword.replace(/\s+/g, "-") + '-report.pdf"',
       },
     });
   } catch (error) {

@@ -1,8 +1,8 @@
-import Link from "next/link";
+import SiteNav from "../../components/SiteNav.js";
 
 export const metadata = {
-  title: "Terms and Conditions — RedHiveLabs",
-  description: "The terms that govern your use of RedHiveLabs.",
+  title: "Terms and Conditions",
+  description: "The terms that govern your use of Wolf of Reddit.",
 };
 
 export default function Terms() {
@@ -11,55 +11,32 @@ export default function Terms() {
       className="min-h-screen px-6 pb-24"
       style={{
         background:
-          "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
+          "radial-gradient(ellipse at top, #15171A 0%, #0D0E10 55%, #08090B 100%)",
       }}
     >
-      <nav className="mx-auto mt-6 flex max-w-4xl items-center justify-between gap-2 rounded-full bg-[#12171D] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)] sm:gap-3 sm:px-6">
-        <Link href="/">
-          <img
-            src="/lockup-horizontal-white.svg"
-            alt="RedHiveLabs"
-            className="w-auto flex-shrink-0"
-            style={{ height: "32px" }}
-          />
-        </Link>
-        <div
-          className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm"
-          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-        >
-          <Link href="/features" className="hover:text-white">
-            Features
-          </Link>
-          <Link href="/sample" className="hover:text-white">
-            Sample
-          </Link>
-          <Link href="/pricing" className="hover:text-white">
-            Pricing
-          </Link>
-        </div>
-      </nav>
+      <SiteNav />
 
       <div className="mx-auto mt-16 max-w-2xl">
         <h1
-          className="text-3xl font-bold text-[#12171D] sm:text-4xl"
+          className="text-3xl font-bold text-white sm:text-4xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           Terms and Conditions
         </h1>
-        <p className="mt-2 text-sm text-[#12171D]/50">
+        <p className="mt-2 text-sm text-white/50">
           Last updated: August 2026
         </p>
 
-        <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-[#12171D]/80">
+        <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-white/80">
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               1. Acceptance of terms
             </h2>
             <p className="mt-2">
-              By using redhivelabs.com ("the Service"), you agree to these
+              By using wolfofreddit.com ("the Service"), you agree to these
               Terms and Conditions. If you do not agree, please do not use
               the Service.
             </p>
@@ -67,13 +44,13 @@ export default function Terms() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               2. What the Service provides
             </h2>
             <p className="mt-2">
-              RedHiveLabs provides a free keyword scan showing publicly
+              Wolf of Reddit provides a free keyword scan showing publicly
               available subreddit activity, and a paid placement report
               (currently $49 USD) containing curated subreddit
               recommendations, posting rules, removal-risk data, timing
@@ -84,13 +61,13 @@ export default function Terms() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               3. Not affiliated with Reddit
             </h2>
             <p className="mt-2">
-              RedHiveLabs is an independent service and is not affiliated
+              Wolf of Reddit is an independent service and is not affiliated
               with, endorsed by, or sponsored by Reddit, Inc. All data
               referenced is drawn from publicly available Reddit activity.
             </p>
@@ -98,7 +75,7 @@ export default function Terms() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               4. Payment and refunds
@@ -115,7 +92,7 @@ export default function Terms() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               5. No guarantee of outcomes
@@ -132,7 +109,7 @@ export default function Terms() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               6. Acceptable use
@@ -146,14 +123,14 @@ export default function Terms() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               7. Limitation of liability
             </h2>
             <p className="mt-2">
               The Service is provided "as is" without warranties of any
-              kind. To the fullest extent permitted by law, RedHiveLabs
+              kind. To the fullest extent permitted by law, Wolf of Reddit
               will not be liable for any indirect, incidental, or
               consequential damages arising from your use of the Service.
             </p>
@@ -161,21 +138,21 @@ export default function Terms() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               8. Governing law
             </h2>
             <p className="mt-2">
               These Terms are governed by applicable law in the
-              jurisdiction in which RedHiveLabs operates. This section will
+              jurisdiction in which Wolf of Reddit operates. This section will
               be updated with a specific jurisdiction once finalized.
             </p>
           </section>
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               9. Changes to these terms
@@ -189,22 +166,22 @@ export default function Terms() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               10. Contact
             </h2>
             <p className="mt-2">
               Questions about these Terms can be sent to us via our contact
-              details on redhivelabs.com, or by reaching out on Twitter/X
+              details on wolfofreddit.com, or by reaching out on Twitter/X
               at{" "}
               <a
-                href="https://twitter.com/Redhivelabs"
+                href="https://twitter.com/wolfofreddit"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#0B6E62] hover:underline"
+                className="text-[#FF6A1A] hover:underline"
               >
-                @Redhivelabs
+                @wolfofreddit
               </a>
               .
             </p>

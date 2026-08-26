@@ -73,7 +73,7 @@ export default function NavAuthStatus() {
             referrerPolicy="no-referrer"
           />
         ) : (
-          <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#1FBFA8] text-xs font-bold text-white">
+          <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#FF6A1A] text-xs font-bold text-white">
             {status.email ? status.email[0].toUpperCase() : "?"}
           </span>
         )}
@@ -88,9 +88,9 @@ export default function NavAuthStatus() {
             }}
           />
           <div
-            className="absolute right-0 z-50 mt-3 w-64 rounded-2xl p-2 text-left shadow-[0_16px_40px_-12px_rgba(11,110,98,0.5)]"
+            className="absolute right-0 z-50 mt-3 w-64 rounded-2xl border border-white/10 p-2 text-left shadow-[0_16px_40px_-12px_rgba(0,0,0,0.6)]"
             style={{
-              background: "linear-gradient(180deg, #0B6E62 0%, #085248 100%)",
+              backgroundColor: "#191B1F",
             }}
           >
             <div className="flex items-center gap-3 border-b border-white/15 px-3 py-3">

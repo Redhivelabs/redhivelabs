@@ -14,7 +14,7 @@ export default function PayPalButton({ orderType, keyword, quantity, notes, find
       }}
     >
       <PayPalButtons
-        style={{ layout: "horizontal", color: "black", shape: "pill", label: "pay" }}
+        style={{ layout: "horizontal", color: "black", shape: "pill", label: "pay", tagline: false }}
         createOrder={async () => {
           const res = await fetch("/api/paypal/create-order", {
             method: "POST",

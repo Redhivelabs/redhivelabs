@@ -33,7 +33,7 @@ async function sendOrderConfirmationEmail({ toEmail, order }) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "RedHiveLabs <orders@redhivelabs.com>",
+      from: "Wolf of Reddit <orders@wolfofreddit.com>",
       to: toEmail,
       subject: "Order confirmed — " + label + " (#" + order.id + ")",
       html: html,
@@ -61,7 +61,7 @@ async function sendGuestLoginLink({ toEmail }) {
 
     const baseUrl =
       process.env.NODE_ENV === "production"
-        ? "https://redhivelabs.com"
+        ? "https://wolfofreddit.com"
         : "http://localhost:3000";
 
     const magicLink = baseUrl + "/api/auth/verify?token=" + encodeURIComponent(token);
@@ -73,14 +73,14 @@ async function sendGuestLoginLink({ toEmail }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "RedHiveLabs <login@redhivelabs.com>",
+        from: "Wolf of Reddit <login@wolfofreddit.com>",
         to: toEmail,
-        subject: "Your login link — RedHiveLabs",
+        subject: "Your login link — Wolf of Reddit",
         html:
           "<p>Thanks for your order! Click below to log in and track your report.</p>" +
-          '<p><a href="' + magicLink + '">Log in to RedHiveLabs</a></p>' +
+          '<p><a href="' + magicLink + '">Log in to Wolf of Reddit</a></p>' +
           "<p>This link expires in 15 minutes. If it expires, just come back to " +
-          "redhivelabs.com and sign in with this same email address.</p>",
+          "wolfofreddit.com and sign in with this same email address.</p>",
       }),
     });
 

@@ -1,22 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Wolf of Reddit brand tokens */
+  --background: #0d0e10;
+  --foreground: #f2f3f4;
+
+  --color-bg: #0d0e10;
+  --color-bg-deep: #08090b;
+  --color-surface: #15171a;
+  --color-surface-2: #191b1f;
+  --color-surface-3: #1d2024;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+
+  --color-text: #f2f3f4;
+  --color-text-muted: rgba(242, 243, 244, 0.6);
+  --color-text-faint: rgba(242, 243, 244, 0.4);
+
+  --color-accent: #ff6a1a;
+  --color-accent-hover: #e85a0c;
+  --color-accent-soft: rgba(255, 106, 26, 0.1);
+
+  --color-warn: #e0a542;
+  --color-warn-soft: rgba(224, 165, 66, 0.1);
+  --color-danger: #e2564c;
+  --color-danger-soft: rgba(226, 86, 76, 0.1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-archivo);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 body {
@@ -106,5 +121,5 @@ body {
 .dashboard-card label,
 .dashboard-card input::placeholder,
 .dashboard-card textarea::placeholder {
-  color: rgba(18, 23, 29, 0.55) !important;
+  color: rgba(242, 243, 244, 0.45) !important;
 }

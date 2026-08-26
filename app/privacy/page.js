@@ -1,8 +1,8 @@
-import Link from "next/link";
+import SiteNav from "../../components/SiteNav.js";
 
 export const metadata = {
-  title: "Privacy Policy — RedHiveLabs",
-  description: "How RedHiveLabs collects, uses, and protects your information.",
+  title: "Privacy Policy",
+  description: "How Wolf of Reddit collects, uses, and protects your information.",
 };
 
 export default function Privacy() {
@@ -11,55 +11,32 @@ export default function Privacy() {
       className="min-h-screen px-6 pb-24"
       style={{
         background:
-          "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
+          "radial-gradient(ellipse at top, #15171A 0%, #0D0E10 55%, #08090B 100%)",
       }}
     >
-      <nav className="mx-auto mt-6 flex max-w-4xl items-center justify-between gap-2 rounded-full bg-[#12171D] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)] sm:gap-3 sm:px-6">
-        <Link href="/">
-          <img
-            src="/lockup-horizontal-white.svg"
-            alt="RedHiveLabs"
-            className="w-auto flex-shrink-0"
-            style={{ height: "32px" }}
-          />
-        </Link>
-        <div
-          className="flex items-center gap-2 text-[11px] font-medium text-white/70 sm:gap-6 sm:text-sm"
-          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-        >
-          <Link href="/features" className="hover:text-white">
-            Features
-          </Link>
-          <Link href="/sample" className="hover:text-white">
-            Sample
-          </Link>
-          <Link href="/pricing" className="hover:text-white">
-            Pricing
-          </Link>
-        </div>
-      </nav>
+      <SiteNav />
 
       <div className="mx-auto mt-16 max-w-2xl">
         <h1
-          className="text-3xl font-bold text-[#12171D] sm:text-4xl"
+          className="text-3xl font-bold text-white sm:text-4xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           Privacy Policy
         </h1>
-        <p className="mt-2 text-sm text-[#12171D]/50">
+        <p className="mt-2 text-sm text-white/50">
           Last updated: August 2026
         </p>
 
-        <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-[#12171D]/80">
+        <div className="mt-10 flex flex-col gap-8 text-sm leading-relaxed text-white/80">
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               1. Who we are
             </h2>
             <p className="mt-2">
-              RedHiveLabs ("we", "us", "our") operates redhivelabs.com, a
+              Wolf of Reddit ("we", "us", "our") operates wolfofreddit.com, a
               service that scans public Reddit activity for a keyword you
               provide and, for paid orders, delivers a curated placement
               report. This policy explains what information we collect and
@@ -69,7 +46,7 @@ export default function Privacy() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               2. Information we collect
@@ -101,7 +78,7 @@ export default function Privacy() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               3. How we use your information
@@ -116,7 +93,7 @@ export default function Privacy() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               4. Third parties we use
@@ -146,7 +123,7 @@ export default function Privacy() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               5. Data retention
@@ -161,7 +138,7 @@ export default function Privacy() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               6. Your rights
@@ -175,7 +152,7 @@ export default function Privacy() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               7. Changes to this policy
@@ -188,22 +165,22 @@ export default function Privacy() {
 
           <section>
             <h2
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               8. Contact
             </h2>
             <p className="mt-2">
               Questions about this policy can be sent to us via our
-              contact details on redhivelabs.com, or by reaching out on
+              contact details on wolfofreddit.com, or by reaching out on
               Twitter/X at{" "}
               <a
-                href="https://twitter.com/Redhivelabs"
+                href="https://twitter.com/wolfofreddit"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#0B6E62] hover:underline"
+                className="text-[#FF6A1A] hover:underline"
               >
-                @Redhivelabs
+                @wolfofreddit
               </a>
               .
             </p>

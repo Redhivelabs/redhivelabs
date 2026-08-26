@@ -10,7 +10,7 @@ export async function GET(request) {
 
   const baseUrl =
     process.env.NODE_ENV === "production"
-      ? "https://redhivelabs.com"
+      ? "https://wolfofreddit.com"
       : "http://localhost:3000";
 
   function redirectTo(path, cookieValue) {

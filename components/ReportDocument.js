@@ -1,5 +1,7 @@
 import path from "path";
-import { Document, Page, Text, View, StyleSheet, Link, Font, Svg, Polygon, Rect } from "@react-pdf/renderer";
+import { Document, Page, Text, View, StyleSheet, Link, Font, Image } from "@react-pdf/renderer";
+
+const WOLF_ICON_PATH = path.join(process.cwd(), "public/brand/wolf-icon.png");
 
 Font.register({
   family: "Archivo",
@@ -20,12 +22,12 @@ Font.register({
 const COLORS = {
   ink: "#12171D",
   inkMuted: "#4A555F",
-  teal: "#0B6E62",
+  teal: "#FF6A1A",
   paper: "#E9ECF0",
   ochre: "#8F5D0C",
   clay: "#98302A",
   white: "#FFFFFF",
-  mint: "#1FBFA8",
+  mint: "#FF8A42",
 };
 
 const styles = StyleSheet.create({
@@ -39,9 +41,18 @@ const styles = StyleSheet.create({
   },
   coverPage: {
     padding: 60,
-    backgroundColor: COLORS.ink,
+    backgroundColor: "#0D0E10",
     color: COLORS.white,
     justifyContent: "center",
+  },
+  coverIcon: {
+    width: 56,
+    height: 56,
+    marginBottom: 24,
+  },
+  headerIcon: {
+    width: 14,
+    height: 14,
   },
   coverBadge: {
     fontFamily: "Archivo",
@@ -208,7 +219,7 @@ const styles = StyleSheet.create({
     color: COLORS.inkMuted,
   },
   badgeTeal: {
-    backgroundColor: "#0B6E621A",
+    backgroundColor: "#FF6A1A1A",
     color: COLORS.teal,
   },
   badgeOchre: {
@@ -349,9 +360,9 @@ const styles = StyleSheet.create({
   upsellBox: {
     padding: 20,
     borderRadius: 8,
-    backgroundColor: "#0B6E620D",
+    backgroundColor: "#FF6A1A0D",
     borderWidth: 1,
-    borderColor: "#0B6E621A",
+    borderColor: "#FF6A1A1A",
   },
   upsellTitle: {
     fontFamily: "Archivo",
@@ -368,31 +379,12 @@ const styles = StyleSheet.create({
   },
 });
 
-function HexMark({ size = 18, light = false }) {
-  const stroke = light ? COLORS.white : COLORS.ink;
-  const barColor = light ? "rgba(255,255,255,0.55)" : "rgba(18,23,29,0.55)";
-  return (
-    <Svg viewBox="0 0 100 100" style={{ width: size, height: size }}>
-      <Polygon
-        points="84.64,70.00 50.00,90.00 15.36,70.00 15.36,30.00 50.00,10.00 84.64,30.00"
-        stroke={stroke}
-        strokeWidth={7}
-        fill="none"
-      />
-      <Rect x="28" y="31" width="17" height="8" rx="1.5" fill={barColor} />
-      <Rect x="28" y="41" width="29" height="8" rx="1.5" fill={barColor} />
-      <Rect x="28" y="51" width="40" height="8" rx="1.5" fill={COLORS.mint} />
-      <Rect x="28" y="61" width="23" height="8" rx="1.5" fill={barColor} />
-    </Svg>
-  );
-}
-
 function PageHeader({ keyword }) {
   return (
     <View style={styles.header} fixed>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-        <HexMark size={14} />
-        <Text style={styles.headerWordmark}>RedHiveLabs</Text>
+        <Image src={WOLF_ICON_PATH} style={styles.headerIcon} />
+        <Text style={styles.headerWordmark}>Wolf of Reddit</Text>
       </View>
       <Text style={styles.headerKeyword}>&quot;{keyword}&quot;</Text>
     </View>
@@ -402,13 +394,13 @@ function PageHeader({ keyword }) {
 function PageFooter() {
   return (
     <Text style={styles.footer} fixed>
-      RedHiveLabs — redhivelabs.com
+      Wolf of Reddit — wolfofreddit.com
     </Text>
   );
 }
 
 function verdictStyle(verdict) {
-  if (verdict === "post") return { backgroundColor: "#0B6E621A", color: COLORS.teal };
+  if (verdict === "post") return { backgroundColor: "#FF6A1A1A", color: COLORS.teal };
   if (verdict === "warm up first") return { backgroundColor: "#8F5D0C1A", color: COLORS.ochre };
   return { backgroundColor: "#98302A1A", color: COLORS.clay };
 }
@@ -481,9 +473,9 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
   return (
     <Document>
       <Page size="A4" style={styles.coverPage}>
-        <HexMark size={44} light />
+        <Image src={WOLF_ICON_PATH} style={styles.coverIcon} />
         <Text style={styles.coverBadge}>Placement Report</Text>
-        <Text style={styles.coverTitle}>RedHiveLabs</Text>
+        <Text style={styles.coverTitle}>Wolf of Reddit</Text>
         <Text style={styles.coverKeyword}>&quot;{keyword}&quot;</Text>
         <View style={styles.coverDivider} />
         <Text style={styles.coverMeta}>Generated {dateStr}</Text>
@@ -690,7 +682,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
       })}
 
       <Page size="A4" style={[styles.page, styles.closingPage]}>
-        <HexMark size={28} />
+        <Image src={WOLF_ICON_PATH} style={{ width: 32, height: 32, marginBottom: 8 }} />
         <Text style={styles.closingTitle}>What&apos;s next</Text>
         <Text style={styles.closingText}>
           {dl(

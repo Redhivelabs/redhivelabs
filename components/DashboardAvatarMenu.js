@@ -18,7 +18,7 @@ export default function DashboardAvatarMenu({ email, picture }) {
         onClick={function () {
           setOpen(!open);
         }}
-        className="flex items-center gap-2 rounded-full bg-white px-2 py-1.5 shadow-[0_4px_16px_-8px_rgba(18,23,29,0.2)]"
+        className="flex items-center gap-2 rounded-full border border-white/8 bg-[#15171A] px-2 py-1.5 shadow-[0_4px_16px_-8px_rgba(0,0,0,0.5)]"
       >
         {picture ? (
           <img
@@ -28,11 +28,11 @@ export default function DashboardAvatarMenu({ email, picture }) {
             referrerPolicy="no-referrer"
           />
         ) : (
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#0B6E62] text-xs font-bold text-white">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#FF6A1A] text-xs font-bold text-white">
             {email ? email[0].toUpperCase() : "?"}
           </span>
         )}
-        <span className="hidden pr-1 text-sm text-[#12171D]/70 sm:inline">
+        <span className="hidden pr-1 text-sm text-white/70 sm:inline">
           {email}
         </span>
       </button>
@@ -45,13 +45,13 @@ export default function DashboardAvatarMenu({ email, picture }) {
               setOpen(false);
             }}
           />
-          <div className="absolute right-0 z-20 mt-2 w-48 rounded-xl bg-white p-2 shadow-[0_12px_32px_-12px_rgba(18,23,29,0.3)]">
-            <div className="border-b border-[#12171D]/10 px-3 py-2 text-xs text-[#12171D]/50">
+          <div className="absolute right-0 z-20 mt-2 w-48 rounded-xl border border-white/8 bg-[#191B1F] p-2 shadow-[0_12px_32px_-12px_rgba(0,0,0,0.6)]">
+            <div className="border-b border-white/10 px-3 py-2 text-xs text-white/50">
               {email}
             </div>
             <button
               onClick={handleLogout}
-              className="mt-1 w-full rounded-lg px-3 py-2 text-left text-sm text-[#12171D] hover:bg-[#12171D]/5"
+              className="mt-1 w-full rounded-lg px-3 py-2 text-left text-sm text-white hover:bg-white/5"
             >
               Log out
             </button>

@@ -72,7 +72,7 @@ export default function ServicesNavDropdown() {
 
       {open && (
         <div
-          className="absolute left-0 top-full z-50 mt-2 w-52 overflow-hidden rounded-2xl bg-[#12171D] py-2 shadow-[0_16px_40px_-8px_rgba(0,0,0,0.5)]"
+          className="absolute left-0 top-full z-50 mt-2 w-52 overflow-hidden rounded-2xl border border-white/8 bg-[#191B1F] py-2 shadow-[0_16px_40px_-8px_rgba(0,0,0,0.6)]"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           onMouseEnter={openNow}
           onMouseLeave={closeSoon}

@@ -41,6 +41,32 @@ function ChevronIcon({ open }) {
   );
 }
 
+function BrandLockup() {
+  return (
+    <Link href="/" className="flex flex-shrink-0 items-center gap-2.5">
+      <img
+        src="/brand/wolf-icon.png"
+        alt="Wolf of Reddit"
+        className="h-8 w-8 flex-shrink-0 rounded-full sm:h-9 sm:w-9"
+      />
+      <span className="flex flex-col leading-none">
+        <span
+          className="inline-flex items-baseline gap-1.5 text-sm font-extrabold tracking-tight text-white sm:text-base"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
+          <span>WOLF</span>
+          <span>OF</span>
+          <span style={{ color: "var(--color-accent)" }}>REDDIT</span>
+        </span>
+        <span className="mt-1 hidden text-[9px] font-semibold uppercase tracking-[0.18em] text-white/35 lg:block">
+          Find <span style={{ color: "var(--color-accent)" }}>•</span> Engage{" "}
+          <span style={{ color: "var(--color-accent)" }}>•</span> Influence
+        </span>
+      </span>
+    </Link>
+  );
+}
+
 export default function SiteNav() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -52,16 +78,12 @@ export default function SiteNav() {
   }, [pathname]);
 
   return (
-    <div className="relative mx-auto mt-6 max-w-4xl">
-      <nav className="flex items-center justify-between gap-2 rounded-full bg-[#12171D] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)] sm:gap-3 sm:px-6">
-        <Link href="/">
-          <img
-            src="/lockup-horizontal-white.svg"
-            alt="RedHiveLabs"
-            className="w-auto flex-shrink-0"
-            style={{ height: "32px" }}
-          />
-        </Link>
+    <div className="relative mx-auto mt-4 max-w-4xl sm:mt-6">
+      <nav
+        className="flex items-center justify-between gap-2 rounded-full border border-white/8 px-3 py-2 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)] sm:gap-3 sm:px-6"
+        style={{ backgroundColor: "var(--color-surface)" }}
+      >
+        <BrandLockup />
 
         {/* Desktop nav */}
         <div
@@ -70,7 +92,7 @@ export default function SiteNav() {
         >
           <ServicesNavDropdown />
           <Link href="/reddit-intel-report" className="hover:text-white">
-            Reddit Intel Report
+            Reddit Intelligence
           </Link>
           <Link href="/about" className="hover:text-white">
             About Me
@@ -95,8 +117,8 @@ export default function SiteNav() {
       {/* Mobile panel */}
       {mobileOpen && (
         <div
-          className="absolute left-0 right-0 top-full z-50 mt-2 rounded-2xl bg-[#12171D] p-3 shadow-[0_16px_40px_-8px_rgba(0,0,0,0.5)] sm:hidden"
-          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+          className="absolute left-0 right-0 top-full z-50 mt-2 rounded-2xl border border-white/8 p-3 shadow-[0_16px_40px_-8px_rgba(0,0,0,0.6)] sm:hidden"
+          style={{ fontFamily: "var(--font-archivo), sans-serif", backgroundColor: "var(--color-surface)" }}
         >
           <button
             type="button"
@@ -140,7 +162,7 @@ export default function SiteNav() {
               setMobileOpen(false);
             }}
           >
-            Reddit Intel Report
+            Reddit Intelligence
           </Link>
           <Link
             href="/about"

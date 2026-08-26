@@ -2,17 +2,31 @@
 
 export default function Login() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#E9ECF0] px-6">
+    <div
+      className="flex min-h-screen items-center justify-center px-6"
+      style={{
+        background:
+          "radial-gradient(ellipse at top, #15171A 0%, #0D0E10 55%, #08090B 100%)",
+      }}
+    >
       <div className="w-full max-w-sm text-center">
         <img
-          src="/lockup-horizontal.svg"
-          alt="RedHiveLabs"
-          className="mx-auto mb-8 h-10 w-auto"
+          src="/brand/wolf-icon.png"
+          alt="Wolf of Reddit"
+          className="mx-auto mb-4 h-16 w-16"
         />
+        <p
+          className="mb-8 inline-flex items-baseline gap-1.5 text-sm font-extrabold tracking-tight text-white"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
+          <span>WOLF</span>
+          <span>OF</span>
+          <span style={{ color: "var(--color-accent)" }}>REDDIT</span>
+        </p>
 
         <a
           href="/api/auth/google"
-          className="flex items-center justify-center gap-3 rounded-full border border-[#12171D]/15 bg-white px-6 py-3 font-medium text-[#12171D] shadow-sm transition-colors hover:bg-[#12171D]/5"
+          className="flex items-center justify-center gap-3 rounded-full border border-white/10 bg-[#15171A] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-white/5"
         >
           <svg width="18" height="18" viewBox="0 0 18 18">
             <path
@@ -35,7 +49,7 @@ export default function Login() {
           Continue with Google
         </a>
 
-        <p className="mt-4 text-xs text-[#12171D]/40">
+        <p className="mt-4 text-xs text-white/40">
           No password to remember — one click and you're in.
         </p>
       </div>

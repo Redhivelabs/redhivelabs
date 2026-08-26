@@ -5,7 +5,7 @@ export async function generateMetadata({ params }) {
   const keyword = decodeURIComponent(rawKeyword);
 
   return {
-    title: "Best Subreddits for " + keyword + " — Free Reddit Scan | RedHiveLabs",
+    title: "Best Subreddits for " + keyword + " — Free Wolf Scan",
     description:
       "See the top subreddits where people are already talking about " +
       keyword +

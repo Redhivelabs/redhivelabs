@@ -1,8 +1,9 @@
-import Link from "next/link";
 import SiteNav from "../../components/SiteNav.js";
+import ReportCheckoutCard from "../../components/ReportCheckoutCard.js";
+import ScrollToButton from "../../components/ScrollToButton.js";
 
 export const metadata = {
-  title: "Reddit Intel Report — Know Before You Post | RedHiveLabs",
+  title: "Reddit Intel Report — Know Before You Post",
   description:
     "Your Buyers are on Reddit. Your Posts Keep Getting Removed. We tell you where to post, when, and how — before you hit submit.",
 };
@@ -10,7 +11,7 @@ export const metadata = {
 function Eyebrow({ children }) {
   return (
     <p
-      className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
+      className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#FF6A1A]"
       style={{ fontFamily: "var(--font-archivo), sans-serif" }}
     >
       {children}
@@ -18,26 +19,15 @@ function Eyebrow({ children }) {
   );
 }
 
-function CTAButton({ children, href = "/dashboard?order=report", subtle = false }) {
-  if (subtle) {
-    return (
-      <Link
-        href={href}
-        className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-[#0B6E62] shadow-[0_16px_40px_-12px_rgba(0,0,0,0.35)] transition-all hover:bg-white/90"
-        style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-      >
-        {children}
-      </Link>
-    );
-  }
+function CTAButton({ children }) {
   return (
-    <Link
-      href={href}
-      className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0B6E62] px-8 py-4 text-base font-bold text-white shadow-[0_16px_40px_-12px_rgba(11,110,98,0.55)] transition-all hover:bg-[#0a5d53]"
+    <ScrollToButton
+      targetId="get-report"
+      className="inline-flex items-center justify-center gap-2 rounded-full bg-[#FF6A1A] px-8 py-4 text-base font-bold text-white shadow-[0_16px_40px_-12px_rgba(255,106,26,0.45)] transition-all hover:bg-[#E85A0C]"
       style={{ fontFamily: "var(--font-archivo), sans-serif" }}
     >
       {children}
-    </Link>
+    </ScrollToButton>
   );
 }
 
@@ -116,7 +106,7 @@ export default function RedditIntelReportPage() {
       className="min-h-screen px-6 pb-24"
       style={{
         background:
-          "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
+          "radial-gradient(ellipse at top, #15171A 0%, #0D0E10 55%, #08090B 100%)",
       }}
     >
       <script
@@ -129,12 +119,12 @@ export default function RedditIntelReportPage() {
       <div className="mx-auto mt-20 max-w-2xl text-center">
         <Eyebrow>Reddit Intel Report</Eyebrow>
         <h1
-          className="mt-4 text-4xl font-extrabold leading-tight text-[#12171D] sm:text-5xl"
+          className="mt-4 text-4xl font-extrabold leading-tight text-white sm:text-5xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           Your Buyers are on Reddit. Your Posts Keep Getting Removed.
         </h1>
-        <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-[#12171D]/70">
+        <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-white/70">
           Wrong Subreddit, Wrong Time — Gone in Minutes. We tell you the right ones.
         </p>
         <div className="mt-8 flex flex-col items-center gap-3">
@@ -144,8 +134,8 @@ export default function RedditIntelReportPage() {
         <div className="mx-auto mt-8 flex max-w-sm flex-col gap-2 text-left sm:mx-auto sm:inline-flex sm:items-start">
           {HERO_CHECKS.map(function (item) {
             return (
-              <div key={item} className="flex items-center gap-2 text-sm text-[#12171D]/70">
-                <span className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-[#0B6E62]/15 text-[10px] font-bold text-[#0B6E62]">
+              <div key={item} className="flex items-center gap-2 text-sm text-white/70">
+                <span className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-[#FF6A1A]/15 text-[10px] font-bold text-[#FF6A1A]">
                   ✓
                 </span>
                 {item}
@@ -159,13 +149,13 @@ export default function RedditIntelReportPage() {
       <div className="mx-auto mt-24 max-w-2xl">
         <Eyebrow>You already know this part</Eyebrow>
         <h2
-          className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
+          className="mt-3 text-2xl font-bold text-white sm:text-3xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           Reddit won&apos;t tell you the rules. It just enforces them. On you.
         </h2>
 
-        <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-[#12171D]/40">
+        <p className="mt-4 text-sm font-semibold uppercase tracking-wide text-white/40">
           Your last few attempts, probably:
         </p>
 
@@ -174,21 +164,21 @@ export default function RedditIntelReportPage() {
             return (
               <div
                 key={p}
-                className="flex items-start gap-3 rounded-2xl bg-white p-4 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]"
+                className="flex items-start gap-3 rounded-2xl border border-white/8 bg-[#15171A] p-4 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]"
               >
-                <span className="mt-0.5 text-[#98302A]">✕</span>
-                <p className="text-sm leading-relaxed text-[#12171D]/75">{p}</p>
+                <span className="mt-0.5 text-[#E2564C]">✕</span>
+                <p className="text-sm leading-relaxed text-white/75">{p}</p>
               </div>
             );
           })}
         </div>
 
-        <p className="mt-8 text-base leading-relaxed text-[#12171D]/70">
+        <p className="mt-8 text-base leading-relaxed text-white/70">
           Somewhere in your niche there&apos;s a subreddit full of your buyers,
           run by a mod who barely shows up. You just don&apos;t know which one.
         </p>
         <p
-          className="mt-2 text-base font-bold text-[#12171D]"
+          className="mt-2 text-base font-bold text-white"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           That&apos;s the whole report.
@@ -199,18 +189,18 @@ export default function RedditIntelReportPage() {
       <div className="mx-auto mt-24 max-w-2xl">
         <Eyebrow>Why this, and not a free Google search</Eyebrow>
         <h2
-          className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
+          className="mt-3 text-2xl font-bold text-white sm:text-3xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           It was never your post. It was the room.
         </h2>
-        <p className="mt-4 text-base leading-relaxed text-[#12171D]/70">
+        <p className="mt-4 text-base leading-relaxed text-white/70">
           Reddit is 100,000+ rooms. Each with its own rules, nobody wrote down.
           Guess wrong and you don&apos;t just lose the post — you teach the
           algorithm to bury the next one too.
         </p>
         <p
-          className="mt-2 text-base font-bold text-[#12171D]"
+          className="mt-2 text-base font-bold text-white"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           Get it right once, and Reddit&apos;s the cheapest buyers you&apos;ll ever
@@ -223,7 +213,7 @@ export default function RedditIntelReportPage() {
         <div className="text-center">
           <Eyebrow>The honest version</Eyebrow>
           <h2
-            className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
+            className="mt-3 text-2xl font-bold text-white sm:text-3xl"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
             What you get. What you don&apos;t.
@@ -231,9 +221,9 @@ export default function RedditIntelReportPage() {
         </div>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
-          <div className="rounded-2xl border border-[#0B6E62]/15 bg-white p-6">
+          <div className="rounded-2xl border border-[#FF6A1A]/20 bg-[#15171A] p-6">
             <h3
-              className="text-sm font-bold uppercase tracking-wide text-[#0B6E62]"
+              className="text-sm font-bold uppercase tracking-wide text-[#FF6A1A]"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               In the report
@@ -241,8 +231,8 @@ export default function RedditIntelReportPage() {
             <ul className="mt-4 flex flex-col gap-3">
               {IN_SCOPE.map(function (item) {
                 return (
-                  <li key={item} className="flex items-start gap-2 text-sm text-[#12171D]/75">
-                    <span className="mt-0.5 text-[#0B6E62]">✓</span>
+                  <li key={item} className="flex items-start gap-2 text-sm text-white/75">
+                    <span className="mt-0.5 text-[#FF6A1A]">✓</span>
                     <span>{item}</span>
                   </li>
                 );
@@ -250,9 +240,9 @@ export default function RedditIntelReportPage() {
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-[#12171D]/10 bg-white p-6">
+          <div className="rounded-2xl border border-white/10 bg-[#15171A] p-6">
             <h3
-              className="text-sm font-bold uppercase tracking-wide text-[#12171D]/50"
+              className="text-sm font-bold uppercase tracking-wide text-white/50"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               Not in it
@@ -260,7 +250,7 @@ export default function RedditIntelReportPage() {
             <ul className="mt-4 flex flex-col gap-3">
               {OUT_OF_SCOPE.map(function (item) {
                 return (
-                  <li key={item} className="flex items-start gap-2 text-sm text-[#12171D]/50">
+                  <li key={item} className="flex items-start gap-2 text-sm text-white/50">
                     <span className="mt-0.5">✕</span>
                     <span>{item}</span>
                   </li>
@@ -276,7 +266,7 @@ export default function RedditIntelReportPage() {
         <div className="text-center">
           <Eyebrow>How it works</Eyebrow>
           <h2
-            className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
+            className="mt-3 text-2xl font-bold text-white sm:text-3xl"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
             Three steps. Done.
@@ -292,12 +282,12 @@ export default function RedditIntelReportPage() {
             return (
               <div key={step.n} className="text-center">
                 <span
-                  className="text-3xl font-extrabold text-[#0B6E62]"
+                  className="text-3xl font-extrabold text-[#FF6A1A]"
                   style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                 >
                   {step.n}
                 </span>
-                <p className="mt-2 text-sm leading-relaxed text-[#12171D]/70">
+                <p className="mt-2 text-sm leading-relaxed text-white/70">
                   {step.t}
                 </p>
               </div>
@@ -308,47 +298,35 @@ export default function RedditIntelReportPage() {
 
       {/* THE ALTERNATIVE */}
       <div className="mx-auto mt-24 max-w-2xl text-center">
-        <p className="text-base leading-relaxed text-[#12171D]/60">
+        <p className="text-base leading-relaxed text-white/60">
           Or keep guessing. Write it, cross your fingers, get removed, blame the
           algorithm, repeat. That works too. Technically.
         </p>
       </div>
 
       {/* PRICING CTA BLOCK */}
-      <div className="mx-auto mt-16 max-w-2xl">
-        <div
-          className="rounded-3xl p-10 text-center"
-          style={{
-            background:
-              "radial-gradient(140% 120% at 10% 0%, #14A08C 0%, #0B6E62 32%, #063D37 100%)",
-            boxShadow:
-              "inset 0 1px 0 rgba(255,255,255,0.12), 0 24px 60px -16px rgba(11,110,98,0.45)",
-          }}
-        >
+      <div id="get-report" className="mx-auto mt-16 max-w-2xl scroll-mt-24">
+        <div className="rounded-3xl border border-white/8 bg-[#15171A] p-10 text-center shadow-[0_24px_60px_-16px_rgba(0,0,0,0.5)]">
           <p
-            className="text-xs font-bold uppercase tracking-[0.14em] text-white/70"
+            className="text-xs font-bold uppercase tracking-[0.14em] text-white/50"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
             Reddit Intel Report
           </p>
           <p
-            className="mt-3 text-5xl font-extrabold text-white"
-            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+            className="mt-3 text-5xl font-extrabold"
+            style={{ color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
           >
             $49
           </p>
-          <p className="mt-2 text-sm text-white/70">
+          <p className="mt-2 text-sm text-white/60">
             One keyword. One report. Once. No subscription, no upsell.
           </p>
-          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-white/60">
+          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-white/50">
             Cheaper than the hour you&apos;ll waste on a post that gets removed
             anyway.
           </p>
-          <div className="mt-8 flex justify-center">
-            <CTAButton subtle href="/dashboard?order=report">
-              Get Your Report
-            </CTAButton>
-          </div>
+          <ReportCheckoutCard />
         </div>
       </div>
 
@@ -357,7 +335,7 @@ export default function RedditIntelReportPage() {
         <div className="text-center">
           <Eyebrow>FAQ</Eyebrow>
           <h2
-            className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
+            className="mt-3 text-2xl font-bold text-white sm:text-3xl"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
             Quick answers
@@ -369,12 +347,12 @@ export default function RedditIntelReportPage() {
             return (
               <div key={item.q}>
                 <h3
-                  className="text-sm font-bold text-[#12171D]"
+                  className="text-sm font-bold text-white"
                   style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                 >
                   {item.q}
                 </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-[#12171D]/65">
+                <p className="mt-1.5 text-sm leading-relaxed text-white/65">
                   {item.a}
                 </p>
               </div>
@@ -386,12 +364,12 @@ export default function RedditIntelReportPage() {
       {/* SELF-AWARE CLOSER */}
       <div className="mx-auto mt-24 max-w-xl text-center">
         <p
-          className="text-xl font-bold text-[#12171D]"
+          className="text-xl font-bold text-white"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           You scrolled all the way down here.
         </p>
-        <p className="mx-auto mt-2 max-w-sm text-sm text-[#12171D]/60">
+        <p className="mx-auto mt-2 max-w-sm text-sm text-white/60">
           So you&apos;re clearly tired of guessing. Get the report. Post in the
           right room for once.
         </p>

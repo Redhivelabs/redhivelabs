@@ -59,20 +59,27 @@ export default async function AdminQueue() {
       className="min-h-screen px-6 pb-24"
       style={{
         background:
-          "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
+          "radial-gradient(ellipse at top, #15171A 0%, #0D0E10 55%, #08090B 100%)",
       }}
     >
-      <nav className="mx-auto mt-6 flex max-w-4xl items-center justify-between gap-2 rounded-full bg-[#12171D] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(18,23,29,0.4)] sm:gap-3 sm:px-6">
-        <Link href="/">
+      <nav className="mx-auto mt-6 flex max-w-4xl items-center justify-between gap-2 rounded-full border border-white/8 bg-[#15171A] px-3 py-1.5 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)] sm:gap-3 sm:px-6">
+        <Link href="/" className="flex items-center gap-2.5">
           <img
-            src="/lockup-horizontal-white.svg"
-            alt="RedHiveLabs"
-            className="w-auto flex-shrink-0"
-            style={{ height: "32px" }}
+            src="/brand/wolf-icon.png"
+            alt="Wolf of Reddit"
+            className="h-8 w-8 flex-shrink-0 rounded-full"
           />
+          <span
+            className="inline-flex items-baseline gap-1.5 text-sm font-extrabold tracking-tight text-white"
+            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+          >
+            <span>WOLF</span>
+            <span>OF</span>
+            <span style={{ color: "var(--color-accent)" }}>REDDIT</span>
+          </span>
         </Link>
         <span
-          className="rounded-full bg-[#0B6E62]/20 px-3 py-1 text-xs font-medium text-[#1FBFA8]"
+          className="rounded-full bg-[#FF6A1A]/15 px-3 py-1 text-xs font-medium text-[#FF6A1A]"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           Admin
@@ -81,20 +88,20 @@ export default async function AdminQueue() {
 
       <div className="mx-auto mt-14 max-w-3xl">
         <h1
-          className="text-2xl font-bold text-[#12171D] sm:text-3xl"
+          className="text-2xl font-bold text-white sm:text-3xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           Order Queue
         </h1>
-        <p className="mt-1 text-sm text-[#12171D]/60">
+        <p className="mt-1 text-sm text-white/60">
           Paid orders awaiting fulfillment.
         </p>
 
-        <h2 className="mt-8 text-sm font-bold uppercase tracking-wide text-[#12171D]/70">
+        <h2 className="mt-8 text-sm font-bold uppercase tracking-wide text-white/70">
           Reports
         </h2>
         {reportOrders.length === 0 ? (
-          <p className="mt-4 text-sm text-[#12171D]/50">
+          <p className="mt-4 text-sm text-white/50">
             No report orders pending.
           </p>
         ) : (
@@ -104,17 +111,17 @@ export default async function AdminQueue() {
               return (
                 <div
                   key={order.orderId}
-                  className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]"
+                  className="rounded-2xl border border-white/8 bg-[#15171A] p-5 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p
-                        className="font-bold text-[#12171D]"
+                        className="font-bold text-white"
                         style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                       >
                         {order.keyword}
                       </p>
-                      <p className="mt-1 text-xs text-[#12171D]/50">
+                      <p className="mt-1 text-xs text-white/50">
                         {order.userEmail} ·{" "}
                         {new Date(order.createdAt).toLocaleDateString("en-US", {
                           month: "short",
@@ -127,9 +134,9 @@ export default async function AdminQueue() {
                       className="flex-shrink-0 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide"
                       style={{
                         backgroundColor: isDone
-                          ? "rgba(11, 110, 98, 0.1)"
-                          : "rgba(143, 93, 12, 0.1)",
-                        color: isDone ? "#0B6E62" : "#8F5D0C",
+                          ? "rgba(255, 106, 26, 0.1)"
+                          : "rgba(224, 165, 66, 0.1)",
+                        color: isDone ? "#FF6A1A" : "#E0A542",
                       }}
                     >
                       {isDone ? "Delivered" : "Needs Report"}
@@ -139,7 +146,7 @@ export default async function AdminQueue() {
                   {!isDone && (
                     <Link
                       href={"/admin/order/" + order.orderId}
-                      className="mt-4 inline-block rounded-full bg-[#0B6E62] px-5 py-2 text-sm font-medium text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
+                      className="mt-4 inline-block rounded-full bg-[#FF6A1A] px-5 py-2 text-sm font-medium text-white shadow-[0_8px_20px_-6px_rgba(255,106,26,0.5)] transition-all hover:bg-[#E85A0C]"
                     >
                       Build Report
                     </Link>
@@ -150,11 +157,11 @@ export default async function AdminQueue() {
           </div>
         )}
 
-        <h2 className="mt-10 text-sm font-bold uppercase tracking-wide text-[#12171D]/70">
+        <h2 className="mt-10 text-sm font-bold uppercase tracking-wide text-white/70">
           Posts &amp; Comments
         </h2>
         {otherOrders.length === 0 ? (
-          <p className="mt-4 text-sm text-[#12171D]/50">
+          <p className="mt-4 text-sm text-white/50">
             No posting/commenting orders pending.
           </p>
         ) : (
@@ -163,20 +170,20 @@ export default async function AdminQueue() {
               return (
                 <div
                   key={order.orderId}
-                  className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]"
+                  className="rounded-2xl border border-white/8 bg-[#15171A] p-5 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p
-                        className="font-bold text-[#12171D]"
+                        className="font-bold text-white"
                         style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                       >
                         {order.keyword}{" "}
-                        <span className="font-normal text-[#12171D]/50">
+                        <span className="font-normal text-white/50">
                           ({order.orderType}, x{order.quantity})
                         </span>
                       </p>
-                      <p className="mt-1 text-xs text-[#12171D]/50">
+                      <p className="mt-1 text-xs text-white/50">
                         {order.userEmail} ·{" "}
                         {new Date(order.createdAt).toLocaleDateString("en-US", {
                           month: "short",
@@ -185,12 +192,12 @@ export default async function AdminQueue() {
                         })}
                       </p>
                     </div>
-                    <span className="flex-shrink-0 rounded-full bg-[#8F5D0C]/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#8F5D0C]">
+                    <span className="flex-shrink-0 rounded-full bg-[#E0A542]/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-[#E0A542]">
                       In Progress
                     </span>
                   </div>
                   {order.notes && (
-                    <p className="mt-3 whitespace-pre-line rounded-xl bg-[#12171D]/[0.03] p-3 text-xs text-[#12171D]/70">
+                    <p className="mt-3 whitespace-pre-line rounded-xl bg-white/[0.03] p-3 text-xs text-white/70">
                       {order.notes}
                     </p>
                   )}

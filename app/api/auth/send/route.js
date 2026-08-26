@@ -19,7 +19,7 @@ export async function POST(request) {
 
     const baseUrl =
       process.env.NODE_ENV === "production"
-        ? "https://redhivelabs.com"
+        ? "https://wolfofreddit.com"
         : "http://localhost:3000";
 
     const magicLink = baseUrl + "/api/auth/verify?token=" + encodeURIComponent(token);
@@ -31,12 +31,12 @@ export async function POST(request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "RedHiveLabs <login@redhivelabs.com>",
+        from: "Wolf of Reddit <login@wolfofreddit.com>",
         to: email,
-        subject: "Your RedHiveLabs login link",
+        subject: "Your Wolf of Reddit login link",
         html:
           "<p>Click below to log in. This link expires in 15 minutes.</p>" +
-          '<p><a href="' + magicLink + '">Log in to RedHiveLabs</a></p>' +
+          '<p><a href="' + magicLink + '">Log in to Wolf of Reddit</a></p>' +
           "<p>If you did not request this, you can ignore this email.</p>",
       }),
     });

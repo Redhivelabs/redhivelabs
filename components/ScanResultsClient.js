@@ -8,12 +8,12 @@ import PayPalButton from "./PayPalButton.js";
 function hasScannedBefore() {
   return document.cookie
     .split("; ")
-    .some((row) => row.startsWith("redhive_scanned="));
+    .some((row) => row.startsWith("wolf_scanned="));
 }
 
 function markScanned() {
   const oneYear = 60 * 60 * 24 * 365;
-  document.cookie = "redhive_scanned=true; path=/; max-age=" + oneYear;
+  document.cookie = "wolf_scanned=true; path=/; max-age=" + oneYear;
 }
 
 const loadingMessages = [
@@ -25,15 +25,15 @@ const loadingMessages = [
 ];
 
 const intentStyles = {
-  BUYING: { bg: "rgba(11, 110, 98, 0.1)", color: "#0B6E62", label: "Buying Intent" },
-  DISCUSSION: { bg: "rgba(143, 93, 12, 0.1)", color: "#8F5D0C", label: "Discussion" },
-  CURIOSITY: { bg: "rgba(18, 23, 29, 0.06)", color: "#12171D99", label: "Curiosity" },
+  BUYING: { bg: "rgba(255, 106, 26, 0.1)", color: "#FF6A1A", label: "Buying Intent" },
+  DISCUSSION: { bg: "rgba(224, 165, 66, 0.1)", color: "#E0A542", label: "Discussion" },
+  CURIOSITY: { bg: "rgba(255, 255, 255, 0.06)", color: "rgba(255,255,255,0.5)", label: "Curiosity" },
 };
 
 function opportunityColor(score) {
-  if (score >= 70) return "#0B6E62";
-  if (score >= 40) return "#8F5D0C";
-  return "#98302A";
+  if (score >= 70) return "#FF6A1A";
+  if (score >= 40) return "#E0A542";
+  return "#E2564C";
 }
 
 export default function ScanResultsClient({ keyword }) {
@@ -109,7 +109,7 @@ export default function ScanResultsClient({ keyword }) {
       className="min-h-screen px-6 pb-24"
       style={{
         background:
-          "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
+          "radial-gradient(ellipse at top, #15171A 0%, #0D0E10 55%, #08090B 100%)",
       }}
     >
       <SiteNav />
@@ -117,28 +117,26 @@ export default function ScanResultsClient({ keyword }) {
       <div className="mx-auto mt-14 max-w-2xl">
         <Link
           href="/"
-          className="text-sm font-medium text-[#0B6E62] hover:underline"
+          className="text-sm font-medium hover:underline"
+          style={{ color: "var(--color-accent)" }}
         >
           ← Back to search
         </Link>
 
         {loading && (
           <div className="mt-20 flex flex-col items-center justify-center text-center">
-            <svg viewBox="0 0 100 100" width="72" height="72" fill="none">
-              <polygon
-                points="84.64,70.00 50.00,90.00 15.36,70.00 15.36,30.00 50.00,10.00 84.64,30.00"
-                fill="none"
-                stroke="#12171D"
-                strokeWidth="6"
-                strokeLinejoin="round"
-                opacity="0.2"
+            <div className="relative flex h-20 w-20 items-center justify-center">
+              <div
+                className="loading-ring absolute inset-0 rounded-full border-2 border-white/10"
+                style={{ borderTopColor: "var(--color-accent)" }}
               />
-              <rect className="bar-1" x="28" y="31" width="17" height="8" rx="1.5" fill="#12171D" />
-              <rect className="bar-2" x="28" y="41" width="29" height="8" rx="1.5" fill="#12171D" />
-              <rect className="bar-3" x="28" y="51" width="40" height="8" rx="1.5" fill="#0B6E62" />
-              <rect className="bar-4" x="28" y="61" width="23" height="8" rx="1.5" fill="#12171D" />
-            </svg>
-            <p className="pulse-fade mt-6 text-sm font-medium text-[#12171D]/60">
+              <img
+                src="/brand/wolf-icon.png"
+                alt=""
+                className="h-12 w-12 rounded-full"
+              />
+            </div>
+            <p className="pulse-fade mt-6 text-sm font-medium text-white/50">
               {loadingMessages[messageIndex]}
             </p>
           </div>
@@ -151,16 +149,16 @@ export default function ScanResultsClient({ keyword }) {
                 return (
                   <div
                     key={n}
-                    className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]"
+                    className="rounded-2xl border border-white/8 bg-[#15171A] p-5 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0B6E62]/10 text-sm font-bold text-[#0B6E62]">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold" style={{ backgroundColor: "var(--color-accent-soft)", color: "var(--color-accent)" }}>
                           {n}
                         </span>
-                        <span className="font-bold text-[#12171D]">r/subreddit{n}</span>
+                        <span className="font-bold text-white">r/subreddit{n}</span>
                       </div>
-                      <span className="rounded-full bg-[#12171D]/5 px-3 py-1 text-xs font-medium text-[#12171D]/60">
+                      <span className="rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white/50">
                         Score 80
                       </span>
                     </div>
@@ -170,20 +168,20 @@ export default function ScanResultsClient({ keyword }) {
             </div>
 
             <div className="absolute inset-0 flex items-center justify-center px-4">
-              <div className="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-[0_16px_48px_-12px_rgba(18,23,29,0.35)]">
+              <div className="w-full max-w-sm rounded-2xl border border-white/8 bg-[#191B1F] p-8 text-center shadow-[0_16px_48px_-12px_rgba(0,0,0,0.6)]">
                 <p
-                  className="text-lg font-bold text-[#12171D]"
+                  className="text-lg font-bold text-white"
                   style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                 >
                   Sign in to view your results
                 </p>
-                <p className="mt-2 text-sm text-[#12171D]/60">
+                <p className="mt-2 text-sm text-white/50">
                   Your scan for &quot;{keyword}&quot; is ready. Sign in free to
                   see it and save it to your dashboard.
                 </p>
                 <a
                   href={"/api/auth/google?next=" + encodeURIComponent("/scan/" + keyword)}
-                  className="mt-5 flex items-center justify-center gap-3 rounded-full border border-[#12171D]/15 bg-white px-6 py-3 font-medium text-[#12171D] shadow-sm transition-colors hover:bg-[#12171D]/5"
+                  className="mt-5 flex items-center justify-center gap-3 rounded-full border border-white/10 bg-[#15171A] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-white/5"
                 >
                   <svg width="18" height="18" viewBox="0 0 18 18">
                     <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" />
@@ -199,21 +197,22 @@ export default function ScanResultsClient({ keyword }) {
         )}
 
         {error && isLoggedIn && (
-          <div className="mt-10 rounded-2xl bg-white p-8 text-center shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
+          <div className="mt-10 rounded-2xl border border-white/8 bg-[#191B1F] p-8 text-center shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
             <p
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               {error}
             </p>
-            <p className="mx-auto mt-2 max-w-sm text-sm text-[#12171D]/60">
+            <p className="mx-auto mt-2 max-w-sm text-sm text-white/50">
               Your free scans reset in 24 hours. Want the full picture right
               now instead? Get the $49 report for this keyword — 10-15
               curated subreddits, no daily limit.
             </p>
             <Link
               href="/dashboard"
-              className="mt-5 inline-block rounded-full bg-[#0B6E62] px-8 py-3 text-sm font-medium text-white shadow-[0_8px_20px_-6px_rgba(11,110,98,0.5)] transition-all hover:bg-[#0a5d53]"
+              className="mt-5 inline-block rounded-full px-8 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-[0_8px_20px_-6px_rgba(255,106,26,0.5)] transition-all"
+              style={{ backgroundColor: "var(--color-accent)" }}
             >
               View report options
             </Link>
@@ -221,20 +220,20 @@ export default function ScanResultsClient({ keyword }) {
         )}
 
         {error && !isLoggedIn && (
-          <div className="mt-10 rounded-2xl bg-white p-8 text-center shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
+          <div className="mt-10 rounded-2xl border border-white/8 bg-[#191B1F] p-8 text-center shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
             <p
-              className="text-lg font-bold text-[#12171D]"
+              className="text-lg font-bold text-white"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               {error}
             </p>
-            <p className="mx-auto mt-2 max-w-sm text-sm text-[#12171D]/60">
+            <p className="mx-auto mt-2 max-w-sm text-sm text-white/50">
               Sign in free to keep scanning and save your results to your
               dashboard.
             </p>
             <a
               href={"/api/auth/google?next=" + encodeURIComponent("/scan/" + keyword)}
-              className="mt-5 flex items-center justify-center gap-3 rounded-full border border-[#12171D]/15 bg-white px-6 py-3 font-medium text-[#12171D] shadow-sm transition-colors hover:bg-[#12171D]/5"
+              className="mt-5 flex items-center justify-center gap-3 rounded-full border border-white/10 bg-[#15171A] px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-white/5"
             >
               <svg width="18" height="18" viewBox="0 0 18 18">
                 <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 0 1-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" />
@@ -248,7 +247,7 @@ export default function ScanResultsClient({ keyword }) {
         )}
 
         {results && results.length === 0 && (
-          <p className="mt-10 text-[#12171D]/60">
+          <p className="mt-10 text-white/50">
             No subreddits found for this keyword. Try something broader.
           </p>
         )}
@@ -256,12 +255,12 @@ export default function ScanResultsClient({ keyword }) {
         {results && results.length > 0 && (
           <>
             <h1
-              className="mt-6 text-2xl font-bold text-[#12171D] sm:text-3xl"
+              className="mt-6 text-2xl font-bold text-white sm:text-3xl"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               Top subreddits for "{keyword}"
             </h1>
-            <p className="mt-1 text-sm text-[#12171D]/50">
+            <p className="mt-1 text-sm text-white/40">
               {results.length} communities found — free preview
             </p>
 
@@ -271,25 +270,25 @@ export default function ScanResultsClient({ keyword }) {
                 return (
                   <div
                     key={r.subreddit}
-                    className="rounded-2xl bg-white p-5 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]"
+                    className="rounded-2xl border border-white/8 bg-[#15171A] p-5 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]"
                   >
                     <div className="flex min-w-0 items-start justify-between gap-3">
                       <div className="flex min-w-0 items-center gap-3">
                         <span
-                          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#0B6E62]/10 text-sm font-bold text-[#0B6E62]"
-                          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold"
+                          style={{ backgroundColor: "var(--color-accent-soft)", color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
                         >
                           {i + 1}
                         </span>
                         <div className="min-w-0">
                           <p
-                            className="truncate font-bold text-[#12171D]"
+                            className="truncate font-bold text-white"
                             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
                           >
                             r/{r.subreddit}
                           </p>
                           {r.subscribers && (
-                            <p className="text-xs text-[#12171D]/50">
+                            <p className="text-xs text-white/40">
                               {r.subscribers.toLocaleString()} subscribers
                             </p>
                           )}
@@ -302,17 +301,17 @@ export default function ScanResultsClient({ keyword }) {
                         >
                           {r.opportunityScore}
                         </span>
-                        <span className="text-[10px] uppercase tracking-wide text-[#12171D]/40">
-                          Opportunity
+                        <span className="text-[10px] uppercase tracking-wide text-white/35">
+                          Wolf Score
                         </span>
                       </div>
                     </div>
 
                     <div className="mt-3 flex flex-wrap gap-2 pl-12">
-                      <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
+                      <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-white/60">
                         {r.activityLabel} activity
                       </span>
-                      <span className="rounded-full bg-[#E9ECF0] px-3 py-1 text-xs text-[#12171D]/70">
+                      <span className="rounded-full bg-white/5 px-3 py-1 text-xs text-white/60">
                         {r.moderationLabel} moderation
                       </span>
                       {r.googleRanking && r.googleRanking.ranking && (
@@ -320,18 +319,19 @@ export default function ScanResultsClient({ keyword }) {
                           href={r.googleRanking.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="rounded-full bg-[#0B6E62]/10 px-3 py-1 text-xs font-medium text-[#0B6E62] hover:underline"
+                          className="rounded-full px-3 py-1 text-xs font-medium hover:underline"
+                          style={{ backgroundColor: "var(--color-accent-soft)", color: "var(--color-accent)" }}
                         >
                           Ranks on Google
                         </a>
                       )}
                       {r.karmaRequired && (
-                        <span className="rounded-full bg-[#8F5D0C]/10 px-3 py-1 text-xs text-[#8F5D0C]">
+                        <span className="rounded-full px-3 py-1 text-xs" style={{ backgroundColor: "var(--color-warn-soft)", color: "var(--color-warn)" }}>
                           Karma required
                         </span>
                       )}
                       {r.accountAgeRequired && (
-                        <span className="rounded-full bg-[#8F5D0C]/10 px-3 py-1 text-xs text-[#8F5D0C]">
+                        <span className="rounded-full px-3 py-1 text-xs" style={{ backgroundColor: "var(--color-warn-soft)", color: "var(--color-warn)" }}>
                           Account age required
                         </span>
                       )}
@@ -343,10 +343,10 @@ export default function ScanResultsClient({ keyword }) {
                         style={{
                           backgroundColor:
                             r.verdict.verdict === "post"
-                              ? "rgba(11, 110, 98, 0.08)"
+                              ? "rgba(255, 106, 26, 0.08)"
                               : r.verdict.verdict === "warm up first"
-                              ? "rgba(143, 93, 12, 0.08)"
-                              : "rgba(152, 48, 42, 0.08)",
+                              ? "rgba(224, 165, 66, 0.08)"
+                              : "rgba(226, 86, 76, 0.08)",
                         }}
                       >
                         <span
@@ -354,30 +354,30 @@ export default function ScanResultsClient({ keyword }) {
                           style={{
                             backgroundColor:
                               r.verdict.verdict === "post"
-                                ? "#0B6E62"
+                                ? "#FF6A1A"
                                 : r.verdict.verdict === "warm up first"
-                                ? "#8F5D0C"
-                                : "#98302A",
+                                ? "#E0A542"
+                                : "#E2564C",
                             color: "#FFFFFF",
                           }}
                         >
                           {r.verdict.verdict}
                         </span>
-                        <p className="text-xs text-[#12171D]/70">
+                        <p className="text-xs text-white/60">
                           {r.verdict.reasoning}
                         </p>
                       </div>
                     )}
 
                     {r.suggestedAngle && (
-                      <p className="mt-3 ml-12 text-xs italic text-[#12171D]/60">
+                      <p className="mt-3 ml-12 text-xs italic text-white/50">
                         “{r.suggestedAngle}”
                       </p>
                     )}
 
                     {r.questions && r.questions.length > 0 && (
                       <div className="mt-4 ml-12 flex flex-col gap-2">
-                        <p className="text-[10px] font-bold uppercase tracking-wide text-[#12171D]/40">
+                        <p className="text-[10px] font-bold uppercase tracking-wide text-white/35">
                           Real questions from this subreddit
                         </p>
                         {r.questions.map(function (q, qi) {
@@ -388,7 +388,7 @@ export default function ScanResultsClient({ keyword }) {
                               href={q.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-start gap-2 rounded-xl border border-[#12171D]/5 p-2.5 transition-colors hover:bg-[#12171D]/[0.02]"
+                              className="flex items-start gap-2 rounded-xl border border-white/5 p-2.5 transition-colors hover:bg-white/[0.03]"
                             >
                               <span
                                 className="mt-0.5 flex-shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide"
@@ -396,7 +396,7 @@ export default function ScanResultsClient({ keyword }) {
                               >
                                 {style.label}
                               </span>
-                              <span className="text-xs text-[#12171D]/80">
+                              <span className="text-xs text-white/70">
                                 {q.title}
                               </span>
                             </a>
@@ -410,43 +410,43 @@ export default function ScanResultsClient({ keyword }) {
             </div>
 
             <div
-              className="mt-10 rounded-3xl p-8 text-center sm:p-10"
-              style={{
-                background:
-                  "radial-gradient(140% 120% at 10% 0%, #14A08C 0%, #0B6E62 32%, #063D37 100%)",
-                boxShadow:
-                  "inset 0 1px 0 rgba(255,255,255,0.12), 0 24px 60px -16px rgba(11,110,98,0.45)",
-              }}
+              className="mt-10 rounded-3xl border border-white/8 bg-[#15171A] p-8 text-center shadow-[0_24px_60px_-16px_rgba(0,0,0,0.5)] sm:p-10"
             >
-              <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white/70">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#1FBFA8]" />
+              <div
+                className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide"
+                style={{ backgroundColor: "var(--color-accent-soft)", color: "var(--color-accent)" }}
+              >
+                <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "var(--color-accent)" }} />
                 Free preview
               </div>
               <p
                 className="text-2xl font-extrabold text-white sm:text-3xl"
                 style={{ fontFamily: "var(--font-archivo), sans-serif" }}
               >
-                You Just Saw Few. One of Them Gets You Removed.
+                {results.length} Communities Shown. More Are Hiding.
               </p>
-              <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-white/70">
-                Real Removal Rates. The exact days and hours to post. Reviewed
-                by Human, not a Bot.
+              <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-white/60">
+                Full removal rates, posting windows, and real buyer questions
+                for every subreddit that matters.
               </p>
 
-              <div className="mx-auto mt-6 max-w-xs rounded-2xl border border-white/10 bg-white/[0.06] p-5">
+              <div className="mx-auto mt-6 max-w-xs rounded-2xl border border-white/10 bg-[#191B1F] p-5">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <span className="text-xs font-medium uppercase tracking-wide text-white/60">
                     Reddit Intel Report
                   </span>
                   <span
-                    className="text-2xl font-extrabold text-white"
-                    style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+                    className="text-2xl font-extrabold"
+                    style={{ color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
                   >
                     $49
                   </span>
                 </div>
 
-                <div className="mt-4 rounded-xl border border-white/10 bg-white p-3">
+                <div
+                  className="mt-4 rounded-xl border bg-[#191B1F] p-3"
+                  style={{ borderColor: "var(--color-accent-soft)" }}
+                >
                   <PayPalButton orderType="report" keyword={keyword} quantity={1} />
                 </div>
 
@@ -460,8 +460,9 @@ export default function ScanResultsClient({ keyword }) {
               </div>
 
               <p className="mt-4 text-xs text-white/50">
-                No account needed — we&apos;ll email your login link right
-                after.
+                {isLoggedIn
+                  ? "You're signed in — we'll email you when it's ready, and it'll be waiting in your dashboard."
+                  : "No account needed — we'll email your login link right after."}
               </p>
             </div>
           </>

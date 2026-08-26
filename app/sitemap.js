@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const baseUrl = "https://redhivelabs.com";
+  const baseUrl = "https://wolfofreddit.com";
 
   const routes = [
     { path: "", priority: 1.0 },

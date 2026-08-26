@@ -2,15 +2,15 @@ import Link from "next/link";
 import SiteNav from "../../components/SiteNav.js";
 
 export const metadata = {
-  title: "About RedHiveLabs",
+  title: "About",
   description:
-    "I spent years learning Reddit the hard way so you don't have to. Here's why RedHiveLabs exists.",
+    "I spent years learning Reddit the hard way so you don't have to. Here's why Wolf of Reddit exists.",
 };
 
 function Eyebrow({ children }) {
   return (
     <p
-      className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#0B6E62]"
+      className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#FF6A1A]"
       style={{ fontFamily: "var(--font-archivo), sans-serif" }}
     >
       {children}
@@ -24,7 +24,7 @@ export default function About() {
       className="min-h-screen px-6 pb-24"
       style={{
         background:
-          "radial-gradient(ellipse at top, #F3F5F7 0%, #E9ECF0 55%, #E2E6EA 100%)",
+          "radial-gradient(ellipse at top, #15171A 0%, #0D0E10 55%, #08090B 100%)",
       }}
     >
       <SiteNav />
@@ -33,18 +33,18 @@ export default function About() {
       <div className="mx-auto mt-20 max-w-2xl text-center">
         <Eyebrow>About Me</Eyebrow>
         <h1
-          className="mt-4 text-4xl font-extrabold leading-tight text-[#12171D] sm:text-6xl"
+          className="mt-4 text-4xl font-extrabold leading-tight text-white sm:text-6xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           I Learned Reddit The Hard Way.
         </h1>
         <p
-          className="mx-auto mt-4 max-w-xl text-xl font-bold text-[#12171D]/80"
+          className="mx-auto mt-4 max-w-xl text-xl font-bold text-white/80"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           Removed Posts, Dead Accounts, Wasted Weeks.
         </p>
-        <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-[#12171D]/70">
+        <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-white/70">
           So I built what I wish I&apos;d had on day one — cheaper than the
           years it cost me.
         </p>
@@ -54,45 +54,45 @@ export default function About() {
       <div className="mx-auto mt-24 max-w-2xl">
         <Eyebrow>Why this exists</Eyebrow>
         <h2
-          className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
+          className="mt-3 text-2xl font-bold text-white sm:text-3xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
           Reddit outperforms paid ads. It also punishes guesswork.
         </h2>
 
-        <p className="mt-6 text-base leading-relaxed text-[#12171D]/70">
+        <p className="mt-6 text-base leading-relaxed text-white/70">
           I&apos;ve worked Reddit as a marketing channel for years — affiliate
           campaigns, client work, my own ventures. When it works, it beats paid
           ads for driving people who actually convert. That&apos;s the good news.
         </p>
-        <p className="mt-4 text-base leading-relaxed text-[#12171D]/70">
+        <p className="mt-4 text-base leading-relaxed text-white/70">
           The bad news: Reddit doesn&apos;t forgive guesswork. Wrong subreddit,
           you get buried. Right idea, wrong account, a mod removes it in minutes.
           Wrong timing, nobody sees it at all. Every founder I talked to had the
           same story — good product, good content, zero traction, because nobody
           told them where to actually post.
         </p>
-        <p className="mt-4 text-base leading-relaxed text-[#12171D]/70">
+        <p className="mt-4 text-base leading-relaxed text-white/70">
           So I built the thing I wished existed: something that tells you which
           subreddits are worth your time, what gets removed, and when to post —
-          before you find out the hard way. That became RedHiveLabs.
+          before you find out the hard way. That became Wolf of Reddit.
         </p>
       </div>
 
       {/* WHO */}
       <div className="mx-auto mt-24 max-w-2xl">
         <Eyebrow>Who&apos;s behind it</Eyebrow>
-        <div className="mt-6 rounded-2xl bg-white p-6 shadow-[0_8px_24px_-12px_rgba(18,23,29,0.15)]">
+        <div className="mt-6 rounded-2xl border border-white/8 bg-[#15171A] p-6 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
           <p
-            className="text-lg font-bold text-[#12171D]"
+            className="text-lg font-bold text-white"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
             Prakash Aravind
           </p>
-          <p className="mt-1 text-sm font-medium text-[#0B6E62]">
-            Founder, RedHiveLabs
+          <p className="mt-1 text-sm font-medium text-[#FF6A1A]">
+            Founder, Wolf of Reddit
           </p>
-          <p className="mt-4 text-sm leading-relaxed text-[#12171D]/70">
+          <p className="mt-4 text-sm leading-relaxed text-white/70">
             One person, and that&apos;s on purpose. I review every report before
             it reaches you. Every posting order goes out through accounts I know
             and trust. I stay hands-on because Reddit punishes anything that
@@ -100,38 +100,38 @@ export default function About() {
             outsource it to a bot.
           </p>
 
-          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-[#12171D]/8 pt-4 text-sm">
+          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/8 pt-4 text-sm">
             <a
-              href="https://t.me/Redhivelabs"
+              href="https://t.me/wolfofreddit"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-[#12171D]/60 hover:text-[#0B6E62]"
+              className="flex items-center gap-1.5 text-white/60 hover:text-[#FF6A1A]"
             >
               <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
                 <path d="M21.94 4.6c.28-1.13-.42-1.66-1.44-1.28L2.7 10.2c-1.1.44-1.08 1.06-.19 1.34l4.53 1.41 10.5-6.62c.5-.32.95-.14.58.2L9.9 14.35l-.35 4.94c.5 0 .72-.23.99-.5l2.38-2.3 4.94 3.63c.91.5 1.56.24 1.79-.85l3.29-14.7z" />
               </svg>
-              @Redhivelabs
+              @wolfofreddit
             </a>
             <a
-              href="mailto:Prakash@redhivelabs.com"
-              className="flex items-center gap-1.5 text-[#12171D]/60 hover:text-[#0B6E62]"
+              href="mailto:prakash@wolfofreddit.com"
+              className="flex items-center gap-1.5 text-white/60 hover:text-[#FF6A1A]"
             >
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="2" y="4" width="20" height="16" rx="2" />
                 <path d="M2 7l10 6 10-6" />
               </svg>
-              Prakash@redhivelabs.com
+              prakash@wolfofreddit.com
             </a>
             <a
-              href="https://twitter.com/redhivelabs"
+              href="https://twitter.com/wolfofreddit"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-[#12171D]/60 hover:text-[#0B6E62]"
+              className="flex items-center gap-1.5 text-white/60 hover:text-[#FF6A1A]"
             >
               <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg>
-              @redhivelabs
+              @wolfofreddit
             </a>
           </div>
         </div>
@@ -142,7 +142,7 @@ export default function About() {
         <div className="text-center">
           <Eyebrow>The honest version</Eyebrow>
           <h2
-            className="mt-3 text-2xl font-bold text-[#12171D] sm:text-3xl"
+            className="mt-3 text-2xl font-bold text-white sm:text-3xl"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
             What I do. And what I&apos;d never do.
@@ -150,9 +150,9 @@ export default function About() {
         </div>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
-          <div className="rounded-2xl border border-[#0B6E62]/15 bg-white p-6">
+          <div className="rounded-2xl border border-[#FF6A1A]/20 bg-[#15171A] p-6">
             <h3
-              className="text-sm font-bold uppercase tracking-wide text-[#0B6E62]"
+              className="text-sm font-bold uppercase tracking-wide text-[#FF6A1A]"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               What I do
@@ -164,8 +164,8 @@ export default function About() {
                 "Post and comment through real, aged, high-karma accounts when you want it run for you.",
               ].map(function (item) {
                 return (
-                  <li key={item} className="flex items-start gap-2 text-sm text-[#12171D]/75">
-                    <span className="mt-0.5 text-[#0B6E62]">✓</span>
+                  <li key={item} className="flex items-start gap-2 text-sm text-white/75">
+                    <span className="mt-0.5 text-[#FF6A1A]">✓</span>
                     <span>{item}</span>
                   </li>
                 );
@@ -173,9 +173,9 @@ export default function About() {
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-[#12171D]/10 bg-white p-6">
+          <div className="rounded-2xl border border-white/10 bg-[#15171A] p-6">
             <h3
-              className="text-sm font-bold uppercase tracking-wide text-[#12171D]/50"
+              className="text-sm font-bold uppercase tracking-wide text-white/50"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               What I&apos;d never do
@@ -188,7 +188,7 @@ export default function About() {
                 "Any shortcut that puts your brand — or my accounts' standing — at risk.",
               ].map(function (item) {
                 return (
-                  <li key={item} className="flex items-start gap-2 text-sm text-[#12171D]/50">
+                  <li key={item} className="flex items-start gap-2 text-sm text-white/50">
                     <span className="mt-0.5">✕</span>
                     <span>{item}</span>
                   </li>
@@ -198,7 +198,7 @@ export default function About() {
           </div>
         </div>
 
-        <p className="mx-auto mt-8 max-w-xl text-center text-base leading-relaxed text-[#12171D]/60">
+        <p className="mx-auto mt-8 max-w-xl text-center text-base leading-relaxed text-white/60">
           Reddit&apos;s communities spot inauthenticity in seconds. I&apos;m not
           about to burn your reputation — or mine — for a shortcut.
         </p>
@@ -210,9 +210,9 @@ export default function About() {
           className="rounded-3xl p-10 text-center"
           style={{
             background:
-              "radial-gradient(140% 120% at 10% 0%, #14A08C 0%, #0B6E62 32%, #063D37 100%)",
+              "radial-gradient(140% 120% at 10% 0%, #FF8A42 0%, #FF6A1A 32%, #7A2A05 100%)",
             boxShadow:
-              "inset 0 1px 0 rgba(255,255,255,0.12), 0 24px 60px -16px rgba(11,110,98,0.45)",
+              "inset 0 1px 0 rgba(255,255,255,0.12), 0 24px 60px -16px rgba(255,106,26,0.4)",
           }}
         >
           <p
@@ -227,7 +227,7 @@ export default function About() {
           <div className="mt-8 flex justify-center">
             <Link
               href="/"
-              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-[#0B6E62] shadow-[0_16px_40px_-12px_rgba(0,0,0,0.35)] transition-all hover:bg-white/90"
+              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-[#FF6A1A] shadow-[0_16px_40px_-12px_rgba(0,0,0,0.35)] transition-all hover:bg-white/90"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
               Run a free scan

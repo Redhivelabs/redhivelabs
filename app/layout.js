@@ -19,25 +19,49 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+const SITE_URL = "https://wolfofreddit.com";
+
 export const metadata = {
-  title: "RedHiveLabs — Reddit Marketing Intel",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Wolf of Reddit — Find the Reddit Communities That Matter",
+    template: "%s | Wolf of Reddit",
+  },
+  applicationName: "Wolf of Reddit",
   description:
-    "Scan Reddit for the subreddits where your customers are already talking. Free scan, full Reddit Intel Report for $49, plus Reddit posting and commenting services.",
+    "Wolf of Reddit maps the subreddits where your buyers are already talking. Run a free Wolf Scan, get a full Reddit Intel Report, and unlock done-for-you Reddit posting and commenting.",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon-180.png",
+  },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "Wolf of Reddit",
+    title: "Wolf of Reddit — Find. Engage. Influence.",
+    description:
+      "Wolf of Reddit maps the subreddits where your buyers are already talking. Run a free Wolf Scan, get a full Reddit Intel Report, and unlock done-for-you Reddit posting and commenting.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Wolf of Reddit" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wolf of Reddit — Find. Engage. Influence.",
+    description:
+      "Reddit marketing intelligence. Find the communities where your buyers are already talking.",
+    images: ["/og-image.png"],
   },
 };
 
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "RedHiveLabs",
-  url: "https://redhivelabs.com",
+  name: "Wolf of Reddit",
+  url: SITE_URL,
+  logo: SITE_URL + "/brand/wolf-icon.png",
   description:
-    "RedHiveLabs helps businesses find the right subreddits to reach their buyers, with a free Reddit scan, a paid Reddit Intel Report, and done-for-you Reddit posting and commenting services.",
-  sameAs: ["https://twitter.com/Redhivelabs"],
+    "Wolf of Reddit helps businesses find the right subreddits to reach their buyers, with a free Wolf Scan, a paid Reddit Intel Report, and done-for-you Reddit posting and commenting services.",
+  sameAs: ["https://twitter.com/wolfofreddit"],
 };
 
 export default function RootLayout({ children }) {
