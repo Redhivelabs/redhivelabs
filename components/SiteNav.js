@@ -71,14 +71,14 @@ export default function SiteNav() {
           className="hidden items-center gap-6 text-sm font-medium text-white/70 sm:flex"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          <Link href="/services" className="hover:text-white">
-            Services
-          </Link>
           <Link href="/reddit-intel-report" className="hover:text-white">
-            Reddit Intelligence
+            Reddit Intel
+          </Link>
+          <Link href="/services" className="hover:text-white">
+            The Hunt
           </Link>
           <Link href="/about" className="hover:text-white">
-            About Me
+            The Wolf
           </Link>
           <NavAuthStatus />
         </div>
@@ -104,22 +104,22 @@ export default function SiteNav() {
           style={{ fontFamily: "var(--font-archivo), sans-serif", backgroundColor: "var(--color-surface)" }}
         >
           <Link
-            href="/services"
-            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white"
-            onClick={function () {
-              setMobileOpen(false);
-            }}
-          >
-            Services
-          </Link>
-          <Link
             href="/reddit-intel-report"
             className="block rounded-xl px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white"
             onClick={function () {
               setMobileOpen(false);
             }}
           >
-            Reddit Intelligence
+            Reddit Intel
+          </Link>
+          <Link
+            href="/services"
+            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white"
+            onClick={function () {
+              setMobileOpen(false);
+            }}
+          >
+            The Hunt
           </Link>
           <Link
             href="/about"
@@ -128,7 +128,7 @@ export default function SiteNav() {
               setMobileOpen(false);
             }}
           >
-            About Me
+            The Wolf
           </Link>
 
           <div className="mt-2 border-t border-white/10 pt-3">
