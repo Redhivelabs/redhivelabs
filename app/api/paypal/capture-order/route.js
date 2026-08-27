@@ -8,6 +8,9 @@ const ORDER_TYPE_LABELS = {
   report: "Subreddit Placement Report",
   posts: "Sub Reddit Posts",
   comments: "Sub Reddit Comments",
+  scout: "Scout — One Placement",
+  pack: "Pack — Three Placements",
+  presence: "Presence — Monthly Visibility",
 };
 
 async function sendOrderConfirmationEmail({ toEmail, order }) {

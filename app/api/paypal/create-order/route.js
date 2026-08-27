@@ -7,17 +7,21 @@ import { getPayPalAccessToken, PAYPAL_BASE_URL } from "../../../../lib/paypal.js
 
 const PRICES = {
   report: 49,
-  posts: 30,
-  comments: 15,
+  scout: 129,
+  pack: 339,
+  presence: 890,
 };
 
 const FIND_SUBREDDIT_FEE = 5;
 
 const LABELS = {
   report: "Subreddit placement report",
-  posts: "Subreddit posting service",
-  comments: "Subreddit commenting service",
+  scout: "Scout — one placement",
+  pack: "Pack — three placements",
+  presence: "Presence — monthly visibility",
 };
+
+const SINGLE_UNIT_ORDER_TYPES = ["report", "scout", "pack", "presence"];
 
 // Returns the logged-in user's id if a valid session exists, or null if not.
 // Unlike before, a missing/invalid session is no longer an error here — it
@@ -44,7 +48,7 @@ export async function POST(request) {
     const body = await request.json();
     const keyword = (body.keyword || "").trim();
     const notes = (body.notes || "").slice(0, 1000);
-    const orderType = ["report", "posts", "comments"].includes(body.orderType)
+    const orderType = Object.keys(PRICES).includes(body.orderType)
       ? body.orderType
       : "report";
     const findSubreddit = orderType !== "report" && Boolean(body.findSubreddit);
@@ -53,7 +57,7 @@ export async function POST(request) {
     if (!Number.isFinite(quantity) || quantity < 1) {
       quantity = 1;
     }
-    if (orderType === "report") {
+    if (SINGLE_UNIT_ORDER_TYPES.includes(orderType)) {
       quantity = 1;
     }
     if (quantity > 15) {
@@ -90,7 +94,7 @@ export async function POST(request) {
       LABELS[orderType] +
       ": " +
       keyword +
-      (orderType !== "report" ? " (x" + quantity + ")" : "") +
+      (!SINGLE_UNIT_ORDER_TYPES.includes(orderType) ? " (x" + quantity + ")" : "") +
       (findSubreddit ? " + find subreddit" : "");
 
     const paypalRes = await fetch(PAYPAL_BASE_URL + "/v2/checkout/orders", {

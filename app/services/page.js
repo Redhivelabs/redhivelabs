@@ -1,11 +1,65 @@
-import Link from "next/link";
 import SiteNav from "../../components/SiteNav.js";
+import ServicePackagesGrid from "../../components/ServicePackagesGrid.js";
 
 export const metadata = {
-  title: "Services",
+  title: "Services — Reddit Placement Packages",
   description:
-    "Reddit placement reports, posts, and comments — built on real, trusted accounts.",
+    "SCOUT, PACK, and PRESENCE — done-for-you Reddit placements, chosen from live risk-and-opportunity data and placed through established, aged accounts.",
 };
+
+const PACKAGES = [
+  {
+    orderType: "scout",
+    orderKeyword: "SCOUT — One Placement",
+    name: "SCOUT — One Placement",
+    price: "$129",
+    description:
+      "One seeded thread or high-context mention, placed in your single highest-opportunity community.",
+    bullets: [
+      "Target community chosen from live Wolf Score data",
+      "Written and placed from established, aged accounts — you risk none of your own",
+      "Pre-screened against that subreddit's real removal rate before anything goes live",
+      "Native to the community's tone — reads like a member, not an ad",
+    ],
+    note: "Best for testing the waters in one specific niche.",
+    ctaLabel: "Get Me In → $129",
+  },
+  {
+    orderType: "pack",
+    orderKeyword: "PACK — Three Placements",
+    name: "PACK — Three Placements",
+    featured: true,
+    price: "$339",
+    strikePrice: "$387",
+    description:
+      "Three coordinated placements across your top-ranked communities — the spread that starts showing up in search and AI answers.",
+    bullets: [
+      "3 communities mapped and prioritized by opportunity, not guesswork",
+      "Staggered timing so it reads organic, never like a campaign",
+      "Each placement risk-screened individually",
+      "Covers the range of threads your buyers actually read before deciding",
+    ],
+    note: "Best for building real presence across a niche, not just one thread.",
+    ctaLabel: "Own the Conversation → $339",
+  },
+  {
+    orderType: "presence",
+    orderKeyword: "PRESENCE — Monthly Visibility",
+    name: "PRESENCE — Monthly Visibility",
+    price: "$890",
+    priceSuffix: "/mo",
+    description:
+      "Ongoing placement in the threads that keep ranking — so when someone asks Google or ChatGPT about your category, your name keeps surfacing.",
+    bullets: [
+      "Continuous thread-finding across your target communities",
+      "Multiple placements per month, timed and risk-screened",
+      "Monthly Reddit Visibility Report: where you're showing up in ranking threads and AI answers",
+      "First priority on new high-opportunity threads as they surface",
+    ],
+    note: "Best for brands that want Reddit working for them every month, not once.",
+    ctaLabel: "Make Me Unmissable → $890/mo",
+  },
+];
 
 export default function Services() {
   return (
@@ -18,139 +72,131 @@ export default function Services() {
     >
       <SiteNav />
 
-      <div className="mx-auto mt-16 max-w-3xl text-center">
+      {/* HERO */}
+      <div className="mx-auto mt-16 max-w-2xl text-center">
         <h1
-          className="text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl"
+          className="mx-auto max-w-xl bg-transparent text-3xl font-extrabold leading-tight text-white sm:text-4xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Stop Getting Removed
+          Visibility on Reddit isn&apos;t random.
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-white/70">
-          You post. A mod nukes it in 4 minutes. Nobody tells you why. We fix
-          that — and we can do the posting for you, too.
-        </p>
-      </div>
 
-      {/* REPORT SECTION */}
-      <div className="mx-auto mt-16 max-w-4xl">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#FF6A1A]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-[#FF6A1A]">
-          Placement Report
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2">
-          <div className="rounded-2xl border border-white/8 bg-[#15171A] p-7 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
-            <h2
-              className="text-xl font-bold text-white"
-              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-            >
-              The list mods don't want you to have
-            </h2>
-            <p className="mt-2 text-sm text-white/70">
-              10-15 curated subreddits for your keyword — not the ones with
-              the biggest subscriber count, the ones with real activity and
-              real buyers.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-white/8 bg-[#15171A] p-7 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
-            <h2
-              className="text-xl font-bold text-white"
-              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-            >
-              Know your odds before you post
-            </h2>
-            <p className="mt-2 text-sm text-white/70">
-              Removal rates, posting rules translated from mod-speak, best
-              times to post, and real evidence — not guesses.
-            </p>
-          </div>
-        </div>
-      </div>
+        <div className="mx-auto mt-5 h-px w-12 bg-white/15" />
 
-      {/* POSTS SECTION */}
-      <div className="mx-auto mt-14 max-w-4xl">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#FF6A1A]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-[#FF6A1A]">
-          Sub Reddit Posts
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2">
-          <div className="rounded-2xl border border-white/8 bg-[#15171A] p-7 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
-            <h2
-              className="text-xl font-bold text-white"
-              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-            >
-              We post it. It stays up.
-            </h2>
-            <p className="mt-2 text-sm text-white/70">
-              Every post goes out through our own network of aged, high-karma
-              accounts with real posting history — not throwaways that get
-              shadowbanned before anyone sees them.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-white/8 bg-[#15171A] p-7 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
-            <h2
-              className="text-xl font-bold text-white"
-              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-            >
-              Karma that mods actually trust
-            </h2>
-            <p className="mt-2 text-sm text-white/70">
-              A brand-new account triggers spam filters instantly. Ours don't
-              — real history, real karma, real standing in the communities
-              you need to reach.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* COMMENTS SECTION */}
-      <div className="mx-auto mt-14 max-w-4xl">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#FF6A1A]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-[#FF6A1A]">
-          Sub Reddit Comments
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2">
-          <div className="rounded-2xl border border-white/8 bg-[#15171A] p-7 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
-            <h2
-              className="text-xl font-bold text-white"
-              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-            >
-              Real conversations, not spam
-            </h2>
-            <p className="mt-2 text-sm text-white/70">
-              We comment where it actually fits the thread — mentions that
-              read like a real person, not a bot dropping a link and
-              vanishing.
-            </p>
-          </div>
-          <div className="rounded-2xl border border-white/8 bg-[#15171A] p-7 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
-            <h2
-              className="text-xl font-bold text-white"
-              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-            >
-              Built to last, not to get nuked
-            </h2>
-            <p className="mt-2 text-sm text-white/70">
-              The same trusted accounts that post for you leave comments too
-              — established enough that mods don't think twice.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto mt-14 max-w-2xl rounded-2xl border border-[#FF6A1A]/20 bg-[#FF6A1A]/5 p-8 text-center">
-        <h2
-          className="text-2xl font-bold text-white"
+        <p
+          className="mx-auto mt-5 max-w-xl bg-transparent text-xl font-bold leading-snug text-white sm:text-2xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          A human looks at every order
-        </h2>
-        <p className="mx-auto mt-2 max-w-lg text-sm text-white/70">
-          No bot spits out a list and calls it done. Every report, post, and
-          comment gets checked by a real person before it goes live.
+          Your Reddit posts don&apos;t fail because they&apos;re bad.
+          <br />
+          <span
+            className="bg-transparent"
+            style={{ color: "var(--color-accent)", backgroundColor: "transparent", backgroundImage: "none" }}
+          >
+            They fail because no one ever sees them.
+          </span>
         </p>
-        <Link
-          href="/"
-          className="mt-6 inline-block rounded-full bg-[#FF6A1A] px-8 py-3 font-medium text-white shadow-[0_8px_20px_-6px_rgba(255,106,26,0.5)] transition-all hover:bg-[#E85A0C]"
+
+        <p className="mx-auto mt-6 max-w-[620px] text-left text-sm leading-relaxed text-white/55 sm:text-base">
+          Post it wrong and a mod deletes it in twenty minutes — your karma,
+          wasted. Post it right and it ranks on Google for years, gets quoted
+          by ChatGPT, and sends you buyers on autopilot.
+        </p>
+        <p className="mx-auto mt-6 max-w-[620px] text-left text-base leading-relaxed text-white/75 sm:text-lg">
+          I already know which rooms open the door and which ones slam it
+          shut.
+        </p>
+
+        <div
+          className="mx-auto mt-5 max-w-[620px] rounded-2xl px-6 py-6 text-center"
+          style={{ backgroundColor: "var(--color-accent)" }}
         >
-          Run a free scan
-        </Link>
+          <p
+            className="text-lg font-extrabold leading-snug text-white sm:text-xl"
+            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+          >
+            NO VISIBILITY → YOU GET IGNORED
+          </p>
+          <p
+            className="mt-2 text-lg font-extrabold leading-snug text-white sm:text-xl"
+            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+          >
+            IGNORED → YOUR COMPETITORS GET CHOSEN
+          </p>
+        </div>
+
+        <div className="mx-auto mt-5 h-px w-16 bg-white/15" />
+
+        <p className="mx-auto mt-5 max-w-[620px] text-center text-base italic text-white/70">
+          This isn&apos;t about posting more. It&apos;s about showing up
+          where it actually matters.
+        </p>
+        <p
+          className="mt-8 text-xs font-bold uppercase tracking-[0.25em]"
+          style={{ color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
+        >
+          Find. Engage. Influence.
+        </p>
+      </div>
+
+      {/* PACKAGES */}
+      <ServicePackagesGrid packages={PACKAGES} />
+
+      {/* CLOSING SECTION */}
+      <div className="mx-auto mt-24 max-w-2xl text-center">
+        <h2
+          className="text-2xl font-bold text-white sm:text-3xl"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
+          Start showing up where it matters.
+        </h2>
+
+        <div className="mx-auto mt-5 h-px w-12 bg-white/15" />
+
+        <div className="mx-auto mt-6 max-w-xl rounded-2xl border border-[#FF6A1A]/30 bg-[#15171A] px-6 py-6 text-center">
+          <p
+            className="text-base leading-relaxed text-white sm:whitespace-nowrap sm:text-lg"
+            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+          >
+            If your brand isn&apos;t part of the conversations your buyers
+            are reading,
+          </p>
+          <p
+            className="mt-1 text-base font-bold leading-relaxed sm:text-lg"
+            style={{ color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
+          >
+            you&apos;re already being left out of the decision.
+          </p>
+          <p
+            className="mt-5 text-xs font-bold uppercase tracking-[0.25em]"
+            style={{ color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
+          >
+            Find • Engage • Influence.
+          </p>
+        </div>
+      </div>
+
+      {/* GUARANTEE */}
+      <div className="mx-auto mt-16 max-w-2xl">
+        <div className="rounded-2xl border border-[#FF6A1A]/25 bg-[#1D2024] p-8 text-center shadow-[0_16px_40px_-16px_rgba(255,106,26,0.3)]">
+          <div
+            className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide"
+            style={{ backgroundColor: "var(--color-accent-soft)", color: "var(--color-accent)" }}
+          >
+            🐺 The Wolf&apos;s Guarantee
+          </div>
+          <p
+            className="text-lg font-bold text-white sm:text-xl"
+            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+          >
+            If a placement gets removed, I redo it free — in another
+            community, no charge, no argument.
+          </p>
+          <p className="mx-auto mt-3 max-w-md text-sm text-white/55">
+            You&apos;re not betting on luck. You&apos;re betting on judgment
+            that&apos;s already proven itself.
+          </p>
+        </div>
       </div>
     </div>
   );

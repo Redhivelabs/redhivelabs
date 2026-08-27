@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
 :root {
+  /* The whole site is a fixed dark theme — declaring this stops browsers
+     (Chromium's auto-dark-mode heuristic in particular) from applying their
+     own synthetic contrast/darkening backdrop behind headings and body
+     text, which otherwise shows up as a stray translucent gray box. */
+  color-scheme: dark;
+
   /* Wolf of Reddit brand tokens */
   --background: #0d0e10;
   --foreground: #f2f3f4;

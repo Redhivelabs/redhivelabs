@@ -430,7 +430,7 @@ export default function ScanResultsClient({ keyword }) {
                 for every subreddit that matters.
               </p>
 
-              <div className="mx-auto mt-6 max-w-xs rounded-2xl border border-white/10 bg-[#191B1F] p-5">
+              <div className="mx-auto mt-6 max-w-xs rounded-2xl bg-[#191B1F] p-5">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <span className="text-xs font-medium uppercase tracking-wide text-white/60">
                     Reddit Intel Report

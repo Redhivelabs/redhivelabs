@@ -3,14 +3,11 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import PayPalButton from "../../components/PayPalButton.js";
 import DashboardAvatarMenu from "../../components/DashboardAvatarMenu.js";
 
 const sections = [
   { key: "scans", label: "My Scans", mobileLabel: "Scans", icon: "search" },
   { key: "report", label: "Reddit Intel Report", mobileLabel: "Report", icon: "doc" },
-  { key: "posts", label: "Sub Reddit Posts", mobileLabel: "Posts", icon: "edit" },
-  { key: "comments", label: "Sub Reddit Comments", mobileLabel: "Comments", icon: "chat" },
 ];
 
 function SidebarIcon({ name }) {
@@ -33,25 +30,8 @@ function SidebarIcon({ name }) {
       </svg>
     );
   }
-  if (name === "edit") {
-    return (
-      <svg {...common}>
-        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4z" />
-      </svg>
-    );
-  }
-  if (name === "chat") {
-    return (
-      <svg {...common}>
-        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-      </svg>
-    );
-  }
   return null;
 }
-
-const PRICES = { report: 49, posts: 30, comments: 15 };
 
 function statusLabel(order) {
   if (order.orderType === "report") {
@@ -131,17 +111,6 @@ function DashboardInner() {
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState("report");
 
-  const [postsKeyword, setPostsKeyword] = useState("");
-  const [postsQty, setPostsQty] = useState(1);
-  const [postsUrl, setPostsUrl] = useState("");
-  const [postsInstructions, setPostsInstructions] = useState("");
-  const [postsFindSubreddit, setPostsFindSubreddit] = useState(false);
-  const [commentsKeyword, setCommentsKeyword] = useState("");
-  const [commentsQty, setCommentsQty] = useState(1);
-  const [commentsUrl, setCommentsUrl] = useState("");
-  const [commentsInstructions, setCommentsInstructions] = useState("");
-  const [commentsFindSubreddit, setCommentsFindSubreddit] = useState(false);
-
   useEffect(function () {
     async function load() {
       try {
@@ -162,18 +131,8 @@ function DashboardInner() {
 
   useEffect(function () {
     const orderParam = searchParams.get("order");
-    const keywordParam = searchParams.get("keyword");
-    const quantityParam = parseInt(searchParams.get("quantity"), 10);
     if (orderParam && sections.some(function (s) { return s.key === orderParam; })) {
       setActiveSection(orderParam);
-    }
-    if (keywordParam) {
-      setPostsKeyword(keywordParam);
-      setCommentsKeyword(keywordParam);
-    }
-    if (Number.isFinite(quantityParam) && quantityParam >= 1 && quantityParam <= 15) {
-      setPostsQty(quantityParam);
-      setCommentsQty(quantityParam);
     }
   }, [searchParams]);
 
@@ -193,12 +152,6 @@ function DashboardInner() {
 
   const reportOrders = data.orders.filter(function (o) {
     return o.orderType === "report";
-  });
-  const postsOrders = data.orders.filter(function (o) {
-    return o.orderType === "posts";
-  });
-  const commentsOrders = data.orders.filter(function (o) {
-    return o.orderType === "comments";
   });
 
   return (
@@ -413,350 +366,6 @@ function DashboardInner() {
                 Your report orders
               </h2>
               <OrderList orders={reportOrders} />
-            </div>
-          )}
-
-          {activeSection === "posts" && (
-            <div>
-              <p
-                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#FF6A1A]"
-                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-              >
-                Posting Service
-              </p>
-              <h1
-                className="mt-1 text-2xl font-extrabold text-white"
-                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-              >
-                Sub Reddit Posts
-              </h1>
-              <p className="mt-1 text-sm text-white/60">
-                We post your content to the subreddits you choose. $30 per
-                post.
-              </p>
-
-              <div className="mt-6 rounded-2xl border border-white/8 bg-[#15171A] p-6 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
-                <label className="text-xs font-medium uppercase tracking-wide text-white/70">
-                  Keyword / subreddit focus
-                </label>
-                <input
-                  type="text"
-                  value={postsKeyword}
-                  onChange={function (e) {
-                    setPostsKeyword(e.target.value);
-                  }}
-                  placeholder="e.g. skincare for sensitive skin"
-                  className="mt-2 w-full rounded-full border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
-                />
-
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
-                  Number of posts
-                </label>
-                <div className="mt-3 flex items-center gap-4">
-                  <button
-                    onClick={function () {
-                      setPostsQty(Math.max(1, postsQty - 1));
-                    }}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0D0E10] text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#FF6A1A] hover:bg-[#FF6A1A]/10"
-                  >
-                    −
-                  </button>
-                  <span
-                    className="w-10 text-center text-2xl font-extrabold text-white"
-                    style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-                  >
-                    {postsQty}
-                  </span>
-                  <button
-                    onClick={function () {
-                      setPostsQty(Math.min(15, postsQty + 1));
-                    }}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0D0E10] text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#FF6A1A] hover:bg-[#FF6A1A]/10"
-                  >
-                    +
-                  </button>
-                </div>
-
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
-                  Subreddit URL(s) (optional)
-                </label>
-                <textarea
-                  value={postsUrl}
-                  onChange={function (e) {
-                    setPostsUrl(e.target.value);
-                  }}
-                  rows={3}
-                  placeholder={"https://www.reddit.com/r/subreddit\nAdd one per line if you have more than one"}
-                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
-                />
-
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
-                  Special instructions (optional)
-                </label>
-                <textarea
-                  value={postsInstructions}
-                  onChange={function (e) {
-                    setPostsInstructions(e.target.value.slice(0, 300));
-                  }}
-                  maxLength={300}
-                  rows={3}
-                  placeholder="Anything we should know before posting?"
-                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
-                />
-                <p className="mt-1 text-right text-xs text-white/40">
-                  {postsInstructions.length}/300
-                </p>
-
-                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 p-4 transition-colors hover:border-[#FF6A1A]/40 bg-[#0D0E10]">
-                  <input
-                    type="checkbox"
-                    checked={postsFindSubreddit}
-                    onChange={function (e) {
-                      setPostsFindSubreddit(e.target.checked);
-                    }}
-                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#FF6A1A]"
-                  />
-                  <span className="text-sm text-white">
-                    <span className="font-medium">
-                      Find the right subreddit for us
-                    </span>
-                    <span className="block text-xs text-white/60">
-                      Don't know where to post? We'll find it. +$5 per post.
-                    </span>
-                  </span>
-                </label>
-
-                {!postsKeyword.trim() && (
-                  <p className="mt-4 text-xs font-medium text-[#FF6A1A]">
-                    Enter a keyword above to unlock checkout.
-                  </p>
-                )}
-
-                <div className="mt-6 border-t border-white/10 pt-5">
-                  <div className="flex items-center justify-between text-sm text-white/60">
-                    <span>{postsQty} × ${PRICES.posts} per post</span>
-                    <span>${PRICES.posts * postsQty} USD</span>
-                  </div>
-                  {postsFindSubreddit && (
-                    <div className="mt-1.5 flex items-center justify-between text-sm text-white/60">
-                      <span>Find-subreddit add-on</span>
-                      <span>+${5 * postsQty} USD</span>
-                    </div>
-                  )}
-                  <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
-                    <span className="text-sm font-medium text-white/70">Total</span>
-                    <span
-                      className="text-2xl font-extrabold"
-                      style={{ color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
-                    >
-                      ${(PRICES.posts + (postsFindSubreddit ? 5 : 0)) * postsQty} USD
-                    </span>
-                  </div>
-                </div>
-
-                {postsKeyword.trim() && (
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-[#191B1F] p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
-                    <PayPalButton
-                      orderType="posts"
-                      keyword={postsKeyword.trim()}
-                      quantity={postsQty}
-                      findSubreddit={postsFindSubreddit}
-                      notes={
-                        "Subreddit URL(s): " +
-                        (postsUrl.trim() || "not provided") +
-                        "\nInstructions: " +
-                        (postsInstructions.trim() || "none") +
-                        "\nFind subreddit for us: " +
-                        (postsFindSubreddit ? "Yes (+$5/post)" : "No")
-                      }
-                    />
-                    <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-white/40">
-                      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="5" y="11" width="14" height="9" rx="2" />
-                        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-                      </svg>
-                      Secure checkout via PayPal
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <h2 className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-white/50" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
-                Your posting orders
-              </h2>
-              <OrderList orders={postsOrders} />
-            </div>
-          )}
-
-          {activeSection === "comments" && (
-            <div>
-              <p
-                className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#FF6A1A]"
-                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-              >
-                Commenting Service
-              </p>
-              <h1
-                className="mt-1 text-2xl font-extrabold text-white"
-                style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-              >
-                Sub Reddit Comments
-              </h1>
-              <p className="mt-1 text-sm text-white/60">
-                We leave real comments on relevant threads. $15 per comment.
-              </p>
-
-              <div className="mt-6 rounded-2xl border border-white/8 bg-[#15171A] p-6 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
-                <label className="text-xs font-medium uppercase tracking-wide text-white/70">
-                  Keyword / subreddit focus
-                </label>
-                <input
-                  type="text"
-                  value={commentsKeyword}
-                  onChange={function (e) {
-                    setCommentsKeyword(e.target.value);
-                  }}
-                  placeholder="e.g. skincare for sensitive skin"
-                  className="mt-2 w-full rounded-full border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
-                />
-
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
-                  Number of comments
-                </label>
-                <div className="mt-3 flex items-center gap-4">
-                  <button
-                    onClick={function () {
-                      setCommentsQty(Math.max(1, commentsQty - 1));
-                    }}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0D0E10] text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#FF6A1A] hover:bg-[#FF6A1A]/10"
-                  >
-                    −
-                  </button>
-                  <span
-                    className="w-10 text-center text-2xl font-extrabold text-white"
-                    style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-                  >
-                    {commentsQty}
-                  </span>
-                  <button
-                    onClick={function () {
-                      setCommentsQty(Math.min(15, commentsQty + 1));
-                    }}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0D0E10] text-xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-all hover:border-[#FF6A1A] hover:bg-[#FF6A1A]/10"
-                  >
-                    +
-                  </button>
-                </div>
-
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
-                  Subreddit URL(s) (optional)
-                </label>
-                <textarea
-                  value={commentsUrl}
-                  onChange={function (e) {
-                    setCommentsUrl(e.target.value);
-                  }}
-                  rows={3}
-                  placeholder={"https://www.reddit.com/r/subreddit\nAdd one per line if you have more than one"}
-                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
-                />
-
-                <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
-                  Special instructions (optional)
-                </label>
-                <textarea
-                  value={commentsInstructions}
-                  onChange={function (e) {
-                    setCommentsInstructions(e.target.value.slice(0, 300));
-                  }}
-                  maxLength={300}
-                  rows={3}
-                  placeholder="Anything we should know before commenting?"
-                  className="mt-2 w-full resize-none rounded-2xl border border-white/10 bg-[#0D0E10] px-5 py-3 text-white outline-none placeholder:text-white/35 focus:border-[#FF6A1A]"
-                />
-                <p className="mt-1 text-right text-xs text-white/40">
-                  {commentsInstructions.length}/300
-                </p>
-
-                <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-2xl border border-white/10 p-4 transition-colors hover:border-[#FF6A1A]/40 bg-[#0D0E10]">
-                  <input
-                    type="checkbox"
-                    checked={commentsFindSubreddit}
-                    onChange={function (e) {
-                      setCommentsFindSubreddit(e.target.checked);
-                    }}
-                    className="mt-0.5 h-4 w-4 flex-shrink-0 accent-[#FF6A1A]"
-                  />
-                  <span className="text-sm text-white">
-                    <span className="font-medium">
-                      Find the right subreddit for us
-                    </span>
-                    <span className="block text-xs text-white/60">
-                      Don't know where to comment? We'll find it. +$5 per
-                      comment.
-                    </span>
-                  </span>
-                </label>
-
-                {!commentsKeyword.trim() && (
-                  <p className="mt-4 text-xs font-medium text-[#FF6A1A]">
-                    Enter a keyword above to unlock checkout.
-                  </p>
-                )}
-
-                <div className="mt-6 border-t border-white/10 pt-5">
-                  <div className="flex items-center justify-between text-sm text-white/60">
-                    <span>{commentsQty} × ${PRICES.comments} per comment</span>
-                    <span>${PRICES.comments * commentsQty} USD</span>
-                  </div>
-                  {commentsFindSubreddit && (
-                    <div className="mt-1.5 flex items-center justify-between text-sm text-white/60">
-                      <span>Find-subreddit add-on</span>
-                      <span>+${5 * commentsQty} USD</span>
-                    </div>
-                  )}
-                  <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
-                    <span className="text-sm font-medium text-white/70">Total</span>
-                    <span
-                      className="text-2xl font-extrabold"
-                      style={{ color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
-                    >
-                      ${(PRICES.comments + (commentsFindSubreddit ? 5 : 0)) * commentsQty} USD
-                    </span>
-                  </div>
-                </div>
-
-                {commentsKeyword.trim() && (
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-[#191B1F] p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
-                    <PayPalButton
-                      orderType="comments"
-                      keyword={commentsKeyword.trim()}
-                      quantity={commentsQty}
-                      findSubreddit={commentsFindSubreddit}
-                      notes={
-                        "Subreddit URL(s): " +
-                        (commentsUrl.trim() || "not provided") +
-                        "\nInstructions: " +
-                        (commentsInstructions.trim() || "none") +
-                        "\nFind subreddit for us: " +
-                        (commentsFindSubreddit ? "Yes (+$5/comment)" : "No")
-                      }
-                    />
-                    <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-white/40">
-                      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="5" y="11" width="14" height="9" rx="2" />
-                        <path d="M8 11V7a4 4 0 0 1 8 0v4" />
-                      </svg>
-                      Secure checkout via PayPal
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <h2 className="mt-8 text-xs font-bold uppercase tracking-[0.1em] text-white/50" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
-                Your comment orders
-              </h2>
-              <OrderList orders={commentsOrders} />
             </div>
           )}
         </main>

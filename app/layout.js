@@ -21,6 +21,10 @@ const jetbrainsMono = JetBrains_Mono({
 
 const SITE_URL = "https://wolfofreddit.com";
 
+export const viewport = {
+  colorScheme: "dark",
+};
+
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -60,7 +64,7 @@ const organizationSchema = {
   url: SITE_URL,
   logo: SITE_URL + "/brand/wolf-icon.png",
   description:
-    "Wolf of Reddit helps businesses find the right subreddits to reach their buyers, with a free Wolf Scan, a paid Reddit Intel Report, and done-for-you Reddit posting and commenting services.",
+    "Wolf of Reddit helps businesses find the right subreddits to reach their buyers, with a free Wolf Scan, a paid Reddit Intel Report, and done-for-you Reddit placement packages.",
   sameAs: ["https://twitter.com/wolfofreddit"],
 };
 

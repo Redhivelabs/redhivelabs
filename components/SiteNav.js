@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import NavAuthStatus from "./NavAuthStatus.js";
-import ServicesNavDropdown from "./ServicesNavDropdown.js";
 
 function HamburgerIcon({ open }) {
   return (
@@ -21,22 +20,6 @@ function HamburgerIcon({ open }) {
           <line x1="4" y1="17" x2="20" y2="17" />
         </>
       )}
-    </svg>
-  );
-}
-
-function ChevronIcon({ open }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width="12"
-      height="12"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      className={"transition-transform " + (open ? "rotate-180" : "")}
-    >
-      <polyline points="6 9 12 15 18 9" />
     </svg>
   );
 }
@@ -70,11 +53,9 @@ function BrandLockup() {
 export default function SiteNav() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   useEffect(function () {
     setMobileOpen(false);
-    setMobileServicesOpen(false);
   }, [pathname]);
 
   return (
@@ -90,7 +71,9 @@ export default function SiteNav() {
           className="hidden items-center gap-6 text-sm font-medium text-white/70 sm:flex"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          <ServicesNavDropdown />
+          <Link href="/services" className="hover:text-white">
+            Services
+          </Link>
           <Link href="/reddit-intel-report" className="hover:text-white">
             Reddit Intelligence
           </Link>
@@ -120,41 +103,15 @@ export default function SiteNav() {
           className="absolute left-0 right-0 top-full z-50 mt-2 rounded-2xl border border-white/8 p-3 shadow-[0_16px_40px_-8px_rgba(0,0,0,0.6)] sm:hidden"
           style={{ fontFamily: "var(--font-archivo), sans-serif", backgroundColor: "var(--color-surface)" }}
         >
-          <button
-            type="button"
+          <Link
+            href="/services"
+            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white"
             onClick={function () {
-              setMobileServicesOpen(function (v) {
-                return !v;
-              });
+              setMobileOpen(false);
             }}
-            className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white"
           >
             Services
-            <ChevronIcon open={mobileServicesOpen} />
-          </button>
-          {mobileServicesOpen && (
-            <div className="ml-3 flex flex-col border-l border-white/10 pl-3">
-              <Link
-                href="/services/posts"
-                className="rounded-xl px-3 py-2 text-sm text-white/60 hover:bg-white/5 hover:text-white"
-                onClick={function () {
-                  setMobileOpen(false);
-                }}
-              >
-                Buy Reddit Posts
-              </Link>
-              <Link
-                href="/services/comments"
-                className="rounded-xl px-3 py-2 text-sm text-white/60 hover:bg-white/5 hover:text-white"
-                onClick={function () {
-                  setMobileOpen(false);
-                }}
-              >
-                Buy Reddit Comments
-              </Link>
-            </div>
-          )}
-
+          </Link>
           <Link
             href="/reddit-intel-report"
             className="block rounded-xl px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white"

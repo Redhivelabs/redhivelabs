@@ -28,7 +28,7 @@ export default function ReportCheckoutCard() {
       )}
 
       {keyword.trim() && (
-        <div className="mt-4 rounded-2xl border border-white/10 bg-[#191B1F] p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
+        <div className="mt-4 rounded-2xl bg-[#191B1F] p-4 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.35)]">
           <PayPalButton orderType="report" keyword={keyword.trim()} quantity={1} />
           <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-white/40">
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">

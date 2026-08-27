@@ -693,13 +693,13 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
         </Text>
 
         <View style={styles.upsellBox}>
-          <Text style={styles.upsellTitle}>We can post it for you</Text>
+          <Text style={styles.upsellTitle}>We can place it for you</Text>
           <Text style={styles.upsellText}>
             {dl(
-              "Our Sub Reddit Posts and Comments services put your content live " +
-                "through a network of real, aged, high-karma accounts — the kind " +
-                "mods trust, not throwaways that get flagged on sight. $30 per post, " +
-                "$15 per comment. Head to your dashboard to get started."
+              "Our SCOUT, PACK, and PRESENCE placement packages put your content " +
+                "live through established, aged accounts — chosen from live risk-and-" +
+                "opportunity data, not throwaways that get flagged on sight. " +
+                "Starting at $129. See wolfofreddit.com/services to get started."
             )}
           </Text>
         </View>
