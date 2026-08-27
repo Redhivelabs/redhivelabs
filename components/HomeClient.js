@@ -107,7 +107,7 @@ export default function HomeClient() {
                 src="/brand/wolf-icon.png"
                 alt=""
                 aria-hidden="true"
-                className="wolf-float-icon pointer-events-none absolute -right-2 -top-2 h-9 w-9 rounded-full sm:-right-3 sm:-top-3 sm:h-10 sm:w-10"
+                className="wolf-float-icon pointer-events-none absolute -right-2 -top-2 hidden h-9 w-9 rounded-full sm:-right-3 sm:-top-3 sm:block sm:h-10 sm:w-10"
               />
             </div>
           </form>
