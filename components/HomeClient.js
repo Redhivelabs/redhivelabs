@@ -89,7 +89,7 @@ export default function HomeClient() {
                 }}
               />
             </div>
-            <div className="relative inline-block self-start sm:self-auto">
+            <div className="relative inline-block self-center sm:self-auto">
               <button
                 type="submit"
                 className="rounded-full px-8 py-4 font-bold uppercase tracking-wide text-white transition-colors"
