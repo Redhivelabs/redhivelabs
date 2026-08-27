@@ -175,12 +175,12 @@ export default function Privacy() {
               contact details on wolfofreddit.com, or by reaching out on
               Twitter/X at{" "}
               <a
-                href="https://twitter.com/wolfofreddit"
+                href="https://twitter.com/WolfofReddits"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#FF6A1A] hover:underline"
               >
-                @wolfofreddit
+                @WolfofReddits
               </a>
               .
             </p>

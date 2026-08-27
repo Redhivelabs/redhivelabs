@@ -89,19 +89,27 @@ export default function HomeClient() {
                 }}
               />
             </div>
-            <button
-              type="submit"
-              className="rounded-full px-8 py-4 font-bold uppercase tracking-wide text-white shadow-[0_8px_20px_-6px_rgba(255,106,26,0.5)] transition-all hover:shadow-[0_10px_24px_-6px_rgba(255,106,26,0.6)]"
-              style={{ backgroundColor: "var(--color-accent)" }}
-              onMouseEnter={function (e) {
-                e.currentTarget.style.backgroundColor = "var(--color-accent-hover)";
-              }}
-              onMouseLeave={function (e) {
-                e.currentTarget.style.backgroundColor = "var(--color-accent)";
-              }}
-            >
-              Find Communities
-            </button>
+            <div className="relative inline-block">
+              <button
+                type="submit"
+                className="rounded-full px-8 py-4 font-bold uppercase tracking-wide text-white transition-colors"
+                style={{ backgroundColor: "var(--color-accent)" }}
+                onMouseEnter={function (e) {
+                  e.currentTarget.style.backgroundColor = "var(--color-accent-hover)";
+                }}
+                onMouseLeave={function (e) {
+                  e.currentTarget.style.backgroundColor = "var(--color-accent)";
+                }}
+              >
+                Find Subreddits
+              </button>
+              <img
+                src="/brand/wolf-icon.png"
+                alt=""
+                aria-hidden="true"
+                className="wolf-float-icon pointer-events-none absolute -right-2 -top-2 h-9 w-9 rounded-full sm:-right-3 sm:-top-3 sm:h-10 sm:w-10"
+              />
+            </div>
           </form>
         </div>
 
@@ -148,7 +156,7 @@ export default function HomeClient() {
 
         <div className="mx-auto mt-16 flex max-w-lg flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-white/35">
           <a
-            href="https://twitter.com/wolfofreddit"
+            href="https://twitter.com/WolfofReddits"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 hover:text-white/70"
@@ -156,7 +164,7 @@ export default function HomeClient() {
             <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
-            @wolfofreddit
+            @WolfofReddits
           </a>
           <Link href="/privacy" className="hover:text-white/70">
             Privacy Policy

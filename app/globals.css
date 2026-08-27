@@ -59,6 +59,19 @@ body {
   animation: float 3.5s ease-in-out infinite;
 }
 
+@keyframes wolf-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.wolf-float-icon {
+  animation: wolf-float 3s ease-in-out infinite;
+}
+
 @keyframes spin-ring {
   to {
     transform: rotate(360deg);

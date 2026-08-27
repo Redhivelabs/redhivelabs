@@ -65,7 +65,7 @@ const organizationSchema = {
   logo: SITE_URL + "/brand/wolf-icon.png",
   description:
     "Wolf of Reddit helps businesses find the right subreddits to reach their buyers, with a free Wolf Scan, a paid Reddit Intel Report, and done-for-you Reddit placement packages.",
-  sameAs: ["https://twitter.com/wolfofreddit"],
+  sameAs: ["https://twitter.com/WolfofReddits"],
 };
 
 export default function RootLayout({ children }) {
