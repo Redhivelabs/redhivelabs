@@ -24,6 +24,14 @@ export default async function AdminQueue() {
     redirect("/login");
   }
 
+  console.log("ADMIN CHECK:", JSON.stringify({
+    sessionEmail: email,
+    sessionEmailLength: email?.length,
+    adminEnv: process.env.ADMIN_EMAIL,
+    adminEnvLength: process.env.ADMIN_EMAIL?.length,
+    match: email === process.env.ADMIN_EMAIL
+  }));
+
   if (email !== process.env.ADMIN_EMAIL) {
     redirect("/dashboard");
   }
