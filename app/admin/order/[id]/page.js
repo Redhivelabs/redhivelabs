@@ -22,6 +22,7 @@ export default function AdminOrderBuilder() {
   const orderId = params.id;
 
   const [competitors, setCompetitors] = useState("");
+  const [client, setClient] = useState("");
   const [generating, setGenerating] = useState(false);
   const [report, setReport] = useState(null);
   const [error, setError] = useState(null);
@@ -34,7 +35,7 @@ export default function AdminOrderBuilder() {
       const res = await fetch("/api/admin/generate-report", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId: orderId, competitors: competitors }),
+        body: JSON.stringify({ orderId: orderId, competitors: competitors, client: client }),
       });
       const data = await res.json();
       if (data.error) {
@@ -55,6 +56,7 @@ export default function AdminOrderBuilder() {
     setReport({
       orderId: orderId,
       keyword: "skincare",
+      client: client,
       generatedAt: new Date().toISOString(),
       strategy: {
         narrative:
@@ -201,6 +203,19 @@ export default function AdminOrderBuilder() {
         {!report && (
           <div className="mt-6 rounded-2xl border border-white/8 bg-[#15171A] p-6 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
             <label className="text-xs font-medium uppercase tracking-wide text-white/70">
+              Client (optional, shown on the report cover)
+            </label>
+            <input
+              type="text"
+              value={client}
+              onChange={function (e) {
+                setClient(e.target.value);
+              }}
+              placeholder="e.g. MIMIQ"
+              className="mt-2 w-full rounded-full border border-white/15 px-5 py-3 text-white outline-none placeholder:text-white/40 focus:border-[#FF6A1A]"
+            />
+
+            <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
               Competitors (optional, comma-separated)
             </label>
             <input

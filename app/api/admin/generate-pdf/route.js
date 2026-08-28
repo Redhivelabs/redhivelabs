@@ -20,14 +20,14 @@ export async function POST(request) {
     }
 
     const body = await request.json();
-    const { keyword, generatedAt, strategy, subreddits } = body;
+    const { keyword, client, generatedAt, strategy, subreddits } = body;
 
     if (!keyword || !subreddits) {
       return Response.json({ error: "Missing report data" }, { status: 400 });
     }
 
     const pdfBuffer = await renderToBuffer(
-      ReportDocument({ keyword, generatedAt, strategy, subreddits })
+      ReportDocument({ keyword, client, generatedAt, strategy, subreddits })
     );
 
     return new Response(pdfBuffer, {

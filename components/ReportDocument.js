@@ -57,54 +57,123 @@ const styles = StyleSheet.create({
     color: COLORS.ink,
   },
   coverPage: {
-    padding: 60,
+    padding: 0,
     backgroundColor: "#0D0E10",
     color: COLORS.white,
-    justifyContent: "center",
   },
-  coverIcon: {
-    width: 72,
-    height: 72,
-    marginBottom: 20,
+  coverTopBar: {
+    height: 8,
+    backgroundColor: COLORS.teal,
+  },
+  coverContent: {
+    flex: 1,
+    paddingTop: 56,
+    paddingBottom: 56,
+    paddingHorizontal: 60,
   },
   headerIcon: {
     width: 14,
     height: 14,
   },
-  coverBadge: {
-    fontFamily: "Archivo",
-    fontWeight: 700,
-    fontSize: 10,
-    color: COLORS.teal,
-    marginBottom: 20,
-    textTransform: "uppercase",
-    letterSpacing: 1.5,
+  coverBrandRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 20,
+    marginBottom: 56,
   },
-  coverTitle: {
+  coverBadgeLogo: {
+    width: 96,
+    height: 96,
+  },
+  coverWordmark: {
     fontFamily: "Archivo",
     fontWeight: 800,
-    fontSize: 36,
-    marginTop: 20,
-    marginBottom: 12,
-    letterSpacing: -0.5,
+    fontSize: 32,
+    letterSpacing: -0.3,
+    textTransform: "uppercase",
   },
-  coverKeyword: {
+  coverTagline: {
     fontFamily: "Archivo",
     fontWeight: 700,
-    fontSize: 22,
-    color: COLORS.mint,
-    marginBottom: 28,
+    fontSize: 10.5,
+    letterSpacing: 2.5,
+    color: "rgba(255,255,255,0.85)",
+    textTransform: "uppercase",
+    marginTop: 8,
   },
-  coverMeta: {
-    fontFamily: "Source Serif 4",
-    fontSize: 11,
-    color: "#B8C0C8",
+  coverTitleBlock: {
+    alignItems: "center",
+    marginBottom: 64,
   },
-  coverDivider: {
+  coverTitleNew: {
+    fontFamily: "Archivo",
+    fontWeight: 800,
+    fontSize: 30,
+    letterSpacing: 0.5,
+    textAlign: "center",
+    textTransform: "uppercase",
+  },
+  coverTitleUnderline: {
+    width: 70,
+    height: 3,
+    borderRadius: 1.5,
+    backgroundColor: COLORS.teal,
+    marginTop: 14,
+  },
+  coverFieldRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  coverFieldLabel: {
+    fontFamily: "Archivo",
+    fontWeight: 700,
+    fontSize: 9.5,
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+    color: "#8A939C",
+  },
+  coverFieldValue: {
+    fontFamily: "Archivo",
+    fontWeight: 800,
+    fontSize: 17,
+    color: COLORS.white,
+    textTransform: "uppercase",
+  },
+  coverFieldDivider: {
     height: 1,
-    backgroundColor: "rgba(255,255,255,0.15)",
-    marginVertical: 24,
-    width: 120,
+    backgroundColor: "rgba(255,255,255,0.14)",
+    marginBottom: 26,
+  },
+  coverDisclaimerBlock: {
+    marginTop: "auto",
+  },
+  coverDisclaimerHeaderRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 6,
+  },
+  coverDisclaimerLabel: {
+    fontFamily: "Archivo",
+    fontWeight: 700,
+    fontSize: 8.5,
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+    color: "#8A939C",
+  },
+  coverDisclaimerDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: COLORS.teal,
+  },
+  coverDisclaimerText: {
+    fontFamily: "Source Serif 4",
+    fontSize: 8,
+    lineHeight: 1.5,
+    color: "#8A939C",
   },
   header: {
     position: "absolute",
@@ -602,13 +671,7 @@ function extraGateBadges(rawGates) {
   return badges;
 }
 
-export default function ReportDocument({ keyword, generatedAt, strategy, subreddits }) {
-  const dateStr = new Date(generatedAt || Date.now()).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
+export default function ReportDocument({ keyword, client, generatedAt, strategy, subreddits }) {
   const ranked = [...(subreddits || [])].sort(function (a, b) {
     return b.opportunityScore - a.opportunityScore;
   });
@@ -616,13 +679,50 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
   return (
     <Document>
       <Page size="A4" style={styles.coverPage}>
-        <Image src={LOGO_BADGE_BUFFER} style={styles.coverIcon} />
-        <Text style={styles.coverBadge}>Reddit Intel Report</Text>
-        <Text style={styles.coverTitle}>Wolf of Reddit</Text>
-        <Text style={styles.coverKeyword}>&quot;{keyword}&quot;</Text>
-        <View style={styles.coverDivider} />
-        <Text style={styles.coverMeta}>Generated {dateStr}</Text>
-        <Text style={styles.coverMeta}>{ranked.length} curated subreddits</Text>
+        <View style={styles.coverTopBar} fixed />
+        <View style={styles.coverContent}>
+          <View style={styles.coverBrandRow}>
+            <Image src={LOGO_BADGE_BUFFER} style={styles.coverBadgeLogo} />
+            <View>
+              <Text style={styles.coverWordmark}>
+                <Text style={{ color: COLORS.white }}>Wolf Of </Text>
+                <Text style={{ color: COLORS.teal }}>Reddit</Text>
+              </Text>
+              <Text style={styles.coverTagline}>Find  •  Engage  •  Influence</Text>
+            </View>
+          </View>
+
+          <View style={styles.coverTitleBlock}>
+            <Text style={styles.coverTitleNew}>Reddit Intel Report</Text>
+            <View style={styles.coverTitleUnderline} />
+          </View>
+
+          <View>
+            <View style={styles.coverFieldRow}>
+              <Text style={styles.coverFieldLabel}>Keyword</Text>
+              <Text style={styles.coverFieldValue}>{keyword}</Text>
+            </View>
+            <View style={styles.coverFieldDivider} />
+
+            <View style={styles.coverFieldRow}>
+              <Text style={styles.coverFieldLabel}>Client</Text>
+              <Text style={styles.coverFieldValue}>{client || "—"}</Text>
+            </View>
+            <View style={styles.coverFieldDivider} />
+          </View>
+
+          <View style={styles.coverDisclaimerBlock}>
+            <View style={styles.coverDisclaimerHeaderRow}>
+              <Text style={styles.coverDisclaimerLabel}>Disclaimer</Text>
+              <View style={styles.coverDisclaimerDot} />
+            </View>
+            <Text style={styles.coverDisclaimerText}>
+              This report is for informational purposes only and does not guarantee
+              posting outcomes, account safety, or platform compliance. Wolf of
+              Reddit is not affiliated with, endorsed by, or sponsored by Reddit, Inc.
+            </Text>
+          </View>
+        </View>
         <CoverPageFooter />
       </Page>
 

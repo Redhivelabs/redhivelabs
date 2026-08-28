@@ -17,6 +17,7 @@ function opportunityColor(score) {
 
 export default function AdminDemoBuilder() {
   const [keyword, setKeyword] = useState("");
+  const [client, setClient] = useState("");
   const [competitors, setCompetitors] = useState("");
   const [generating, setGenerating] = useState(false);
   const [report, setReport] = useState(null);
@@ -34,7 +35,7 @@ export default function AdminDemoBuilder() {
       const res = await fetch("/api/admin/generate-report-demo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ keyword: keyword, competitors: competitors }),
+        body: JSON.stringify({ keyword: keyword, competitors: competitors, client: client }),
       });
       const data = await res.json();
       if (data.error) {
@@ -152,6 +153,19 @@ export default function AdminDemoBuilder() {
                 setKeyword(e.target.value);
               }}
               placeholder="e.g. skincare"
+              className="mt-2 w-full rounded-full border border-white/15 px-5 py-3 text-white outline-none placeholder:text-white/40 focus:border-[#FF6A1A]"
+            />
+
+            <label className="mt-5 block text-xs font-medium uppercase tracking-wide text-white/70">
+              Client (optional, shown on the report cover)
+            </label>
+            <input
+              type="text"
+              value={client}
+              onChange={function (e) {
+                setClient(e.target.value);
+              }}
+              placeholder="e.g. MIMIQ"
               className="mt-2 w-full rounded-full border border-white/15 px-5 py-3 text-white outline-none placeholder:text-white/40 focus:border-[#FF6A1A]"
             />
 

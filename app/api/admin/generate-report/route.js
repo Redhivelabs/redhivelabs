@@ -23,6 +23,7 @@ export async function POST(request) {
 
     const body = await request.json();
     const orderId = parseInt(body.orderId, 10);
+    const client = (body.client || "").trim();
     const competitors = (body.competitors || "")
       .split(",")
       .map(function (c) { return c.trim(); })
@@ -43,7 +44,7 @@ export async function POST(request) {
 
     const report = await buildReport({ keyword: keyword, competitors: competitors, baseUrl: baseUrl });
 
-    return Response.json({ orderId: orderId, ...report });
+    return Response.json({ orderId: orderId, client: client, ...report });
   } catch (error) {
     if (error.status) {
       return Response.json(
