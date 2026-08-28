@@ -46,10 +46,12 @@ export async function GET(request) {
       }
     }
 
+    // redditapis.com caps limit at 100 (confirmed via a live 400: "limit must
+    // be an integer between 1 and 100") — 100 is the practical max, not 250.
     const apiUrl =
       "https://api.redditapis.com/api/reddit/search?q=" +
       encodeURIComponent(keyword) +
-      "&sort=new&limit=100";
+      "&sort=relevance&limit=100";
 
     let res = null;
     let lastErrText = "";
