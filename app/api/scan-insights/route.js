@@ -156,8 +156,13 @@ export async function GET(request) {
   try {
     const baseUrl = new URL(request.url).origin;
 
+    // Forward the caller's session cookie so /api/scan can identify the
+    // logged-in user and save this scan to their dashboard history — this
+    // is a server-to-server fetch, which does not carry cookies unless
+    // explicitly passed through.
     const scanRes = await fetch(
-      baseUrl + "/api/scan?keyword=" + encodeURIComponent(keyword)
+      baseUrl + "/api/scan?keyword=" + encodeURIComponent(keyword),
+      { headers: { cookie: request.headers.get("cookie") || "" } }
     );
     if (!scanRes.ok) {
       return Response.json({ error: "Scan failed" }, { status: 500 });
