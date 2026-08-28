@@ -77,6 +77,52 @@ async function checkRelevance(keyword, subredditName, data) {
   }
 }
 
+async function generateRelatedTerms(keyword) {
+  const prompt =
+    'You are helping find additional Reddit search terms related to the keyword/topic: "' +
+    keyword + '".\n\n' +
+    "Generate 5 related search terms or short phrases that a real audience interested in this " +
+    "topic would also search for or discuss on Reddit — genuinely adjacent terms (related " +
+    "products, common subtopics, specific problems or questions in this space, or how real people " +
+    "actually phrase things), not just synonyms of the exact keyword. Keep each term short " +
+    "(1-4 words), suitable as a Reddit search query on its own.\n\n" +
+    "Respond with exactly 5 lines, one term per line, nothing else — no numbering, no bullets, " +
+    "no explanation.";
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": process.env.ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 150,
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+
+    if (!res.ok) return [];
+
+    const data = await res.json();
+    const text = data.content && data.content[0] && data.content[0].text
+      ? data.content[0].text
+      : "";
+
+    return text
+      .split("\n")
+      .map(function (line) {
+        return line.replace(/^[\s\-*\d.]+/, "").trim();
+      })
+      .filter(Boolean)
+      .slice(0, 5);
+  } catch (e) {
+    return [];
+  }
+}
+
 async function checkGoogleRanking(keyword) {
   try {
     const url =
@@ -122,10 +168,13 @@ export async function GET(request) {
   try {
     const baseUrl = new URL(request.url).origin;
 
+    // Original keyword scan runs first and its failure is still fatal (same
+    // behavior as before) — everything downstream depends on at least this
+    // one search succeeding.
     const scanRes = await fetch(
       baseUrl + "/api/scan?keyword=" + encodeURIComponent(keyword)
     );
-       if (!scanRes.ok) {
+    if (!scanRes.ok) {
       const errText = await scanRes.text();
       return Response.json(
         { error: "Scan failed", details: errText.slice(0, 500) },
@@ -133,7 +182,58 @@ export async function GET(request) {
       );
     }
     const scanData = await scanRes.json();
-    const candidates = scanData.extended || [];
+
+    // Multi-query expansion: a single 100-post Reddit search caps out fast
+    // for broad keywords. Ask Claude for related terms a real audience in
+    // this niche would also search/discuss, then run the same /api/scan
+    // search for each one, sequentially (to avoid hammering the shared
+    // rate-limited pool behind /api/scan's retry logic with concurrent
+    // requests) and merge the candidate pools together.
+    const relatedTerms = await generateRelatedTerms(keyword);
+    const queriesUsed = [keyword];
+    const scansByQuery = [{ query: keyword, candidates: scanData.extended || [] }];
+
+    for (const term of relatedTerms) {
+      try {
+        const r = await fetch(baseUrl + "/api/scan?keyword=" + encodeURIComponent(term));
+        if (r.ok) {
+          const d = await r.json();
+          queriesUsed.push(term);
+          scansByQuery.push({ query: term, candidates: d.extended || [] });
+        }
+      } catch (e) {
+        // A related-term search failing shouldn't sink the whole request —
+        // just skip it and keep going with whatever queries did succeed.
+      }
+    }
+
+    // Dedupe across all query variations into one merged pool. A subreddit
+    // that clusters under multiple related terms is a stronger relevance
+    // signal, so it's tracked (queryHitCount/matchedQueries) and sorted to
+    // the front — not used in scoring yet, just preserved for later.
+    const mergedBySubreddit = new Map();
+    for (const scan of scansByQuery) {
+      for (const c of scan.candidates) {
+        const key = c.subreddit.toLowerCase();
+        if (!mergedBySubreddit.has(key)) {
+          mergedBySubreddit.set(key, {
+            subreddit: c.subreddit,
+            mentions: 0,
+            queryHitCount: 0,
+            matchedQueries: [],
+          });
+        }
+        const entry = mergedBySubreddit.get(key);
+        entry.mentions += c.mentions;
+        entry.queryHitCount += 1;
+        entry.matchedQueries.push(scan.query);
+      }
+    }
+
+    const candidates = Array.from(mergedBySubreddit.values()).sort(function (a, b) {
+      if (b.queryHitCount !== a.queryHitCount) return b.queryHitCount - a.queryHitCount;
+      return b.mentions - a.mentions;
+    });
 
     const qualified = [];
     const disqualified = [];
@@ -173,6 +273,8 @@ export async function GET(request) {
       qualified.push({
         subreddit: candidate.subreddit,
         mentions: candidate.mentions,
+        queryHitCount: candidate.queryHitCount,
+        matchedQueries: candidate.matchedQueries,
         data: data,
       });
     }
@@ -191,6 +293,8 @@ export async function GET(request) {
 
     return Response.json({
       keyword: keyword,
+      queriesUsed: queriesUsed,
+      candidatePoolSize: candidates.length,
       qualifiedCount: qualifiedWithGoogle.length,
       qualified: qualifiedWithGoogle,
       disqualified: disqualified,
