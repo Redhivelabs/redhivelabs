@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SiteNav from "./SiteNav.js";
+import SampleReportLink from "./SampleReportLink.js";
+import SampleReportModal from "./SampleReportModal.js";
 
 export default function HomeClient() {
   const [keyword, setKeyword] = useState("");
@@ -172,8 +174,13 @@ export default function HomeClient() {
           <Link href="/terms" className="hover:text-white/70">
             Terms and Conditions
           </Link>
+          <SampleReportLink className="hover:text-white/70">
+            Download Sample Report
+          </SampleReportLink>
         </div>
       </div>
+
+      <SampleReportModal />
     </div>
   );
 }

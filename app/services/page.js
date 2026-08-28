@@ -1,5 +1,6 @@
 import SiteNav from "../../components/SiteNav.js";
 import ServicePackagesGrid from "../../components/ServicePackagesGrid.js";
+import SampleReportLink from "../../components/SampleReportLink.js";
 
 export const metadata = {
   title: "Services — Reddit Placement Packages",
@@ -137,6 +138,13 @@ export default function Services() {
         >
           Find. Engage. Influence.
         </p>
+      </div>
+
+      {/* SAMPLE REPORT */}
+      <div className="mx-auto mt-12 max-w-2xl text-center">
+        <SampleReportLink className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-white hover:bg-white/5">
+          See a Sample Report First
+        </SampleReportLink>
       </div>
 
       {/* PACKAGES */}

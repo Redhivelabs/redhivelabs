@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import NavAuthStatus from "./NavAuthStatus.js";
+import SampleReportLink from "./SampleReportLink.js";
 
 function HamburgerIcon({ open }) {
   return (
@@ -80,6 +81,9 @@ export default function SiteNav() {
           <Link href="/about" className="hover:text-white">
             The Wolf
           </Link>
+          <SampleReportLink className="rounded-full border border-[var(--color-accent)]/40 px-3 py-1 text-xs font-semibold text-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]">
+            Sample Report
+          </SampleReportLink>
           <NavAuthStatus />
         </div>
 
@@ -130,6 +134,14 @@ export default function SiteNav() {
           >
             The Wolf
           </Link>
+          <SampleReportLink
+            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[var(--color-accent)] hover:bg-white/5"
+            onClick={function () {
+              setMobileOpen(false);
+            }}
+          >
+            Download Sample Report
+          </SampleReportLink>
 
           <div className="mt-2 border-t border-white/10 pt-3">
             <NavAuthStatus />

@@ -1,6 +1,7 @@
 import SiteNav from "../../components/SiteNav.js";
 import ReportCheckoutCard from "../../components/ReportCheckoutCard.js";
 import ScrollToButton from "../../components/ScrollToButton.js";
+import SampleReportLink from "../../components/SampleReportLink.js";
 
 export const metadata = {
   title: "Reddit Intel Report — Know Before You Post",
@@ -293,6 +294,12 @@ export default function RedditIntelReportPage() {
               </div>
             );
           })}
+        </div>
+
+        <div className="mt-10 text-center">
+          <SampleReportLink className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-white hover:bg-white/5">
+            See It In Action — Download a Sample Report
+          </SampleReportLink>
         </div>
       </div>
 
