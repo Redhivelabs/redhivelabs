@@ -85,6 +85,9 @@ export default async function AdminQueue() {
           <Link href="/admin/users" className="text-white/50 hover:text-white">
             Users
           </Link>
+          <Link href="/admin/demo" className="text-white/50 hover:text-white">
+            Demo
+          </Link>
         </div>
       </nav>
 

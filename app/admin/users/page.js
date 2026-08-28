@@ -74,6 +74,9 @@ export default async function AdminUsers() {
           <span className="rounded-full bg-[#FF6A1A]/15 px-3 py-1 font-medium text-[#FF6A1A]">
             Users
           </span>
+          <Link href="/admin/demo" className="text-white/50 hover:text-white">
+            Demo
+          </Link>
         </div>
       </nav>
 

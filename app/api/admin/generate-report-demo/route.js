@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
-import { db } from "../../../../db/client.js";
-import { orders } from "../../../../db/schema.js";
-import { eq } from "drizzle-orm";
 import { buildReport } from "../_lib/reportPipeline.js";
 
+// Keyword-only variant of /api/admin/generate-report for the /admin/demo
+// tool. Deliberately does not touch the orders or users tables at all —
+// this is a standalone testing tool, not tied to a real order.
 export async function POST(request) {
   try {
     const cookieStore = await cookies();
@@ -22,28 +22,21 @@ export async function POST(request) {
     }
 
     const body = await request.json();
-    const orderId = parseInt(body.orderId, 10);
+    const keyword = (body.keyword || "").trim();
     const competitors = (body.competitors || "")
       .split(",")
       .map(function (c) { return c.trim(); })
       .filter(Boolean);
 
-    if (!orderId) {
-      return Response.json({ error: "Missing orderId" }, { status: 400 });
+    if (!keyword) {
+      return Response.json({ error: "Missing keyword" }, { status: 400 });
     }
 
-    const orderRows = await db.select().from(orders).where(eq(orders.id, orderId));
-    const order = orderRows[0];
-    if (!order) {
-      return Response.json({ error: "Order not found" }, { status: 404 });
-    }
-
-    const keyword = order.keyword;
     const baseUrl = new URL(request.url).origin;
 
     const report = await buildReport({ keyword: keyword, competitors: competitors, baseUrl: baseUrl });
 
-    return Response.json({ orderId: orderId, ...report });
+    return Response.json(report);
   } catch (error) {
     if (error.status) {
       return Response.json(
