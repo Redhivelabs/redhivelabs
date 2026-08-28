@@ -81,6 +81,9 @@ export default function SiteNav() {
           <Link href="/about" className="hover:text-white">
             The Wolf
           </Link>
+          <Link href="/services#faq" className="hover:text-white">
+            FAQ
+          </Link>
           <SampleReportLink className="rounded-full border border-[var(--color-accent)]/40 px-3 py-1 text-xs font-semibold text-[var(--color-accent)] hover:bg-[var(--color-accent-soft)]">
             Sample Report
           </SampleReportLink>
@@ -133,6 +136,15 @@ export default function SiteNav() {
             }}
           >
             The Wolf
+          </Link>
+          <Link
+            href="/services#faq"
+            className="block rounded-xl px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white"
+            onClick={function () {
+              setMobileOpen(false);
+            }}
+          >
+            FAQ
           </Link>
           <SampleReportLink
             className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[var(--color-accent)] hover:bg-white/5"

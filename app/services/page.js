@@ -1,6 +1,7 @@
 import SiteNav from "../../components/SiteNav.js";
 import ServicePackagesGrid from "../../components/ServicePackagesGrid.js";
 import SampleReportLink from "../../components/SampleReportLink.js";
+import FaqAccordion from "../../components/FaqAccordion.js";
 
 export const metadata = {
   title: "Services — Reddit Placement Packages",
@@ -59,6 +60,66 @@ const PACKAGES = [
     ],
     note: "Best for brands that want Reddit working for them every month, not once.",
     ctaLabel: "Make Me Unmissable → $890/mo",
+  },
+];
+
+const FAQS = [
+  {
+    q: "Is posting on Reddit against the rules?",
+    a: "No — but each subreddit has its own moderation style, and posting the wrong way in the wrong community can get you removed or banned. That's exactly what Wolf of Reddit is built to prevent: we analyze removal rates, moderation strictness, and self-promo restrictions before you ever post.",
+  },
+  {
+    q: "What is the Opportunity Score?",
+    a: "A 0–100 score calculated from a subreddit's removal risk, posting activity, Google visibility, and how often your keyword comes up in that community. Higher means a better opportunity to post and be seen.",
+  },
+  {
+    q: 'What do "Post," "Warm Up First," and "Avoid" mean?',
+    a: (
+      <div className="flex flex-col gap-2">
+        <p>
+          <span className="font-bold" style={{ color: "var(--color-accent)" }}>
+            Post
+          </span>{" "}
+          — low removal risk, no unusual restrictions. Safe to post now.
+        </p>
+        <p>
+          <span className="font-bold" style={{ color: "var(--color-warn)" }}>
+            Warm Up First
+          </span>{" "}
+          — moderate removal risk. Build some karma and post history before posting your key content.
+        </p>
+        <p>
+          <span className="font-bold" style={{ color: "var(--color-danger)" }}>
+            Avoid
+          </span>{" "}
+          — high removal risk combined with strict moderation. Don't post here without significant prep.
+        </p>
+      </div>
+    ),
+  },
+  {
+    q: "Will my Reddit account get banned?",
+    a: "We can't guarantee outcomes on a platform we don't control, but our whole approach is designed to reduce that risk — by identifying which subreddits are safe to post in directly versus which need warm-up, based on real removal-rate data rather than guesswork.",
+  },
+  {
+    q: "Do you guarantee results (traffic, sales, engagement)?",
+    a: "No — this report gives you data-backed placement intelligence, not guaranteed outcomes. What you post and how you engage still matters. We're not affiliated with, endorsed by, or sponsored by Reddit, Inc.",
+  },
+  {
+    q: "How current is the data in my report?",
+    a: "Each report reflects live Reddit activity — subscriber counts, moderation status, and traction (median score, comments, upvote ratio, removal rate) — from the trailing 90 days, generated at the time you order.",
+  },
+  {
+    q: "Can I get a report for a keyword/niche other than the one in the sample?",
+    a: 'Yes — the sample report uses "skincare" as an example, but reports can be generated for any keyword or niche you\'re targeting.',
+  },
+  {
+    q: "Do you post the content for me, or just tell me where to post?",
+    a: "Both, depending on what you need. The report itself gives you the intelligence — exactly where to post, when, and how to approach each subreddit — so you can post it yourself. If you'd rather not handle posting directly, our placement packages put your content live through established, aged accounts chosen from the same risk-and-opportunity data in your report.",
+  },
+  {
+    q: "What's your refund policy?",
+    a: "Reports are non-refundable once delivered, since the data and analysis are generated specifically for your keyword at the time of purchase. For placement services, if a post gets removed, we'll replace it free of charge — in the same subreddit or an equivalent one — for up to 90 days from the original placement.",
   },
 ];
 
@@ -149,6 +210,23 @@ export default function Services() {
 
       {/* PACKAGES */}
       <ServicePackagesGrid packages={PACKAGES} />
+
+      {/* FAQ */}
+      <div id="faq" className="mx-auto mt-24 max-w-2xl scroll-mt-24">
+        <div className="text-center">
+          <h2
+            className="text-2xl font-bold text-white sm:text-3xl"
+            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+          >
+            Questions, answered.
+          </h2>
+          <div className="mx-auto mt-5 h-px w-12 bg-white/15" />
+        </div>
+
+        <div className="mt-10">
+          <FaqAccordion items={FAQS} defaultOpenIndex={0} />
+        </div>
+      </div>
 
       {/* CLOSING SECTION */}
       <div className="mx-auto mt-24 max-w-2xl text-center">
