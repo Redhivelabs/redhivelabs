@@ -78,12 +78,14 @@ export default async function AdminQueue() {
             <span style={{ color: "var(--color-accent)" }}>REDDIT</span>
           </span>
         </Link>
-        <span
-          className="rounded-full bg-[#FF6A1A]/15 px-3 py-1 text-xs font-medium text-[#FF6A1A]"
-          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-        >
-          Admin
-        </span>
+        <div className="flex items-center gap-4 text-xs font-medium" style={{ fontFamily: "var(--font-archivo), sans-serif" }}>
+          <span className="rounded-full bg-[#FF6A1A]/15 px-3 py-1 font-medium text-[#FF6A1A]">
+            Order Queue
+          </span>
+          <Link href="/admin/users" className="text-white/50 hover:text-white">
+            Users
+          </Link>
+        </div>
       </nav>
 
       <div className="mx-auto mt-14 max-w-3xl">
