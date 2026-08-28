@@ -136,6 +136,23 @@ body {
   animation-delay: 0.6s;
 }
 
+/* Respect prefers-reduced-motion: existing looping/entrance animations are
+   purely decorative, so users who ask for reduced motion get static content
+   instead — no visual change for anyone else. */
+@media (prefers-reduced-motion: reduce) {
+  .float-icon,
+  .wolf-float-icon,
+  .loading-ring,
+  .pulse-fade,
+  .fade-in-detail,
+  .bar-1,
+  .bar-2,
+  .bar-3,
+  .bar-4 {
+    animation: none !important;
+  }
+}
+
 /* Dashboard readability overrides */
 .dashboard-card label,
 .dashboard-card input::placeholder,

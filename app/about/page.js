@@ -1,22 +1,37 @@
 import Link from "next/link";
 import SiteNav from "../../components/SiteNav.js";
+import SampleReportLink from "../../components/SampleReportLink.js";
+import AboutOriginStory from "../../components/AboutOriginStory.js";
+import AboutLessonCards from "../../components/AboutLessonCards.js";
+import AboutFounder from "../../components/AboutFounder.js";
+import AboutMethodSteps from "../../components/AboutMethodSteps.js";
+import AboutBoundaries from "../../components/AboutBoundaries.js";
 
 export const metadata = {
   title: "About",
   description:
-    "I spent years learning Reddit the hard way so you don't have to. Here's why Wolf of Reddit exists.",
+    "I learned Reddit by getting it wrong first. Here's why Wolf of Reddit exists, how I work, and where I draw the line.",
 };
 
-function Eyebrow({ children }) {
+function Eyebrow({ children, center }) {
   return (
     <p
-      className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#FF6A1A]"
+      className={
+        "text-[11px] font-bold uppercase tracking-[0.14em] text-[#FF6A1A] " +
+        (center ? "text-center" : "")
+      }
       style={{ fontFamily: "var(--font-archivo), sans-serif" }}
     >
       {children}
     </p>
   );
 }
+
+const PRIMARY_BUTTON =
+  "inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#FF6A1A] px-8 py-4 text-base font-bold text-white shadow-[0_16px_40px_-12px_rgba(255,106,26,0.45)] transition-all hover:bg-[#E85A0C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-auto";
+
+const SECONDARY_BUTTON =
+  "inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:w-auto";
 
 export default function About() {
   return (
@@ -30,208 +45,141 @@ export default function About() {
       <SiteNav />
 
       {/* HERO */}
-      <div className="mx-auto mt-20 max-w-2xl text-center">
-        <Eyebrow>About Me</Eyebrow>
+      <div className="relative mx-auto mt-20 max-w-2xl text-center">
+        <div
+          className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/4 rounded-full opacity-25 blur-3xl sm:h-[420px] sm:w-[420px]"
+          style={{ background: "radial-gradient(circle, var(--color-accent) 0%, transparent 70%)" }}
+          aria-hidden="true"
+        />
+
+        <Eyebrow center>About Wolf of Reddit</Eyebrow>
         <h1
-          className="mt-4 text-4xl font-extrabold leading-tight text-white sm:text-6xl"
+          className="mx-auto mt-4 max-w-xl text-4xl font-extrabold leading-tight text-white sm:text-6xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          I Learned Reddit The Hard Way.
+          I Learned Reddit by Getting It Wrong First.
         </h1>
         <p
           className="mx-auto mt-4 max-w-xl text-xl font-bold text-white/80"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Removed Posts, Dead Accounts, Wasted Weeks.
+          Removed posts. Wasted weeks. Communities I completely misunderstood.
         </p>
         <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-white/70">
-          So I built what I wish I&apos;d had on day one — cheaper than the
-          years it cost me.
+          Those mistakes taught me something most Reddit marketing advice
+          misses: success here is not about posting more. It is about
+          understanding where you belong, how a community thinks, and what
+          earns its attention.
         </p>
-      </div>
-
-      {/* STORY */}
-      <div className="mx-auto mt-24 max-w-2xl">
-        <Eyebrow>Why this exists</Eyebrow>
-        <h2
-          className="mt-3 text-2xl font-bold text-white sm:text-3xl"
-          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-        >
-          Reddit outperforms paid ads. It also punishes guesswork.
-        </h2>
-
-        <p className="mt-6 text-base leading-relaxed text-white/70">
-          I&apos;ve worked Reddit as a marketing channel for years — affiliate
-          campaigns, client work, my own ventures. When it works, it beats paid
-          ads for driving people who actually convert. That&apos;s the good news.
+        <p className="mx-auto mt-3 max-w-lg text-lg leading-relaxed text-white/70">
+          That is the experience I turned into Wolf of Reddit.
         </p>
-        <p className="mt-4 text-base leading-relaxed text-white/70">
-          The bad news: Reddit doesn&apos;t forgive guesswork. Wrong subreddit,
-          you get buried. Right idea, wrong account, a mod removes it in minutes.
-          Wrong timing, nobody sees it at all. Every founder I talked to had the
-          same story — good product, good content, zero traction, because nobody
-          told them where to actually post.
-        </p>
-        <p className="mt-4 text-base leading-relaxed text-white/70">
-          So I built the thing I wished existed: something that tells you which
-          subreddits are worth your time, what gets removed, and when to post —
-          before you find out the hard way. That became Wolf of Reddit.
-        </p>
-      </div>
 
-      {/* WHO */}
-      <div className="mx-auto mt-24 max-w-2xl">
-        <Eyebrow>Who&apos;s behind it</Eyebrow>
-        <div className="mt-6 rounded-2xl border border-white/8 bg-[#15171A] p-6 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.5)]">
-          <p
-            className="text-lg font-bold text-white"
-            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-          >
-            Prakash Aravind
-          </p>
-          <p className="mt-1 text-sm font-medium text-[#FF6A1A]">
-            Founder, Wolf of Reddit
-          </p>
-          <p className="mt-4 text-sm leading-relaxed text-white/70">
-            One person, and that&apos;s on purpose. I review every report before
-            it reaches you. Every posting order goes out through accounts I know
-            and trust. I stay hands-on because Reddit punishes anything that
-            feels automated — the nuance is the whole product, and you can&apos;t
-            outsource it to a bot.
-          </p>
+        <div className="mx-auto mt-8 flex max-w-md flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <Link href="/" className={PRIMARY_BUTTON} style={{ outlineColor: "var(--color-accent)" }}>
+            See How It Works
+          </Link>
+          <SampleReportLink className={SECONDARY_BUTTON} style={{ outlineColor: "var(--color-accent)" }}>
+            View Sample Report
+          </SampleReportLink>
+        </div>
 
-          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/8 pt-4 text-sm">
-            <a
-              href="https://t.me/wolfofreddit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-white/60 hover:text-[#FF6A1A]"
-            >
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
-                <path d="M21.94 4.6c.28-1.13-.42-1.66-1.44-1.28L2.7 10.2c-1.1.44-1.08 1.06-.19 1.34l4.53 1.41 10.5-6.62c.5-.32.95-.14.58.2L9.9 14.35l-.35 4.94c.5 0 .72-.23.99-.5l2.38-2.3 4.94 3.63c.91.5 1.56.24 1.79-.85l3.29-14.7z" />
-              </svg>
-              @wolfofreddit
-            </a>
-            <a
-              href="mailto:prakash@wolfofreddit.com"
-              className="flex items-center gap-1.5 text-white/60 hover:text-[#FF6A1A]"
-            >
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="2" y="4" width="20" height="16" rx="2" />
-                <path d="M2 7l10 6 10-6" />
-              </svg>
-              prakash@wolfofreddit.com
-            </a>
-            <a
-              href="https://twitter.com/WolfofReddits"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-white/60 hover:text-[#FF6A1A]"
-            >
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-              @WolfofReddits
-            </a>
-          </div>
+        <div className="mx-auto mt-8 flex max-w-lg flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-medium uppercase tracking-wide text-white/40">
+          <span>Research-led</span>
+          <span className="hidden text-white/20 sm:inline">•</span>
+          <span>Human-reviewed</span>
+          <span className="hidden text-white/20 sm:inline">•</span>
+          <span>Built around real community behaviour</span>
         </div>
       </div>
 
-      {/* WHAT I DO / DON'T */}
-      <div className="mx-auto mt-24 max-w-3xl">
+      {/* ORIGIN STORY */}
+      <div className="mx-auto mt-28 max-w-5xl">
+        <AboutOriginStory />
+      </div>
+
+      {/* LESSONS */}
+      <div className="mx-auto mt-28 max-w-5xl">
+        <Eyebrow>What Reddit Taught Me</Eyebrow>
+        <h2
+          className="mt-3 max-w-xl text-2xl font-bold text-white sm:text-3xl"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
+          The biggest subreddit is rarely the whole answer.
+        </h2>
+        <AboutLessonCards />
+      </div>
+
+      {/* FOUNDER */}
+      <div className="mx-auto mt-28 max-w-5xl">
+        <Eyebrow>Who&rsquo;s Behind It</Eyebrow>
+        <AboutFounder />
+      </div>
+
+      {/* METHOD */}
+      <div className="mx-auto mt-28 max-w-4xl text-center">
+        <Eyebrow center>How I Work</Eyebrow>
+        <h2
+          className="mx-auto mt-3 max-w-lg text-2xl font-bold text-white sm:text-3xl"
+          style={{ fontFamily: "var(--font-archivo), sans-serif" }}
+        >
+          Research first. Judgment second. Execution last.
+        </h2>
+        <AboutMethodSteps />
+      </div>
+
+      {/* HONEST BOUNDARIES */}
+      <div className="mx-auto mt-28 max-w-3xl">
         <div className="text-center">
-          <Eyebrow>The honest version</Eyebrow>
+          <Eyebrow center>The Honest Version</Eyebrow>
           <h2
             className="mt-3 text-2xl font-bold text-white sm:text-3xl"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            What I do. And what I&apos;d never do.
+            What I do—and where I draw the line.
           </h2>
         </div>
-
-        <div className="mt-10 grid gap-6 sm:grid-cols-2">
-          <div className="rounded-2xl border border-[#FF6A1A]/20 bg-[#15171A] p-6">
-            <h3
-              className="text-sm font-bold uppercase tracking-wide text-[#FF6A1A]"
-              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-            >
-              What I do
-            </h3>
-            <ul className="mt-4 flex flex-col gap-3">
-              {[
-                "Scan real Reddit activity to find where your buyers actually talk — not just the biggest subreddits.",
-                "Check removal rates and posting rules before you ever hit submit.",
-                "Post and comment through real, aged, high-karma accounts when you want it run for you.",
-              ].map(function (item) {
-                return (
-                  <li key={item} className="flex items-start gap-2 text-sm text-white/75">
-                    <span className="mt-0.5 text-[#FF6A1A]">✓</span>
-                    <span>{item}</span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-[#15171A] p-6">
-            <h3
-              className="text-sm font-bold uppercase tracking-wide text-white/50"
-              style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-            >
-              What I&apos;d never do
-            </h3>
-            <ul className="mt-4 flex flex-col gap-3">
-              {[
-                "Bots or fake accounts.",
-                "Vote manipulation.",
-                "Carpet-bomb every subreddit that mentions your keyword.",
-                "Any shortcut that puts your brand — or my accounts' standing — at risk.",
-              ].map(function (item) {
-                return (
-                  <li key={item} className="flex items-start gap-2 text-sm text-white/50">
-                    <span className="mt-0.5">✕</span>
-                    <span>{item}</span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-
-        <p className="mx-auto mt-8 max-w-xl text-center text-base leading-relaxed text-white/60">
-          Reddit&apos;s communities spot inauthenticity in seconds. I&apos;m not
-          about to burn your reputation — or mine — for a shortcut.
-        </p>
+        <AboutBoundaries />
       </div>
 
-      {/* CTA */}
-      <div className="mx-auto mt-24 max-w-2xl">
+      {/* CLOSING CTA */}
+      <div className="mx-auto mt-28 max-w-2xl">
         <div
-          className="rounded-3xl p-10 text-center"
-          style={{
-            background:
-              "radial-gradient(140% 120% at 10% 0%, #FF8A42 0%, #FF6A1A 32%, #7A2A05 100%)",
-            boxShadow:
-              "inset 0 1px 0 rgba(255,255,255,0.12), 0 24px 60px -16px rgba(255,106,26,0.4)",
-          }}
+          className="relative overflow-hidden rounded-3xl border border-[#FF6A1A]/20 bg-[#15171A] p-7 text-center shadow-[0_24px_60px_-16px_rgba(0,0,0,0.5)] sm:p-10"
         >
-          <p
-            className="text-2xl font-extrabold text-white"
-            style={{ fontFamily: "var(--font-archivo), sans-serif" }}
-          >
-            Want to see where you&apos;d show up?
-          </p>
-          <p className="mx-auto mt-2 max-w-sm text-sm text-white/70">
-            Run a free scan and get a feel for it. No account, no card, no catch.
-          </p>
-          <div className="mt-8 flex justify-center">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-[#FF6A1A] shadow-[0_16px_40px_-12px_rgba(0,0,0,0.35)] transition-all hover:bg-white/90"
+          <div
+            className="pointer-events-none absolute inset-0 opacity-40"
+            style={{
+              background:
+                "radial-gradient(120% 100% at 50% 0%, rgba(255,106,26,0.18) 0%, transparent 60%)",
+            }}
+            aria-hidden="true"
+          />
+          <div className="relative">
+            <Eyebrow center>Start With Clarity</Eyebrow>
+            <p
+              className="mx-auto mt-3 max-w-md text-2xl font-extrabold text-white sm:text-3xl"
               style={{ fontFamily: "var(--font-archivo), sans-serif" }}
             >
-              Run a free scan
-            </Link>
+              Before you post on Reddit, know where you belong.
+            </p>
+            <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-white/60">
+              Wolf of Reddit helps you identify the communities,
+              conversations, and constraints that matter—before you spend
+              weeks learning through trial and error.
+            </p>
+            <div className="mx-auto mt-8 flex max-w-md flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <Link
+                href="/reddit-intel-report"
+                className={PRIMARY_BUTTON}
+                style={{ outlineColor: "var(--color-accent)" }}
+              >
+                Get Your Reddit Intel Report
+              </Link>
+              <SampleReportLink className={SECONDARY_BUTTON} style={{ outlineColor: "var(--color-accent)" }}>
+                View Sample Report
+              </SampleReportLink>
+            </div>
           </div>
         </div>
       </div>
