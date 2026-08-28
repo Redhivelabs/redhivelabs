@@ -1,7 +1,24 @@
 import path from "path";
-import { Document, Page, Text, View, StyleSheet, Link, Font, Image } from "@react-pdf/renderer";
+import fs from "fs";
+import { Document, Page, Text as RawText, View, StyleSheet, Link, Font, Image } from "@react-pdf/renderer";
 
-const WOLF_ICON_PATH = path.join(process.cwd(), "public/brand/wolf-icon.png");
+// @react-pdf/image resolves string `src` paths by first trying
+// `new URL(src, "file:")`. On Windows that throws for a raw drive-letter
+// path like "C:\...", and the library's fallback regex then misreads the
+// drive letter ("C:") as if it were a URI scheme — so it treats the local
+// file as a remote URL and tries to `fetch()` it, which fails silently and
+// drops the image with no visible error. Passing a pre-read Buffer instead
+// of a path string skips that broken resolution path entirely (Buffers are
+// handled directly, no URL parsing involved), so images actually embed.
+//
+// These read the *-pdf.png variants (128px / 300px), not the full-size
+// source assets (up to 4096px) used elsewhere on the site — react-pdf embeds
+// an Image at its full source resolution regardless of display size, so
+// embedding the 4096px original at a 14px header icon on every page bloated
+// a single report to 60+ MB. The small variants are pre-generated once via
+// sharp; regenerate them if the source badge/icon art changes.
+const WOLF_ICON_BUFFER = fs.readFileSync(path.join(process.cwd(), "public/brand/wolf-icon-pdf.png"));
+const LOGO_BADGE_BUFFER = fs.readFileSync(path.join(process.cwd(), "public/brand/wolf-badge-icon-pdf.png"));
 
 Font.register({
   family: "Archivo",
@@ -46,9 +63,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   coverIcon: {
-    width: 56,
-    height: 56,
-    marginBottom: 24,
+    width: 72,
+    height: 72,
+    marginBottom: 20,
   },
   headerIcon: {
     width: 14,
@@ -156,8 +173,8 @@ const styles = StyleSheet.create({
   summaryScore: { width: 60, fontFamily: "Archivo", fontWeight: 800, fontSize: 11, textAlign: "center" },
   summaryVerdict: { width: 90, fontFamily: "Source Serif 4", fontSize: 9, textTransform: "capitalize" },
   subredditCard: {
-    marginBottom: 18,
-    padding: 16,
+    marginBottom: 24,
+    padding: 18,
     borderWidth: 1,
     borderColor: "#E0E4E8",
     borderRadius: 6,
@@ -195,6 +212,19 @@ const styles = StyleSheet.create({
     fontWeight: 800,
     fontSize: 18,
   },
+  scoreMeterTrack: {
+    width: 52,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: COLORS.paper,
+    marginTop: 4,
+    marginBottom: 4,
+    overflow: "hidden",
+  },
+  scoreMeterFill: {
+    height: 4,
+    borderRadius: 2,
+  },
   scoreLabel: {
     fontFamily: "Archivo",
     fontWeight: 700,
@@ -206,7 +236,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 6,
-    marginBottom: 8,
+    marginBottom: 10,
   },
   badge: {
     fontFamily: "Archivo",
@@ -231,9 +261,9 @@ const styles = StyleSheet.create({
     color: COLORS.clay,
   },
   verdictBox: {
-    padding: 8,
+    padding: 10,
     borderRadius: 4,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   verdictText: {
     fontFamily: "Source Serif 4",
@@ -249,19 +279,12 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     fontSize: 9,
     color: COLORS.inkMuted,
-    marginBottom: 8,
-  },
-  questionLabel: {
-    fontFamily: "Archivo",
-    fontWeight: 700,
-    fontSize: 8,
-    color: COLORS.inkMuted,
-    textTransform: "uppercase",
-    marginBottom: 4,
+    marginTop: 4,
+    marginBottom: 12,
   },
   questionRow: {
     flexDirection: "row",
-    marginBottom: 4,
+    marginBottom: 6,
     gap: 6,
     alignItems: "flex-start",
   },
@@ -290,15 +313,19 @@ const styles = StyleSheet.create({
   statGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 4,
-    marginBottom: 10,
-    gap: 8,
+    marginTop: 2,
+    marginBottom: 14,
+    gap: 10,
   },
   statBox: {
     width: 96,
-    padding: 8,
+    paddingVertical: 8,
+    paddingRight: 8,
+    paddingLeft: 9,
     backgroundColor: COLORS.paper,
     borderRadius: 4,
+    borderLeftWidth: 3,
+    borderLeftColor: COLORS.teal,
   },
   statValue: {
     fontFamily: "Archivo",
@@ -314,20 +341,31 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     marginTop: 2,
   },
+  subSectionHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginTop: 16,
+    marginBottom: 7,
+  },
+  subSectionAccent: {
+    width: 14,
+    height: 2,
+    borderRadius: 1,
+    backgroundColor: COLORS.teal,
+  },
   subSectionLabel: {
     fontFamily: "Archivo",
     fontWeight: 700,
     fontSize: 8,
     color: COLORS.inkMuted,
     textTransform: "uppercase",
-    marginBottom: 4,
-    marginTop: 8,
   },
   inlineDetailText: {
     fontFamily: "Source Serif 4",
     fontSize: 8.5,
     color: COLORS.inkMuted,
-    marginBottom: 3,
+    marginBottom: 5,
   },
   footer: {
     position: "absolute",
@@ -337,6 +375,16 @@ const styles = StyleSheet.create({
     fontFamily: "Source Serif 4",
     fontSize: 7,
     color: "#B8C0C8",
+    textAlign: "center",
+  },
+  coverFooter: {
+    position: "absolute",
+    bottom: 32,
+    left: 60,
+    right: 60,
+    fontFamily: "Source Serif 4",
+    fontSize: 8,
+    color: "rgba(255,255,255,0.4)",
     textAlign: "center",
   },
   closingPage: {
@@ -377,13 +425,35 @@ const styles = StyleSheet.create({
     color: COLORS.inkMuted,
     lineHeight: 1.5,
   },
+  readmeBox: {
+    padding: 12,
+    borderRadius: 6,
+    backgroundColor: COLORS.paper,
+    marginBottom: 20,
+  },
+  readmeTitle: {
+    fontFamily: "Archivo",
+    fontWeight: 800,
+    fontSize: 9,
+    color: COLORS.ink,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    marginBottom: 6,
+  },
+  readmeText: {
+    fontFamily: "Source Serif 4",
+    fontSize: 8.5,
+    lineHeight: 1.5,
+    color: COLORS.inkMuted,
+    marginBottom: 4,
+  },
 });
 
 function PageHeader({ keyword }) {
   return (
     <View style={styles.header} fixed>
       <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-        <Image src={WOLF_ICON_PATH} style={styles.headerIcon} />
+        <Image src={WOLF_ICON_BUFFER} style={styles.headerIcon} />
         <Text style={styles.headerWordmark}>Wolf of Reddit</Text>
       </View>
       <Text style={styles.headerKeyword}>&quot;{keyword}&quot;</Text>
@@ -393,9 +463,25 @@ function PageHeader({ keyword }) {
 
 function PageFooter() {
   return (
-    <Text style={styles.footer} fixed>
-      Wolf of Reddit — wolfofreddit.com
-    </Text>
+    <Text
+      style={styles.footer}
+      fixed
+      render={function (props) {
+        return "Wolf of Reddit — wolfofreddit.com   ·   Page " + props.pageNumber + " of " + props.totalPages;
+      }}
+    />
+  );
+}
+
+function CoverPageFooter() {
+  return (
+    <Text
+      style={styles.coverFooter}
+      fixed
+      render={function (props) {
+        return "Page " + props.pageNumber + " of " + props.totalPages;
+      }}
+    />
   );
 }
 
@@ -417,14 +503,60 @@ function intentStyle(intent) {
   return {};
 }
 
-// Works around a known @react-pdf/renderer issue: certain fonts (including
-// Archivo) define an "fl" ligature glyph that sometimes fails to embed and
-// silently drops from the rendered PDF (e.g. "flagged" -> "fagged"). Inserting
-// a zero-width non-joiner between "f" and a following "l" or "i" stops the
-// ligature substitution from triggering, with no visible effect on the text.
+// Works around a known @react-pdf/renderer issue: our embedded fonts define
+// ligature glyphs (ff, fi, fl, ffi, ffl, and \u2014 per Source Serif 4's
+// historical-ligature set \u2014 ft) that sometimes fail to embed/subset
+// correctly and silently drop the character(s) after "f" from the rendered
+// PDF (e.g. "flagged" -> "fagged", "craft" -> "craf", "effort" -> "efort").
+// A zero-width non-joiner is the standard Unicode signal to a text-shaping
+// engine to not ligate the surrounding characters, so inserting one right
+// after every "f" that precedes another ligature-prone letter blocks the
+// substitution before it can happen, with no visible effect on the text.
+// Case-insensitive so it also covers a capitalized "F" starting a sentence
+// or label (e.g. "Flair").
 function dl(text) {
   if (text == null) return text;
-  return String(text).replace(/f([li])/g, "f\u200C$1");
+  return String(text).replace(/f(?=[filt])/gi, function (m) {
+    return m + "\u200C";
+  });
+}
+
+// Strips emoji and related pictographic/modifier characters from text before
+// it's rendered into the PDF. Subreddit descriptions come straight from
+// Reddit and our embedded fonts (Archivo, Source Serif 4) don't include
+// emoji glyphs, so unstripped emoji render as garbled/mojibake characters.
+function stripEmoji(text) {
+  if (text == null) return text;
+  return String(text)
+    .replace(/\p{Extended_Pictographic}/gu, "")
+    .replace(/[\u{1F3FB}-\u{1F3FF}]/gu, "") // skin tone modifiers
+    .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, "") // regional indicators (flag emoji)
+    .replace(/\u200D/g, "") // zero-width joiner (compound emoji sequences)
+    .replace(/\uFE0F/g, "") // variation selector-16 (emoji presentation)
+    .replace(/[ \t]+([,.!?;:])/g, "$1") // stray space left where an emoji sat before punctuation
+    .replace(/[ \t]{2,}/g, " ")
+    .trim();
+}
+
+// Local wrapper around react-pdf's Text that automatically runs dl() over
+// any string children. Ligature breakage was happening in some places (e.g.
+// the "Top flairs" label, page-header keyword) simply because a call site
+// forgot to wrap its text manually \u2014 shadowing the Text import means every
+// <Text> in this file is protected by default, so that class of bug can't
+// recur. stripEmoji() is deliberately NOT applied here since it's specific
+// to Reddit-sourced description text, not a general rendering fix.
+function Text({ children, ...rest }) {
+  if (children == null) {
+    return <RawText {...rest} />;
+  }
+  const safeChildren = Array.isArray(children)
+    ? children.map(function (child) {
+        return typeof child === "string" ? dl(child) : child;
+      })
+    : typeof children === "string"
+    ? dl(children)
+    : children;
+  return <RawText {...rest}>{safeChildren}</RawText>;
 }
 
 function formatAge(ageDays) {
@@ -434,6 +566,17 @@ function formatAge(ageDays) {
   const months = Math.floor(ageDays / 30);
   if (months >= 1) return months + (months === 1 ? " month old" : " months old");
   return ageDays + (ageDays === 1 ? " day old" : " days old");
+}
+
+// Small labeled section heading with a short orange accent rule, used to
+// visually separate subsections within a subreddit detail card.
+function SubSectionHeading({ children }) {
+  return (
+    <View style={styles.subSectionHeaderRow}>
+      <View style={styles.subSectionAccent} />
+      <Text style={styles.subSectionLabel}>{children}</Text>
+    </View>
+  );
 }
 
 // Small stat tile used in the Traction grid — value + label stacked.
@@ -473,21 +616,40 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
   return (
     <Document>
       <Page size="A4" style={styles.coverPage}>
-        <Image src={WOLF_ICON_PATH} style={styles.coverIcon} />
-        <Text style={styles.coverBadge}>Placement Report</Text>
+        <Image src={LOGO_BADGE_BUFFER} style={styles.coverIcon} />
+        <Text style={styles.coverBadge}>Reddit Intel Report</Text>
         <Text style={styles.coverTitle}>Wolf of Reddit</Text>
         <Text style={styles.coverKeyword}>&quot;{keyword}&quot;</Text>
         <View style={styles.coverDivider} />
         <Text style={styles.coverMeta}>Generated {dateStr}</Text>
         <Text style={styles.coverMeta}>{ranked.length} curated subreddits</Text>
+        <CoverPageFooter />
       </Page>
 
       <Page size="A4" style={styles.page}>
         <PageHeader keyword={keyword} />
         <Text style={styles.sectionTitle}>Strategy</Text>
         <Text style={styles.sectionSubtitle}>Your at-a-glance game plan</Text>
+
+        <View style={styles.readmeBox}>
+          <Text style={styles.readmeTitle}>How to read this report</Text>
+          <Text style={styles.readmeText}>
+            The Opportunity Score (0–100) is calculated from removal risk, posting
+            activity, Google visibility, and how often this keyword comes up in the
+            subreddit — higher means a better opportunity.
+          </Text>
+          <Text style={styles.readmeText}>
+            <Text style={{ fontFamily: "Archivo", fontWeight: 800, color: COLORS.teal }}>POST </Text>
+            means it's safe to post now.{"  "}
+            <Text style={{ fontFamily: "Archivo", fontWeight: 800, color: COLORS.ochre }}>WARM UP FIRST </Text>
+            means build some karma and post history before posting.{"  "}
+            <Text style={{ fontFamily: "Archivo", fontWeight: 800, color: COLORS.clay }}>AVOID </Text>
+            means high risk — don't post without significant prep.
+          </Text>
+        </View>
+
         <Text style={styles.strategyText}>
-          {strategy && strategy.narrative ? dl(strategy.narrative) : "No narrative available."}
+          {strategy && strategy.narrative ? strategy.narrative : "No narrative available."}
         </Text>
 
         <View style={{ marginTop: 28 }}>
@@ -548,13 +710,24 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                     {ageText}
                   </Text>
                   {r.description ? (
-                    <Text style={styles.descriptionText}>{dl(r.description)}</Text>
+                    <Text style={styles.descriptionText}>{stripEmoji(r.description)}</Text>
                   ) : null}
                 </View>
                 <View style={styles.scoreBox}>
                   <Text style={[styles.scoreNumber, { color: scoreColor(r.opportunityScore) }]}>
                     {r.opportunityScore}
                   </Text>
+                  <View style={styles.scoreMeterTrack}>
+                    <View
+                      style={[
+                        styles.scoreMeterFill,
+                        {
+                          width: Math.max(2, Math.round((r.opportunityScore / 100) * 52)),
+                          backgroundColor: scoreColor(r.opportunityScore),
+                        },
+                      ]}
+                    />
+                  </View>
                   <Text style={styles.scoreLabel}>Opportunity</Text>
                 </View>
               </View>
@@ -577,7 +750,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                 {gateBadges.map(function (label) {
                   return (
                     <Text key={label} style={[styles.badge, styles.badgeOchre]}>
-                      {dl(label)}
+                      {label}
                     </Text>
                   );
                 })}
@@ -587,7 +760,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                 <View style={[styles.verdictBox, vStyle]}>
                   <Text style={styles.verdictText}>
                     <Text style={styles.verdictLabel}>{r.verdict.verdict.toUpperCase()}: </Text>
-                    {dl(r.verdict.reasoning)}
+                    {r.verdict.reasoning}
                   </Text>
                 </View>
               ) : null}
@@ -595,7 +768,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
               {/* Traction stats grid */}
               {r.traction ? (
                 <View>
-                  <Text style={styles.subSectionLabel}>Traction (last 90 days)</Text>
+                  <SubSectionHeading>Traction (last 90 days)</SubSectionHeading>
                   <View style={styles.statGrid}>
                     <StatBox value={t.medianScore} label="Median score" />
                     <StatBox value={t.medianComments} label="Median comments" />
@@ -631,13 +804,11 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
               {topFlairs.length > 0 ? (
                 <Text style={styles.inlineDetailText}>
                   <Text style={{ fontFamily: "Archivo", fontWeight: 700 }}>Top flairs: </Text>
-                  {dl(
-                    topFlairs
-                      .map(function (f) {
-                        return f.flair + " (avg score " + f.avgScore + ")";
-                      })
-                      .join("  \u2022  ")
-                  )}
+                  {topFlairs
+                    .map(function (f) {
+                      return stripEmoji(f.flair) + " (avg score " + f.avgScore + ")";
+                    })
+                    .join("  \u2022  ")}
                 </Text>
               ) : null}
 
@@ -649,12 +820,12 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
               ) : null}
 
               {r.suggestedAngle ? (
-                <Text style={styles.angleText}>&quot;{dl(r.suggestedAngle)}&quot;</Text>
+                <Text style={styles.angleText}>&quot;{r.suggestedAngle}&quot;</Text>
               ) : null}
 
               {r.questions && r.questions.length > 0 ? (
                 <View>
-                  <Text style={styles.questionLabel}>Real questions from this subreddit</Text>
+                  <SubSectionHeading>Real questions from this subreddit</SubSectionHeading>
                   {r.questions.map(function (q, qi) {
                     return (
                       <View key={qi} style={styles.questionRow}>
@@ -662,7 +833,7 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
                           {q.intent}
                         </Text>
                         <Link src={q.url} style={styles.questionTitle}>
-                          {dl(q.title)}
+                          {dl(stripEmoji(q.title))}
                         </Link>
                         <Text style={styles.questionMeta}>
                           {q.score != null ? q.score + " pts" : ""}
@@ -682,25 +853,21 @@ export default function ReportDocument({ keyword, generatedAt, strategy, subredd
       })}
 
       <Page size="A4" style={[styles.page, styles.closingPage]}>
-        <Image src={WOLF_ICON_PATH} style={{ width: 32, height: 32, marginBottom: 8 }} />
+        <Image src={WOLF_ICON_BUFFER} style={{ width: 32, height: 32, marginBottom: 8 }} />
         <Text style={styles.closingTitle}>What&apos;s next</Text>
         <Text style={styles.closingText}>
-          {dl(
-            "You now know exactly where your audience is talking, what gets removed, " +
-              "and what kind of post actually lands. The next step is putting that to " +
-              "work — whether that's posting it yourself, or letting us handle it."
-          )}
+          You now know exactly where your audience is talking, what gets removed,
+          and what kind of post actually lands. The next step is putting that to
+          work — whether that's posting it yourself, or letting us handle it.
         </Text>
 
         <View style={styles.upsellBox}>
           <Text style={styles.upsellTitle}>We can place it for you</Text>
           <Text style={styles.upsellText}>
-            {dl(
-              "Our SCOUT, PACK, and PRESENCE placement packages put your content " +
-                "live through established, aged accounts — chosen from live risk-and-" +
-                "opportunity data, not throwaways that get flagged on sight. " +
-                "Starting at $129. See wolfofreddit.com/services to get started."
-            )}
+            Our SCOUT, PACK, and PRESENCE placement packages put your content
+            live through established, aged accounts — chosen from live risk-and-
+            opportunity data, not throwaways that get flagged on sight.
+            Starting at $129. See wolfofreddit.com/services to get started.
           </Text>
         </View>
 
