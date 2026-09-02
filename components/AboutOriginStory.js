@@ -12,7 +12,7 @@ export default function AboutOriginStory() {
           className="mt-4 text-3xl font-bold leading-[1.15] text-white sm:text-4xl"
           style={{ fontFamily: "var(--font-archivo), sans-serif" }}
         >
-          Reddit rewards relevance—and exposes shortcuts.
+          Reddit rewards relevance — and exposes shortcuts.
         </h2>
       </div>
 
@@ -39,7 +39,7 @@ export default function AboutOriginStory() {
           I started asking better questions:
         </p>
         <p className="mt-4 text-base leading-relaxed text-white/70">
-          Where are buyers already discussing this problem? Which communities are open to the topic? What language do members use? What gets welcomed—and what gets removed?
+          Where are buyers already discussing this problem? Which communities are open to the topic? What language do members use? What gets welcomed — and what gets removed?
         </p>
         <p className="mt-4 text-base leading-relaxed text-white/70">
           Those questions became the foundation of Wolf of Reddit.

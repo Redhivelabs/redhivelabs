@@ -22,7 +22,7 @@ export default function AboutFounder() {
           That hands-on approach is not just a preference. It is necessary. Reddit decisions often depend on small details that automated tools overlook: the tone of recent discussions, how moderators interpret a rule, whether a community is tired of a topic, or whether a contribution genuinely belongs in the conversation.
         </p>
         <p className="mt-3 text-sm leading-relaxed text-white/70">
-          Tools help me collect and organise the signals. Human judgment decides what they mean.
+          Tools help me collect and organize the signals. Human judgment decides what they mean.
         </p>
 
         <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-white/8 pt-5 text-sm">
@@ -46,17 +46,6 @@ export default function AboutFounder() {
               <path d="M2 7l10 6 10-6" />
             </svg>
             prakash@wolfofreddit.com
-          </a>
-          <a
-            href="https://twitter.com/WolfofReddits"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 break-all text-white/60 hover:text-[#FF6A1A]"
-          >
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" className="flex-shrink-0">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-            @WolfofReddits
           </a>
         </div>
       </div>

@@ -144,9 +144,10 @@ export default function Terms() {
               8. Governing law
             </h2>
             <p className="mt-2">
-              These Terms are governed by applicable law in the
-              jurisdiction in which Wolf of Reddit operates. This section will
-              be updated with a specific jurisdiction once finalized.
+              These Terms are governed by the laws of India, without regard
+              to its conflict of law principles. Any disputes arising from
+              these Terms will be subject to the jurisdiction of Indian
+              courts.
             </p>
           </section>
 
@@ -173,17 +174,7 @@ export default function Terms() {
             </h2>
             <p className="mt-2">
               Questions about these Terms can be sent to us via our contact
-              details on wolfofreddit.com, or by reaching out on Twitter/X
-              at{" "}
-              <a
-                href="https://twitter.com/WolfofReddits"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#FF6A1A] hover:underline"
-              >
-                @WolfofReddits
-              </a>
-              .
+              details on wolfofreddit.com.
             </p>
           </section>
         </div>

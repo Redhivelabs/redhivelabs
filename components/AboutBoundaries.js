@@ -7,7 +7,7 @@ const DO_ITEMS = [
 ];
 
 const DONT_ITEMS = [
-  "Use bots or fabricated engagement.",
+  "Use bots, scripted automation, or purchased fake engagement (fake upvotes, fake followers, and the like).",
   "Manipulate votes.",
   "Mass-post the same message across unrelated communities.",
   "Promise that moderators will approve a post.",

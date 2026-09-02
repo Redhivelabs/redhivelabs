@@ -6,7 +6,7 @@ import SampleReportLink from "../../components/SampleReportLink.js";
 export const metadata = {
   title: "Reddit Intel Report — Know Before You Post",
   description:
-    "Your Buyers are on Reddit. Your Posts Keep Getting Removed. We tell you where to post, when, and how — before you hit submit.",
+    "Your Buyers are on Reddit. Your Posts Keep Getting Removed. I tell you where to post, when, and how — before you hit submit.",
 };
 
 function Eyebrow({ children }) {
@@ -55,7 +55,7 @@ const IN_SCOPE = [
 
 const OUT_OF_SCOPE = [
   "A promise you go viral",
-  "Us posting for you (that's a different service)",
+  "Me posting for you (that's a different service)",
   "Reddit ads",
 ];
 
@@ -69,8 +69,8 @@ const FAQS = [
     a: "Especially you. It shows you which subreddits go easy on new accounts — before you torch your first one.",
   },
   {
-    q: "We're a company, not one guy with a Reddit account.",
-    a: "Even better. This is your due diligence before you put a team's hours into a channel.",
+    q: "We're an established company — is this too small-scale for us?",
+    a: "That's exactly who this is for. I personally review every report before it goes out, so you're not getting a templated tool — you're getting the same judgment call I'd make on my own campaigns, applied to yours.",
   },
   {
     q: "How fast?",
@@ -126,10 +126,10 @@ export default function RedditIntelReportPage() {
           Your Buyers are on Reddit. Your Posts Keep Getting Removed.
         </h1>
         <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-white/70">
-          Wrong Subreddit, Wrong Time — Gone in Minutes. We tell you the right ones.
+          Wrong Subreddit, Wrong Time — Gone in Minutes. I tell you the right ones.
         </p>
         <div className="mt-8 flex flex-col items-center gap-3">
-          <CTAButton>Show me the Right Subreddits — $49*</CTAButton>
+          <CTAButton>Show me the Right Subreddits — $49</CTAButton>
         </div>
 
         <div className="mx-auto mt-8 flex max-w-sm flex-col gap-2 text-left sm:mx-auto sm:inline-flex sm:items-start">
@@ -276,8 +276,8 @@ export default function RedditIntelReportPage() {
 
         <div className="mt-10 grid gap-8 sm:grid-cols-3">
           {[
-            { n: "1", t: "Give us your keyword." },
-            { n: "2", t: "We run the recon — real posts, real removal data, real timing." },
+            { n: "1", t: "Give me your keyword." },
+            { n: "2", t: "I run the recon — real posts, real removal data, real timing." },
             { n: "3", t: "Report hits your inbox. Go post." },
           ].map(function (step) {
             return (

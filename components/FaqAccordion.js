@@ -44,11 +44,18 @@ function FaqItem({ q, a, defaultOpen }) {
         </span>
         <PlusIcon open={open} />
       </button>
-      {open && (
-        <div className="fade-in-detail px-5 pb-5 text-sm leading-relaxed text-white/65 sm:text-[15px]">
-          {a}
-        </div>
-      )}
+      {/* Always rendered (not conditionally mounted) so answer text is
+          present in the server-rendered HTML for search/AI crawlers, and
+          purely CSS-collapsed for the visual accordion effect. */}
+      <div
+        aria-hidden={!open}
+        className={
+          "overflow-hidden px-5 text-sm leading-relaxed text-white/65 transition-all duration-300 ease-in-out sm:text-[15px] " +
+          (open ? "max-h-[600px] pb-5 opacity-100" : "max-h-0 pb-0 opacity-0")
+        }
+      >
+        {a}
+      </div>
     </div>
   );
 }

@@ -89,7 +89,7 @@ export default function About() {
           <span className="hidden text-white/20 sm:inline">•</span>
           <span>Human-reviewed</span>
           <span className="hidden text-white/20 sm:inline">•</span>
-          <span>Built around real community behaviour</span>
+          <span>Built around real community behavior</span>
         </div>
       </div>
 
@@ -136,7 +136,7 @@ export default function About() {
             className="mt-3 text-2xl font-bold text-white sm:text-3xl"
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            What I do—and where I draw the line.
+            What I do — and where I draw the line.
           </h2>
         </div>
         <AboutBoundaries />
@@ -165,7 +165,7 @@ export default function About() {
             </p>
             <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-white/60">
               Wolf of Reddit helps you identify the communities,
-              conversations, and constraints that matter—before you spend
+              conversations, and constraints that matter — before you spend
               weeks learning through trial and error.
             </p>
             <div className="mx-auto mt-8 flex max-w-md flex-col items-center gap-3 sm:flex-row sm:justify-center">

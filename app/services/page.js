@@ -69,7 +69,7 @@ const PACKAGES = [
 const FAQS = [
   {
     q: "Is posting on Reddit against the rules?",
-    a: "No — but each subreddit has its own moderation style, and posting the wrong way in the wrong community can get you removed or banned. That's exactly what Wolf of Reddit is built to prevent: we analyze removal rates, moderation strictness, and self-promo restrictions before you ever post.",
+    a: "No — but each subreddit has its own moderation style, and posting the wrong way in the wrong community can get you removed or banned. That's exactly what Wolf of Reddit is built to prevent: I analyze removal rates, moderation strictness, and self-promo restrictions before you ever post.",
   },
   {
     q: "What is the Opportunity Score?",
@@ -99,14 +99,17 @@ const FAQS = [
         </p>
       </div>
     ),
+    // Plain-text version for FAQPage structured data, since `a` above is JSX.
+    aText:
+      "Post — low removal risk, no unusual restrictions. Safe to post now. Warm Up First — moderate removal risk. Build some karma and post history before posting your key content. Avoid — high removal risk combined with strict moderation. Don't post here without significant prep.",
   },
   {
     q: "Will my Reddit account get banned?",
-    a: "We can't guarantee outcomes on a platform we don't control, but our whole approach is designed to reduce that risk — by identifying which subreddits are safe to post in directly versus which need warm-up, based on real removal-rate data rather than guesswork.",
+    a: "I can't guarantee outcomes on a platform I don't control, but my whole approach is designed to reduce that risk — by identifying which subreddits are safe to post in directly versus which need warm-up, based on real removal-rate data rather than guesswork.",
   },
   {
     q: "Do you guarantee results (traffic, sales, engagement)?",
-    a: "No — this report gives you data-backed placement intelligence, not guaranteed outcomes. What you post and how you engage still matters. We're not affiliated with, endorsed by, or sponsored by Reddit, Inc.",
+    a: "No — this report gives you data-backed placement intelligence, not guaranteed outcomes. What you post and how you engage still matters. I'm not affiliated with, endorsed by, or sponsored by Reddit, Inc.",
   },
   {
     q: "How current is the data in my report?",
@@ -118,15 +121,30 @@ const FAQS = [
   },
   {
     q: "Do you post the content for me, or just tell me where to post?",
-    a: "Both, depending on what you need. The report itself gives you the intelligence — exactly where to post, when, and how to approach each subreddit — so you can post it yourself. If you'd rather not handle posting directly, our placement packages put your content live through established, aged accounts chosen from the same risk-and-opportunity data in your report.",
+    a: "Both, depending on what you need. The report itself gives you the intelligence — exactly where to post, when, and how to approach each subreddit — so you can post it yourself. If you'd rather not handle posting directly, my placement packages put your content live through established, aged accounts chosen from the same risk-and-opportunity data in your report.",
   },
   {
     q: "What's your refund policy?",
-    a: "Reports are non-refundable once delivered, since the data and analysis are generated specifically for your keyword at the time of purchase. For placement services, if a post gets removed, we'll replace it free of charge — in the same subreddit or an equivalent one — for up to 90 days from the original placement.",
+    a: "Reports are non-refundable once delivered, since the data and analysis are generated specifically for your keyword at the time of purchase. For placement services, if a post gets removed, I'll replace it free of charge — in the same subreddit or an equivalent one — for up to 90 days from the original placement.",
   },
 ];
 
 export default function Services() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map(function (item) {
+      return {
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.aText || item.a,
+        },
+      };
+    }),
+  };
+
   return (
     <div
       className="min-h-screen px-6 pb-24"
@@ -135,6 +153,10 @@ export default function Services() {
           "radial-gradient(ellipse at top, #15171A 0%, #0D0E10 55%, #08090B 100%)",
       }}
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <SiteNav />
 
       {/* HERO */}
@@ -260,7 +282,7 @@ export default function Services() {
             className="mt-5 text-xs font-bold uppercase tracking-[0.25em]"
             style={{ color: "var(--color-accent)", fontFamily: "var(--font-archivo), sans-serif" }}
           >
-            Find • Engage • Influence.
+            Find. Engage. Influence.
           </p>
         </div>
       </div>
@@ -279,7 +301,8 @@ export default function Services() {
             style={{ fontFamily: "var(--font-archivo), sans-serif" }}
           >
             If a placement gets removed, I redo it free — in another
-            community, no charge, no argument.
+            community, no charge, no argument — for up to 90 days from the
+            original placement.
           </p>
           <p className="mx-auto mt-3 max-w-md text-sm text-white/55">
             You&apos;re not betting on luck. You&apos;re betting on judgment

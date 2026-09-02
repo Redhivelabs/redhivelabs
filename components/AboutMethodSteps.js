@@ -12,7 +12,7 @@ const STEPS = [
   {
     n: "03",
     title: "Choose the right approach",
-    text: "I turn that research into clear recommendations—or a carefully managed execution plan when the client wants hands-on support.",
+    text: "I turn that research into clear recommendations — or a carefully managed execution plan when the client wants hands-on support.",
   },
 ];
 
