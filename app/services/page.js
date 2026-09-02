@@ -50,18 +50,19 @@ const PACKAGES = [
     orderType: "presence",
     orderKeyword: "PRESENCE — Monthly Visibility",
     name: "PRESENCE — Monthly Visibility",
-    price: "$890",
+    price: "$699",
     priceSuffix: "/mo",
     description:
-      "Ongoing placement in the threads that keep ranking — so when someone asks Google or ChatGPT about your category, your name keeps surfacing.",
+      "5 Reddit posts and 10 comments every month — 4 with links — across the threads that keep ranking, so when someone asks Google or ChatGPT about your category, your name keeps surfacing.",
     bullets: [
-      "Continuous thread-finding across your target communities",
-      "Multiple placements per month, timed and risk-screened",
+      "5 posts + 10 comments every month across your target communities",
+      "4 of the 10 comments include links, the rest mention your brand by name",
+      "Continuous thread-finding — placements timed and risk-screened",
       "Monthly Reddit Visibility Report: where you're showing up in ranking threads and AI answers",
       "First priority on new high-opportunity threads as they surface",
     ],
     note: "Best for brands that want Reddit working for them every month, not once.",
-    ctaLabel: "Make Me Unmissable → $890/mo",
+    ctaLabel: "Make Me Unmissable → $699/mo",
   },
 ];
 

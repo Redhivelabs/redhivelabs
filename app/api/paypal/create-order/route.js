@@ -9,7 +9,7 @@ const PRICES = {
   report: 49,
   scout: 129,
   pack: 339,
-  presence: 890,
+  presence: 699,
 };
 
 const FIND_SUBREDDIT_FEE = 5;
