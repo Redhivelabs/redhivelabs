@@ -35,9 +35,10 @@ const PACKAGES = [
     price: "$339",
     strikePrice: "$387",
     description:
-      "Three coordinated placements across your top-ranked communities — the spread that starts showing up in search and AI answers.",
+      "Three coordinated placements across your top-ranked communities, plus 7 comments — 2 with links — the spread that starts showing up in search and AI answers.",
     bullets: [
       "3 communities mapped and prioritized by opportunity, not guesswork",
+      "7 comments across your placements — 2 include links, the rest mention your brand by name",
       "Staggered timing so it reads organic, never like a campaign",
       "Each placement risk-screened individually",
       "Covers the range of threads your buyers actually read before deciding",
