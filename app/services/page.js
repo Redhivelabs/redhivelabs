@@ -72,6 +72,10 @@ const FAQS = [
     a: "No — but each subreddit has its own moderation style, and posting the wrong way in the wrong community can get you removed or banned. That's exactly what Wolf of Reddit is built to prevent: I analyze removal rates, moderation strictness, and self-promo restrictions before you ever post.",
   },
   {
+    q: "Are these real Reddit accounts?",
+    a: "Yes — established, existing High Karma accounts, not bots or vote farms. Everything is written and placed by hand, matched to the community, and if a placement gets removed I fix it free.",
+  },
+  {
     q: "What is the Opportunity Score?",
     a: "A 0–100 score calculated from a subreddit's removal risk, posting activity, Google visibility, and how often your keyword comes up in that community. Higher means a better opportunity to post and be seen.",
   },

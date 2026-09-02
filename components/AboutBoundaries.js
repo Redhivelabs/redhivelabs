@@ -2,6 +2,7 @@ const DO_ITEMS = [
   "Study real discussions to find where your buyers actually spend time.",
   "Review rules, content patterns, and potential removal risks before recommending a community.",
   "Build strategies around relevance, timing, positioning, and genuine participation.",
+  "When clients want hands-on execution, place content through established, vetted Reddit contributors — matched to that community's tone, never templated or mass-blasted.",
   "Personally review every client-facing report and recommendation.",
   "Set realistic expectations about what Reddit can and cannot deliver.",
 ];
@@ -61,7 +62,7 @@ export default function AboutBoundaries() {
       </div>
 
       <p className="mx-auto mt-8 max-w-xl text-center text-base leading-relaxed text-white/60">
-        Reddit communities can detect inauthenticity quickly. Protecting your reputation matters more than forcing a short-term result.
+        Reddit communities notice templated spam immediately — that's why every placement is chosen and reviewed by hand, never run on autopilot.
       </p>
     </>
   );
