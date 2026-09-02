@@ -16,10 +16,10 @@ const PACKAGES = [
     name: "SCOUT — One Placement",
     price: "$129",
     description:
-      "One seeded thread or high-context mention, plus three supporting comments, placed in your single highest-opportunity community.",
+      "One seeded thread or high-context mention, plus three comments mentioning your brand by name — no links, placed in your single highest-opportunity community.",
     bullets: [
       "Target community chosen from live Wolf Score data",
-      "One seeded post plus 3 supporting comments — real conversation, not just a lone thread",
+      "3 comments mentioning your brand — no links, so they read natural instead of spammy",
       "Written and placed from established, aged accounts — you risk none of your own",
       "Pre-screened against that subreddit's real removal rate before anything goes live",
       "Native to the community's tone — reads like a member, not an ad",
